@@ -1,7 +1,5 @@
-# Portfolio prototype
+# Portfolio content guide
 
-The `index.html` file is a responsive static portfolio draft. Open it locally to preview.
+Public pages describe professional contributions and high-level concepts only. Do not add actual employer screenshots, source code, datasets, implementation mappings, or detailed architecture.
 
-To publish with GitHub Pages, review the content, merge `feature/portfolio-site` into `main`, then enable Pages under Settings > Pages using `main` and `/(root)`.
-
-All three case studies are illustrative templates, not verified descriptions of confidential employer systems. Replace placeholders only with independently created and approved information. Do not publish internal code, diagrams, database schemas, APIs, metrics, or security details.
+General tools are presented as personal experience rather than an internal project deployment stack. AI-assisted work and generated concept imagery are disclosed.

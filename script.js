@@ -1,5 +1,35 @@
-document.getElementById('year').textContent=new Date().getFullYear();
-function openCase(hash,focus=false){if(!/^#case-\d+$/.test(hash))return;const detail=document.getElementById(hash.slice(1));if(detail){detail.open=true;if(focus){detail.querySelector('summary').focus({preventScroll:true});detail.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'});}}}
-document.querySelectorAll('a[href^="#case-"]').forEach(link=>link.addEventListener('click',()=>openCase(link.hash,true)));
-window.addEventListener('hashchange',()=>openCase(location.hash));openCase(location.hash);
-if('IntersectionObserver' in window){const sections=document.querySelectorAll('#work,#approach,#about');const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){document.querySelectorAll('nav a').forEach(a=>{const active=a.hash==='#'+entry.target.id;a.classList.toggle('active',active);if(active)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current');});}})},{rootMargin:'-15% 0px -50% 0px'});sections.forEach(section=>observer.observe(section));}
+(() => {
+  const year = document.getElementById('year');
+  if (year) year.textContent = new Date().getFullYear();
+
+  // Preserve external links to the former in-page case studies.
+  const legacyCases = {
+    '#case-01': 'document-automation',
+    '#case-02': 'construction-progress',
+    '#case-03': 'digital-twin',
+    '#case-04': 'drawing-information',
+    '#case-05': 'asset-master-data',
+    '#case-06': 'operations-analytics'
+  };
+  if (document.getElementById('home') && legacyCases[location.hash]) {
+    location.replace('projects/' + legacyCases[location.hash] + '.html');
+    return;
+  }
+
+  // Native links, history, and full HTML content work without JavaScript.
+  if (!('IntersectionObserver' in window)) return;
+  const navigation = document.querySelector('header nav');
+  if (!navigation || !document.getElementById('home')) return;
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      navigation.querySelectorAll('a').forEach(link => {
+        const active = link.hash === '#' + entry.target.id;
+        link.classList.toggle('active', active);
+        if (active) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
+      });
+    });
+  }, { rootMargin: '-15% 0px -50% 0px' });
+  document.querySelectorAll('#work, #approach, #about').forEach(section => observer.observe(section));
+})();
