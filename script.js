@@ -1,0 +1,5 @@
+document.getElementById('year').textContent=new Date().getFullYear();
+function openCase(hash,focus=false){if(!/^#case-\d+$/.test(hash))return;const detail=document.getElementById(hash.slice(1));if(detail){detail.open=true;if(focus){detail.querySelector('summary').focus({preventScroll:true});detail.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'});}}}
+document.querySelectorAll('a[href^="#case-"]').forEach(link=>link.addEventListener('click',()=>openCase(link.hash,true)));
+window.addEventListener('hashchange',()=>openCase(location.hash));openCase(location.hash);
+if('IntersectionObserver' in window){const sections=document.querySelectorAll('#work,#approach,#about');const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){document.querySelectorAll('nav a').forEach(a=>{const active=a.hash==='#'+entry.target.id;a.classList.toggle('active',active);if(active)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current');});}})},{rootMargin:'-15% 0px -50% 0px'});sections.forEach(section=>observer.observe(section));}
