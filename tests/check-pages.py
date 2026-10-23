@@ -43,6 +43,14 @@ for stem in stems:
         else:assert 'data-career-years' in s and '2019' in s
     # English aliases have identical semantics and markup.
     assert (ROOT/(stem+'.html')).read_bytes()==(ROOT/(stem+'.en.html')).read_bytes()
+for filename,lang in [('version2.html','en'),('version2.en.html','en'),('version2.ko.html','ko')]:
+    p=ROOT/filename;c=Page();s=p.read_text();c.feed(s);parsed[p]=c
+    assert c.lang==lang and c.h1==1 and not c.errors and not c.stack and len(c.ids)==len(set(c.ids)),p
+    assert all(key in c.ids for key in ['home','work','approach','about','contact'])
+    assert s.count('data-v2-panel=')==11 and 'data-version="2"' in s
+    for record in data['projects']:assert 'project-'+record['slug'] in c.ids
+assert (ROOT/'version2.html').read_bytes()==(ROOT/'version2.en.html').read_bytes()
+
 for p,c in parsed.items():
     for tag,link,switch in c.links:
         u=urlsplit(link)
@@ -55,4 +63,4 @@ for p in data['projects']:
     en=(ROOT/'projects'/(p['slug']+'.html')).read_text();ko=(ROOT/'projects'/(p['slug']+'.ko.html')).read_text()
     for value,label in p['metrics']:assert value in en and value in ko
     for token in p['stack']:assert escape(token) in en and escape(token) in ko
-print('PASS: 21 pages, six paired project records, metric/stack parity, complete locale links, HTML, assets, sections and disclosure checks.')
+print('PASS: original and v2 pages, isolated project IDs, metric/stack parity, locale links, HTML, assets and sections.')
