@@ -5,55 +5,62 @@ const path = require('node:path');
 const vm = require('node:vm');
 const source = fs.readFileSync(path.join(__dirname, '../script.js'), 'utf8');
 
-function run({date = '2026-10-23T00:00:00Z', language = 'ko', preference = null,
-  pathname = '/profile/index.html', hash = '', home = true, blockedStorage = false} = {}) {
-  const realDate = Date;
-  class Clock extends realDate { constructor(...args) { super(...(args.length ? args : [date])); } }
-  const career = {textContent: ''}, year = {textContent: ''}, listeners = {}, writes = [];
-  const links = ['ko', 'en'].map(lang => ({dataset: {siteLang: lang}, addEventListener(event, handler) { listeners[lang] = handler; }}));
+function run({date='2026-10-24T00:00:00Z', language='en', preference=null,
+  pathname='/profile/index.html', hash='', home=true, blockedStorage=false, withFlow=false}={}) {
+  const RealDate=Date;
+  class Clock extends RealDate { constructor(...args) { super(...(args.length ? args : [date])); } }
+  const career={textContent:''}, year={textContent:''}, writes=[], languageListeners={};
+  const links=['en','ko'].map(lang=>({dataset:{siteLang:lang},addEventListener(event,fn){languageListeners[lang]=fn;}}));
+  const buttons=Array.from({length:3},(_,i)=>({attrs:{'aria-pressed':String(i===0)},listeners:{},focused:false,
+    addEventListener(event,fn){this.listeners[event]=fn;},setAttribute(k,v){this.attrs[k]=v;},focus(){this.focused=true;}}));
+  const panels=buttons.map((_,i)=>({hidden:i!==0}));
+  const flow={querySelectorAll(selector){return selector==='[data-flow-select]'?buttons:panels;}};
   let redirected;
-  const context = {
-    Date: Clock, Intl, window: {},
-    localStorage: {
-      getItem() { if (blockedStorage) throw Error('blocked'); return preference; },
-      setItem(key, value) { if (blockedStorage) throw Error('blocked'); writes.push([key, value]); }
-    },
-    location: {pathname, hash, search: '', replace(value) { redirected = value; }},
-    document: {
-      documentElement: {lang: language},
-      getElementById(id) { return id === 'home' ? (home ? {} : null) : id === 'year' ? year : null; },
-      querySelectorAll(selector) { return selector === '[data-career-years]' ? [career] : selector === '[data-site-lang]' ? links : []; }
-    }
-  };
-  vm.runInNewContext(source, context);
-  return {career: career.textContent, year: year.textContent, redirected, writes, listeners};
+  vm.runInNewContext(source,{
+    Date:Clock,Intl,window:{},
+    localStorage:{getItem(){if(blockedStorage)throw Error('blocked');return preference;},setItem(k,v){if(blockedStorage)throw Error('blocked');writes.push([k,v]);}},
+    location:{pathname,hash,search:'',replace(value){redirected=value;}},
+    document:{documentElement:{lang:language},getElementById(id){return id==='home'?(home?{}:null):id==='year'?year:null;},
+      querySelectorAll(s){return s==='[data-career-years]'?[career]:s==='[data-site-lang]'?links:s==='[data-flow]'&&withFlow?[flow]:[];}}
+  });
+  return {career:career.textContent,year:year.textContent,redirected,writes,languageListeners,links,buttons,panels};
 }
-
-test('experience advances on each January anniversary in Seoul', () => {
-  for (const [date, expected] of [
-    ['2026-10-23T00:00:00Z','7+'], ['2026-12-31T14:59:59Z','7+'],
-    ['2026-12-31T15:00:00Z','8+'], ['2027-12-31T15:00:00Z','9+'],
-    ['2018-12-31T14:00:00Z','0+']
-  ]) assert.equal(run({date}).career, expected, date);
-  assert.equal(run({date:'2026-12-31T15:00:00Z'}).year, 2027);
+test('English is the default without a saved preference',()=>{
+  const r=run();assert.equal(r.redirected,undefined);assert.equal(r.career,'7+');assert.deepEqual(r.writes,[]);
 });
-test('an explicitly selected English preference is restored on home', () => {
-  assert.equal(run({preference:'en',hash:'#work'}).redirected, 'index.en.html#work');
-  assert.equal(run({preference:'ko'}).redirected, undefined);
+test('experience advances at Seoul January boundaries',()=>{
+  for(const [date,expected] of [['2026-12-31T14:59:59Z','7+'],['2026-12-31T15:00:00Z','8+'],['2027-12-31T15:00:00Z','9+'],['2018-12-31T14:00:00Z','0+']])assert.equal(run({date}).career,expected,date);
+  assert.equal(run({date:'2026-12-31T15:00:00Z'}).year,2027);
 });
-test('language controls store the choice before navigating', () => {
-  const result = run(); result.listeners.en(); result.listeners.ko();
-  assert.deepEqual(result.writes, [['tj-portfolio-language','en'], ['tj-portfolio-language','ko']]);
+test('home restores explicit Korean preference and preserves the anchor',()=>{
+  assert.equal(run({preference:'ko',hash:'#work'}).redirected,'index.ko.html#work');
+  assert.equal(run({preference:'en'}).redirected,undefined);
 });
-test('direct English pages remember English; Korean detail URLs remain accessible', () => {
-  assert.deepEqual(run({pathname:'/profile/index.en.html',language:'en'}).writes, [['tj-portfolio-language','en']]);
-  assert.equal(run({home:false,preference:'en',pathname:'/profile/projects/digital-twin.html'}).redirected, undefined);
+test('explicit English and Korean URLs preserve their selected language',()=>{
+  assert.equal(run({preference:'ko',pathname:'/profile/index.en.html'}).redirected,undefined);
+  assert.deepEqual(run({language:'ko',pathname:'/profile/index.ko.html'}).writes,[['tj-portfolio-language','ko']]);
 });
-test('blocked browser storage does not break experience or navigation', () => {
-  const result = run({blockedStorage:true}); result.listeners.en();
-  assert.equal(result.career,'7+'); assert.equal(result.redirected,undefined);
+test('language links remember the selection and preserve section context',()=>{
+  const r=run({hash:'#about'});r.languageListeners.ko();r.languageListeners.en();
+  assert.deepEqual(r.writes,[['tj-portfolio-language','ko'],['tj-portfolio-language','en']]);assert.equal(r.links[1].hash,'#about');
 });
-test('legacy project links preserve the current language', () => {
-  assert.equal(run({hash:'#case-03'}).redirected, 'projects/digital-twin.html');
-  assert.equal(run({hash:'#case-03',language:'en',pathname:'/profile/index.en.html'}).redirected, 'projects/digital-twin.en.html');
+test('blocked storage does not break calculation, switches or flow controls',()=>{
+  const r=run({blockedStorage:true,withFlow:true});r.languageListeners.ko();r.buttons[2].listeners.click();
+  assert.equal(r.career,'7+');assert.equal(r.panels[2].hidden,false);
+});
+test('legacy case anchors resolve to the current language and project',()=>{
+  assert.equal(run({hash:'#case-03'}).redirected,'projects/digital-twin.html');
+  assert.equal(run({language:'ko',pathname:'/profile/index.ko.html',hash:'#case-03'}).redirected,'projects/digital-twin.ko.html');
+  assert.equal(run({hash:'#case-02'}).redirected,'projects/engineering-agents.html');
+});
+test('workflow selection exposes only the matching panel and pressed control',()=>{
+  const r=run({home:false,withFlow:true});r.buttons[2].listeners.click();
+  assert.deepEqual(r.panels.map(p=>p.hidden),[true,true,false]);assert.deepEqual(r.buttons.map(b=>b.attrs['aria-pressed']),['false','false','true']);
+});
+test('workflow keyboard navigation wraps and supports Home and End',()=>{
+  const r=run({home:false,withFlow:true});let prevented=0;
+  r.buttons[2].listeners.keydown({key:'ArrowRight',preventDefault(){prevented++;}});
+  assert.equal(r.panels[0].hidden,false);assert.equal(r.buttons[0].focused,true);
+  r.buttons[0].listeners.keydown({key:'End',preventDefault(){prevented++;}});assert.equal(r.panels[2].hidden,false);
+  r.buttons[2].listeners.keydown({key:'Home',preventDefault(){prevented++;}});assert.equal(r.panels[0].hidden,false);assert.equal(prevented,3);
 });
