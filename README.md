@@ -1,22 +1,29 @@
-# TJ Lee — Systems & Automation Engineering
+# TJ Lee — Business Systems & Automation Engineering
 
 [View portfolio](https://leetj94-lab.github.io/profile/)
 
-The default pages are Korean. Each `*.en.html` page contains complete English HTML; the language controls preserve the project and remember the selected language when browser storage is available. Both languages work without JavaScript. Professional experience is calculated from January 2019 at page load, using the Seoul calendar year; this is total professional experience, not a claim about software-development tenure.
+The default and canonical pages are English (`index.html`, `projects/<slug>.html`). Korean pages use `.ko.html`. Existing `.en.html` addresses remain equivalent English aliases. An explicit language choice is remembered when browser storage is available; language links preserve the current section.
 
-## Editing content
+## Content and rebuild
 
-1. Edit the English `index.en.html` or `projects/*.en.html` pages.
-2. Update the corresponding Korean text in `content/ko.json`.
-3. Run `python tools/build-locales.py` to regenerate Korean pages and versioned CSS/JS assets. Missing translations fail the build.
-4. Run `node --test tests/site.test.cjs`.
+`content/portfolio.json` is the bilingual project source. Each text field stores paired `en` and `ko` values; metrics, dates and technology lists are shared. Main-page copy and shared presentation components live in `tools/build-locales.py` as paired translations.
 
-Edit `styles.css` and `script.js`, then run the same locale builder to update content-hashed filenames. Do not edit hashed copies directly.
+The source resume is `Taekjun_Lee_Resume_Final.pdf`. Project periods, roles and quantitative outcomes follow that resume. Annual productivity values retain the resume’s estimation basis. The engineering-agent work remains a prototype. Source system screenshots, protected code, operational datasets, detailed deployment architecture and internal identifiers are excluded.
 
-## Content boundaries
+Edit `content/portfolio.json`, `styles.css`, `script.js` or the shared renderer, then run:
 
-Actual project contributions are separate from the labeled hypothetical design exercises. Example stacks, design choices, recovery patterns, and validation criteria are illustrative; they are not assertions about the employer’s architecture or completed implementations. Replace examples only with verified, disclosure-approved experience. No performance measurements have been invented.
+```sh
+python tools/build-locales.py
+python tests/check-pages.py
+node --test tests/site.test.cjs
+```
 
-AI assists design, development, and conceptual imagery. Protected employer screenshots, code, operational datasets, and detailed architecture are excluded.
+The renderer creates complete English/Korean HTML and content-hashed CSS/JS. Do not edit hashed assets or generated HTML directly. It also keeps the former construction-progress URLs working by routing them to the updated project set.
 
-The existing `feature/portfolio-site` deployment branch is retained for the GitHub Pages environment.
+## Interaction
+
+Each case study includes a before/after workflow, selectable processing stages, ownership by engineering area and operational results. Stage controls support click, arrow keys, Home and End. No API keys, analytics trackers, external runtime libraries or employer data are required.
+
+Professional experience is calculated from January 2019 using the Seoul calendar year. This is total professional tenure, separate from the Systems Engineer role beginning in 2020.
+
+The existing `feature/portfolio-site` branch is retained for the GitHub Pages deployment environment.
