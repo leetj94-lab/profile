@@ -6,7 +6,7 @@ const vm = require('node:vm');
 const source = fs.readFileSync(path.join(__dirname, '../script.js'), 'utf8');
 
 function run({date='2026-10-24T00:00:00Z', language='en', preference=null,
-  pathname='/profile/index.html', hash='', home=true, blockedStorage=false, withFlow=false}={}) {
+  pathname='/profile/index.html', hash='', home=true, blockedStorage=false, withFlow=false, version=null}={}) {
   const RealDate=Date;
   class Clock extends RealDate { constructor(...args) { super(...(args.length ? args : [date])); } }
   const career={textContent:''}, year={textContent:''}, writes=[], languageListeners={};
@@ -20,7 +20,7 @@ function run({date='2026-10-24T00:00:00Z', language='en', preference=null,
     Date:Clock,Intl,window:{},
     localStorage:{getItem(){if(blockedStorage)throw Error('blocked');return preference;},setItem(k,v){if(blockedStorage)throw Error('blocked');writes.push([k,v]);}},
     location:{pathname,hash,search:'',replace(value){redirected=value;}},
-    document:{documentElement:{lang:language},getElementById(id){return id==='home'?(home?{}:null):id==='year'?year:null;},
+    document:{body:{dataset:{version}},documentElement:{lang:language},getElementById(id){return id==='home'?(home?{}:null):id==='year'?year:null;},
       querySelectorAll(s){return s==='[data-career-years]'?[career]:s==='[data-site-lang]'?links:s==='[data-flow]'&&withFlow?[flow]:[];}}
   });
   return {career:career.textContent,year:year.textContent,redirected,writes,languageListeners,links,buttons,panels};
@@ -63,4 +63,8 @@ test('workflow keyboard navigation wraps and supports Home and End',()=>{
   assert.equal(r.panels[0].hidden,false);assert.equal(r.buttons[0].focused,true);
   r.buttons[0].listeners.keydown({key:'End',preventDefault(){prevented++;}});assert.equal(r.panels[2].hidden,false);
   r.buttons[2].listeners.keydown({key:'Home',preventDefault(){prevented++;}});assert.equal(r.panels[0].hidden,false);assert.equal(prevented,3);
+});
+
+test('v2 restores Korean without redirecting to the original site',()=>{
+  assert.equal(run({preference:'ko',pathname:'/profile/version2.html',hash:'#approach',version:'2'}).redirected,'version2.ko.html#approach');
 });
