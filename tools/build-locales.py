@@ -13,7 +13,7 @@ DATA=json.loads((ROOT/'content/portfolio.json').read_text())
 PROJECTS=DATA['projects']
 YEAR=datetime.now(ZoneInfo('Asia/Seoul')).year
 ASSETS={}
-for name in ['styles.css','script.js','v2-styles.css','v2-script.js','workflow.js']:
+for name in ['styles.css','script.js','v2-styles.css','v2-script.js']:
     p=ROOT/name; b=p.read_bytes(); hashed=p.stem+'-'+hashlib.sha256(b).hexdigest()[:10]+p.suffix
     (ROOT/hashed).write_bytes(b);ASSETS[p.stem]=hashed
 
@@ -105,7 +105,7 @@ def project(p,lang):
     s+='</div>'+render_evidence(p,lang,S,text)+'</section>'+render_engineering(p,lang,S,text,icon)+'<section class="case-section results" id="results"><p class="eyebrow">05 / '+S('OPERATIONAL RESULT','개선 결과',lang)+'</p><h2>'+S('What changed in practice.','실무에서 달라진 결과.',lang)+'</h2><p>'+text(p['result'],lang)+'</p>'
     if p.get('measurement'):s+='<p class="measurement-note">'+text(p['measurement'],lang)+'</p>'
     if p.get('rollout'):s+='<aside class="project-rollout"><span class="mini-label">'+text(p['rollout'],lang)+'</span><p>'+text(p['rollout_note'],lang)+'</p></aside>'
-    if p.get('estimate'):s+='<small>'+S('Productivity value estimates are based on workforce size, hourly pay and efficiency gains.','생산성 가치는 인원 규모·시간당 인건비·효율 개선을 기반으로 추정한 값입니다.',lang)+'</small>'
+    if p.get('estimate') and not p.get('measurement'):s+='<small>'+S('Productivity value estimates are based on workforce size, hourly pay and efficiency gains.','생산성 가치는 인원 규모·시간당 인건비·효율 개선을 기반으로 추정한 값입니다.',lang)+'</small>'
     nxt=PROJECTS[(PROJECTS.index(p)+1)%len(PROJECTS)]
     s+='</section><div class="case-pagination"><a href="../'+route('index',lang)+'#work">'+S('← All projects','← 전체 프로젝트',lang)+'</a><a href="'+route(nxt['slug'],lang)+'"><small>'+S('NEXT PROJECT','다음 프로젝트',lang)+'</small>'+text(nxt['title'],lang)+' ↗</a></div></main></div>'
     return s+footer(lang,prefix)

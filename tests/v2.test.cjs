@@ -20,7 +20,7 @@ function run({hash='',language='en'}={}){
   const location={hash};
   const target={closest:()=>panels[5],scrollIntoView(){this.scrolled=true;}};
   const document={title:'',documentElement:{lang:language},
-    getElementById(id){return id==='project-document-automation-system-flow'?target:panels.find(p=>p.id===id);},
+    getElementById(id){return ['project-document-automation-system-flow','project-document-automation-engineering'].includes(id)?target:panels.find(p=>p.id===id);},
     querySelector(s){return s==='.v2-subnav'?subnav:s==='[data-back-v1]'?back:s==='[data-v2-current]'?label:null;},
     querySelectorAll(s){return s==='[data-v2-panel]'?panels:s==='[data-v2-nav]'?navigation:s==='[data-v2-project]'?projectLinks:s==='[data-site-lang]'?languageLinks:s==='a[href^="#"]'?navigation:[];}};
   vm.runInNewContext(source,{document,location,requestAnimationFrame:fn=>fn(),window:{addEventListener(k,v){events[k]=v;},scrollTo(value){scrolls.push(value);}}});
@@ -54,4 +54,10 @@ test('reselecting the current navigation item restores the panel top',()=>{
   const r=run({hash:'#work'});let prevented=false;
   r.navigation[1].listeners.click({preventDefault(){prevented=true;}});
   assert.equal(prevented,true);assert.equal(r.scrolls.length,2);assert.equal(r.scrolls[1].top,0);
+});
+
+test('retired walkthrough links open document engineering instead of the overview',()=>{
+  const r=run({hash:'#project-document-automation-validation-workflow'});
+  assert.deepEqual(r.visible(),['project-document-automation']);
+  assert.equal(r.target.scrolled,true);
 });

@@ -61,8 +61,8 @@ The active case-study reading order is problem/change → outcome → contributi
 
 The three-pass HR/BA/developer review and acceptance findings are recorded in `docs/PORTFOLIO_REVIEW.md`. That internal document is excluded from the public artifact.
 
-## Requirements evidence and executable workflow
+## Requirements evidence and retained walkthrough code
 
 Every project has an `evidence` case linking business needs, implementation decisions and acceptance criteria. Selected results have a `measurement` note separating workload scale, efficiency and estimated productivity value. Do not alter metric values in order to fit an illustrative calculation.
 
-`workflow.js` contains the validation/delivery state engine and browser adapter for the interactive workflow in the document-delivery case. It runs locally in the visitor’s browser and does not call employer APIs or persist records. It demonstrates executable validation, revision-bound approval, partial delivery and idempotent target-only retry. Tests cover invalid transitions and recovery invariants. The UI describes a workflow walkthrough, not a live employer system.
+The former interactive validation/delivery walkthrough and its overview entry are removed from the public UI. `workflow.js`, its engine tests and the unused `render_explorer` helper are retained for future reuse; do not re-enable them unless explicitly requested. The active renderer does not load or package the walkthrough runtime, and Jekyll fallback excludes it. Previously shared walkthrough anchors resolve to the document case's engineering section. The selectable implementation stages remain active: these explain project work and are separate from the retired walkthrough.

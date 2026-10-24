@@ -12,6 +12,8 @@
   const activate=(fragment,moveFocus=false)=>{
     let id;
     try { id=decodeURIComponent(fragment.replace(/^#/,'')); } catch (_) { id='home'; }
+    // Previously shared walkthrough URLs retain the relevant engineering context.
+    if(id==='project-document-automation-validation-workflow')id='project-document-automation-engineering';
     let target=document.getElementById(id);
     let panel=target?.closest('[data-v2-panel]');
     if (id==='main') panel=panels.find(p=>p.dataset.v2Panel===current);
