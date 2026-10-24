@@ -6,7 +6,7 @@ from datetime import datetime
 from zoneinfo import ZoneInfo
 import json, hashlib
 from presentation import ai_section, render_v2
-from engineering import render_engineering
+from engineering import render_engineering, render_stage
 
 ROOT=Path(__file__).resolve().parents[1]
 DATA=json.loads((ROOT/'content/portfolio.json').read_text())
@@ -86,7 +86,7 @@ def project(p,lang):
     s+='<section class="case-hero"><div><div class="project-meta"><span>'+text(p['category'],lang)+'</span><span>'+p['period']+'</span></div><h1>'+text(p['title'],lang)+'</h1><p class="case-lead">'+text(p['lead'],lang)+'</p><p class="role-line"><span class="status-pill">'+text(p['status'],lang)+'</span>'+text(p['role'],lang)+'</p></div><figure class="case-art">'+art(p,lang,prefix)+'</figure></section>'
     if p['image']:s+='<p class="art-note">'+S('AI-generated concept illustration for understanding the workflow; not an actual system screenshot.','업무 흐름 이해를 돕기 위해 AI로 생성한 컨셉 이미지이며 실제 시스템 화면은 아닙니다.',lang)+'</p>'
     s+='<div class="case-metrics">'+''.join('<div><strong class="'+('long-metric' if len(v)>8 else '')+'">'+E(v)+'</strong><span>'+text(label,lang)+'</span></div>' for v,label in p['metrics'])+'</div>'
-    s+='<nav class="case-jumps" aria-label="'+S('Case study sections','상세 페이지 목차',lang)+'">'+''.join('<a href="#'+ident+'">'+S(en,ko,lang)+' ↓</a>' for ident,en,ko in [('before-after','Before & after','개선 전후'),('system-flow','System flow','처리 흐름'),('my-build','What I built','개발 영역'),('engineering','Decisions & checks','설계 판단·검증'),('results','Results','개선 결과')])+'</nav>'+disclosure(lang)
+    s+='<nav class="case-jumps" aria-label="'+S('Case study sections','상세 페이지 목차',lang)+'">'+''.join('<a href="#'+ident+'">'+S(en,ko,lang)+' ↓</a>' for ident,en,ko in [('before-after','Problem & change','문제·개선'),('results','Outcome','성과'),('my-build','My contribution','직접 기여'),('system-flow','Implementation','단계별 구현'),('engineering','Decisions & checks','설계 판단·검증')])+'</nav>'+disclosure(lang)
     s+='<section class="case-section" id="before-after"><p class="eyebrow">01 / '+S('WHAT CHANGED','무엇이 달라졌나',lang)+'</p><h2>'+S('The workflow, before and after.','업무 흐름의 개선 전후.',lang)+'</h2><div class="comparison">'
     for key,label,ic in [('before',S('BEFORE','개선 전',lang),'mail'),('after',S('AFTER','개선 후',lang),'check')]:
         graphic=''
@@ -95,12 +95,11 @@ def project(p,lang):
             exchange='<svg viewBox="0 0 30 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M2 7h25m-5-4 5 4-5 4M28 18H3m5-4-5 4 5 4"/></svg>' if key=='before' else '<svg viewBox="0 0 30 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M2 12h25m-5-5 5 5-5 5"/></svg>'
             graphic='<div class="handover-visual">'+('<span class="handover-exchange">'+exchange+'</span>').join('<span class="handover-person">'+icon(n[0])+'<span>'+S(n[1],n[2],lang)+'</span></span>' for n in nodes)+'</div>'
         s+='<article class="compare-'+key+'"><div class="compare-label">'+icon(ic)+'<span>'+label+'</span></div><h3>'+text(p[key],lang)+'</h3>'+graphic+'<ol>'+''.join('<li><span>'+str(i+1)+'</span>'+text(step,lang)+'</li>' for i,step in enumerate(p[key+'_steps']))+'</ol><p>'+text(p[key+'_note'],lang)+'</p></article>'
-    s+='</div></section><section class="case-section" id="system-flow"><p class="eyebrow">02 / '+S('TECHNOLOGY IN THE WORKFLOW','업무 흐름 속 기술',lang)+'</p><h2>'+S('Follow the information through the system.','정보가 시스템을 통과하는 과정.',lang)+'</h2><p class="section-intro">'+S('Select a stage to see its purpose, implementation technologies and operational safeguards.','단계를 선택하면 목적, 구현 기술, 운영상 보호 장치를 확인할 수 있습니다.',lang)+'</p><div class="interactive-flow" data-flow><ol class="system-flow">'
+    s+='</div></section><section class="case-section" id="system-flow"><p class="eyebrow">02 / '+S('TECHNOLOGY IN THE WORKFLOW','업무 흐름 속 기술',lang)+'</p><h2>'+S('Follow the information through the system.','정보가 시스템을 통과하는 과정.',lang)+'</h2><p class="section-intro">'+S('Choose a stage to inspect its inputs, implementation, outputs and exception handling.','단계를 선택하면 입력·직접 구현한 처리·결과·예외 대응과 처리 예시를 확인할 수 있습니다.',lang)+'</p><div class="interactive-flow" data-flow><ol class="system-flow" data-stage-count="'+str(len(p['flow']))+'">'
     for i,(ic,title,tech,description,safeguard) in enumerate(p['flow']):
-        s+='<li><button type="button" data-flow-select="'+str(i)+'" aria-controls="flow-panel-'+str(i)+'" aria-pressed="'+str(i==0).lower()+'"><span class="stage-top"><span class="stage-number">0'+str(i+1)+'</span>'+icon(ic)+'</span><strong>'+text(title,lang)+'</strong><small>'+E(tech)+'</small></button></li>'
+        s+='<li><button type="button" data-flow-select="'+str(i)+'" aria-controls="flow-panel-'+str(i)+'" aria-pressed="'+str(i==0).lower()+'"><span class="stage-top"><span class="stage-number">0'+str(i+1)+'</span>'+icon(ic)+'</span><strong>'+text(title,lang)+'</strong><small>'+E(tech)+'</small><span class="flow-more">'+S('View implementation ↘','구현 내용 보기 ↘',lang)+'</span></button></li>'
     s+='</ol><div class="flow-panels" aria-live="polite">'
-    for i,(ic,title,tech,description,safeguard) in enumerate(p['flow']):
-        s+='<article class="flow-panel" id="flow-panel-'+str(i)+'" data-flow-panel="'+str(i)+'" '+('hidden' if i else '')+'><div class="panel-heading">'+icon(ic)+'<h3>'+text(title,lang)+'</h3><span>'+E(tech)+'</span></div><p>'+text(description,lang)+'</p><div class="safeguard">'+icon('shield')+'<p>'+text(safeguard,lang)+'</p></div></article>'
+    for i in range(len(p['flow'])):s+=render_stage(p,i,lang,S,text,icon)
     s+='</div></div></section><section class="case-section" id="my-build"><p class="eyebrow">03 / '+S('MY ENGINEERING OWNERSHIP','직접 개발한 영역',lang)+'</p><h2>'+S('What I designed, built and supported.','설계하고 개발하고 운영한 영역.',lang)+'</h2><p class="implementation-scope">'+text(p['engineering']['scope'],lang)+'</p>'+tags(p)+'<div class="ownership-grid">'
     for ic,title,description in p['ownership']:s+='<article>'+icon(ic)+'<h3>'+text(title,lang)+'</h3><p>'+text(description,lang)+'</p></article>'
     s+='</div></section>'+render_engineering(p,lang,S,text,icon)+'<section class="case-section results" id="results"><p class="eyebrow">05 / '+S('OPERATIONAL RESULT','개선 결과',lang)+'</p><h2>'+S('What changed in practice.','실무에서 달라진 결과.',lang)+'</h2><p>'+text(p['result'],lang)+'</p>'

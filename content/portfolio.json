@@ -337,7 +337,65 @@
             }
           }
         ]
-      }
+      },
+      "stage_details": [
+        {
+          "input": {
+            "en": "Local equipment codes, source attributes, owners and lifecycle status.",
+            "ko": "시스템별 설비 코드·속성·관리 부서·사용 상태."
+          },
+          "output": {
+            "en": "A canonical asset identity, source-code mappings and attribute ownership.",
+            "ko": "공통 설비 식별자·원천 코드 매핑·속성별 관리 주체."
+          },
+          "example": {
+            "en": "Two systems use different codes for the same pump. Both codes map to one asset ID; conflicting ownership is routed to review.",
+            "ko": "두 시스템이 같은 펌프를 다른 코드로 관리하면 하나의 설비 ID에 연결합니다. 관리 주체가 충돌하면 검토 대상으로 분리합니다."
+          }
+        },
+        {
+          "input": {
+            "en": "New or changed records, mapping candidates and the current approved master.",
+            "ko": "신규·변경 레코드·매핑 후보·현재 승인 기준정보."
+          },
+          "output": {
+            "en": "Validation issues or a traceable, approved master revision.",
+            "ko": "검증 오류 또는 이력을 추적할 수 있는 승인 기준정보 개정."
+          },
+          "example": {
+            "en": "A duplicate equipment identifier is held in staging with its source and rule reference; it cannot overwrite the approved master.",
+            "ko": "중복 설비 식별자는 원천·규칙 참조와 함께 검수용 영역에 남기고 승인 기준정보를 덮어쓰지 못하게 합니다."
+          }
+        },
+        {
+          "input": {
+            "en": "Approved asset changes and the mapping contract for each target.",
+            "ko": "승인된 설비 변경과 대상별 연계 매핑 규칙."
+          },
+          "output": {
+            "en": "Target-specific messages with per-asset revision and delivery status.",
+            "ko": "설비별 개정·전송 상태를 가진 대상별 연계 메시지."
+          },
+          "example": {
+            "en": "One target is unavailable after a master update. Other targets remain complete; only the failed delivery is replayed with the same revision key.",
+            "ko": "기준정보 변경 후 한 대상이 응답하지 않으면 다른 대상의 완료 상태는 유지하고 실패 건만 동일 개정 키로 재전송합니다."
+          }
+        },
+        {
+          "input": {
+            "en": "Expected master revisions, target snapshots and delivery logs.",
+            "ko": "기준정보 기대 개정·대상 스냅샷·전송 로그."
+          },
+          "output": {
+            "en": "Owner-assigned exceptions for missing assets, stale revisions and failed links.",
+            "ko": "설비 누락·개정 지연·연계 실패에 대한 담당자별 조치 목록."
+          },
+          "example": {
+            "en": "A send is marked successful but the target still holds the previous revision. Reconciliation raises an exception rather than trusting the send log.",
+            "ko": "전송은 성공했지만 대상이 이전 개정을 보유하면 전송 로그만 믿지 않고 대사에서 불일치 이슈를 생성합니다."
+          }
+        }
+      ]
     },
     {
       "slug": "drawing-information",
@@ -668,7 +726,65 @@
             }
           }
         ]
-      }
+      },
+      "stage_details": [
+        {
+          "input": {
+            "en": "Submitted drawing files, revision metadata and extracted object properties.",
+            "ko": "제출 도면 파일·개정 메타데이터·추출 객체 속성."
+          },
+          "output": {
+            "en": "Normalised drawing/object records that retain source references.",
+            "ko": "원본 참조를 보존한 정규화 도면·객체 레코드."
+          },
+          "example": {
+            "en": "A tag has different labels across drawing formats. Extraction adapters map them into the same field while retaining the original object reference.",
+            "ko": "도면 형식마다 태그 명칭이 달라도 추출 어댑터가 공통 필드로 매핑하고 원본 객체 참조는 보존합니다."
+          }
+        },
+        {
+          "input": {
+            "en": "Extracted tags, canonical asset IDs and approved object aliases.",
+            "ko": "추출 태그·공통 설비 ID·승인된 객체 별칭."
+          },
+          "output": {
+            "en": "Revision-aware asset–drawing links and unresolved mapping candidates.",
+            "ko": "개정별 설비·도면 연결 및 미확정 매핑 후보."
+          },
+          "example": {
+            "en": "A tag resolves to two equipment records. Search exposes both candidates for review instead of silently attaching the first match.",
+            "ko": "하나의 태그가 두 설비에 대응하면 첫 결과에 임의 연결하지 않고 두 후보를 검토 대상으로 제시합니다."
+          }
+        },
+        {
+          "input": {
+            "en": "A drawing revision, required deliverables and a pinned rule-set version.",
+            "ko": "도면 개정·필수 납품 목록·고정된 검증 규칙 버전."
+          },
+          "output": {
+            "en": "Issues identified by drawing, source object, rule and severity.",
+            "ko": "도면·원본 객체·규칙·심각도로 식별되는 검증 오류."
+          },
+          "example": {
+            "en": "A reference points to a missing equipment tag. The result links the broken reference to its drawing object and records the rule version used.",
+            "ko": "참조 대상 설비 태그가 없으면 오류를 해당 도면 객체와 연결하고 적용한 규칙 버전을 기록합니다."
+          }
+        },
+        {
+          "input": {
+            "en": "Equipment keywords, drawing relationships, revision and approval filters.",
+            "ko": "설비 검색어·도면 관계·개정·승인 필터."
+          },
+          "output": {
+            "en": "Current approved results with source context and accessible history.",
+            "ko": "원본 맥락과 이력 조회 경로를 포함한 현재 승인 검색 결과."
+          },
+          "example": {
+            "en": "A user searches for equipment rather than a filename. The system returns related drawings and distinguishes the approved revision from older history.",
+            "ko": "사용자가 파일명이 아닌 설비로 검색하면 관련 도면을 반환하고 승인 개정과 이전 이력을 구분합니다."
+          }
+        }
+      ]
     },
     {
       "slug": "digital-twin",
@@ -1010,7 +1126,65 @@
             }
           }
         ]
-      }
+      },
+      "stage_details": [
+        {
+          "input": {
+            "en": "Model packages, equipment properties and canonical asset mappings.",
+            "ko": "모델 패키지·설비 속성·공통 설비 매핑."
+          },
+          "output": {
+            "en": "Facility-scoped model packages and a revision-aware lookup index.",
+            "ko": "시설 범위별 모델 패키지와 개정별 조회 인덱스."
+          },
+          "example": {
+            "en": "A revised model changes object references. The mapping pass flags unresolved equipment before the new revision is used for operational lookup.",
+            "ko": "모델 개정으로 객체 참조가 바뀌면 운영 정보 조회에 사용하기 전에 매핑 단계에서 미연결 설비를 표시합니다."
+          }
+        },
+        {
+          "input": {
+            "en": "A viewer object selection and its current model/asset mapping.",
+            "ko": "뷰어 객체 선택과 현재 모델·설비 매핑."
+          },
+          "output": {
+            "en": "An asset-scoped request context and the required data panels.",
+            "ko": "설비 범위로 제한된 요청 맥락과 필요한 정보 패널."
+          },
+          "example": {
+            "en": "The user selects B while A is loading. A’s request is cancelled or its response discarded using the selection token.",
+            "ko": "A 로딩 중 B를 선택하면 선택 토큰으로 A 요청을 취소하거나 늦은 응답을 폐기합니다."
+          }
+        },
+        {
+          "input": {
+            "en": "The selected asset ID, allowed source endpoints and query context.",
+            "ko": "선택 설비 ID·허용된 원천 조회 경로·질의 맥락."
+          },
+          "output": {
+            "en": "Normalised operational fields with source, timestamp and availability.",
+            "ko": "원천·시각·가용 상태를 포함한 정규화 운영 필드."
+          },
+          "example": {
+            "en": "One source times out while another responds. The available response is shown and the failed source remains explicitly unavailable.",
+            "ko": "한 소스가 타임아웃되고 다른 소스가 응답하면 가능한 정보는 표시하고 실패 소스는 조회 불가로 구분합니다."
+          }
+        },
+        {
+          "input": {
+            "en": "The active selection, model location and source-specific response states.",
+            "ko": "현재 선택·모델 위치·소스별 응답 상태."
+          },
+          "output": {
+            "en": "A connected view of location, operating status and related records.",
+            "ko": "위치·운영 상태·관련 기록이 연결된 조회 화면."
+          },
+          "example": {
+            "en": "A cached reading is older than the latest model selection. The panel shows its timestamp and freshness state instead of implying a live reading.",
+            "ko": "캐시 값이 현재 선택 시점보다 오래됐으면 실시간 값처럼 표시하지 않고 데이터 시각과 최신성 상태를 함께 제공합니다."
+          }
+        }
+      ]
     },
     {
       "slug": "document-automation",
@@ -1386,7 +1560,93 @@
             }
           }
         ]
-      }
+      },
+      "stage_details": [
+        {
+          "input": {
+            "en": "S3 object-creation events, submission manifests and file revisions.",
+            "ko": "S3 객체 생성 이벤트·제출 목록·파일 개정."
+          },
+          "output": {
+            "en": "A deduplicated arrival record and queued work for a ready submission.",
+            "ko": "중복을 구분한 파일 도착 기록과 준비된 제출 건의 처리 작업."
+          },
+          "example": {
+            "en": "The last expected drawing arrives twice. The manifest becomes ready once, and the same object/revision key does not create a second effective job.",
+            "ko": "마지막 필수 도면의 도착 이벤트가 두 번 수신돼도 제출 목록은 한 번만 준비 상태가 되고 동일 객체·개정 키로 유효 작업이 중복 생성되지 않습니다."
+          }
+        },
+        {
+          "input": {
+            "en": "Queued work, persisted job state and external extraction job references.",
+            "ko": "큐 작업·영속화된 작업 상태·외부 추출 작업 참조."
+          },
+          "output": {
+            "en": "A tracked extraction job, retry state or isolated failed item.",
+            "ko": "추적 가능한 추출 작업·재시도 상태 또는 격리된 실패 항목."
+          },
+          "example": {
+            "en": "One message in a batch fails temporarily. Successful items stay complete, while only the failed item is returned for another attempt.",
+            "ko": "배치 중 한 메시지에서 일시 오류가 나면 성공 항목은 완료 상태를 유지하고 실패 항목만 재시도 대상으로 반환합니다."
+          }
+        },
+        {
+          "input": {
+            "en": "Drawing objects, source versions and an APS translation job ID.",
+            "ko": "도면 객체·원본 버전·APS 변환 작업 ID."
+          },
+          "output": {
+            "en": "Normalised equipment references, drawing metadata and extracted attributes.",
+            "ko": "정규화 설비 참조·도면 메타데이터·추출 속성."
+          },
+          "example": {
+            "en": "Translation is not yet complete. The job remains pending; validation does not begin against a partial property set.",
+            "ko": "변환이 끝나지 않았으면 작업을 대기 상태로 유지하고 불완전한 속성 집합으로 검증을 시작하지 않습니다."
+          }
+        },
+        {
+          "input": {
+            "en": "Staged extraction records, approved master data and validation rules.",
+            "ko": "검수용 추출 레코드·승인 기준정보·검증 규칙."
+          },
+          "output": {
+            "en": "A versioned validation run with actionable issues or a review-ready dataset.",
+            "ko": "조치 가능한 오류 또는 검토 가능한 데이터셋을 가진 버전별 검증 실행."
+          },
+          "example": {
+            "en": "A required asset ID is absent from master data. The issue retains rule, source record and severity; the record cannot enter the approved dataset.",
+            "ko": "필수 설비 ID가 기준정보에 없으면 규칙·원본 레코드·심각도를 오류에 남기고 해당 레코드의 승인 데이터 반영을 차단합니다."
+          }
+        },
+        {
+          "input": {
+            "en": "Drawing-level issues, review actions and the latest submitted revision.",
+            "ko": "도면별 오류·검토 작업·최신 제출 개정."
+          },
+          "output": {
+            "en": "Corrected revisions, comparison history and revision-bound approval.",
+            "ko": "수정 개정·비교 이력·개정에 연결된 승인."
+          },
+          "example": {
+            "en": "A reviewer approves an old screen after resubmission. The API rejects the stale revision and requests review of the new result.",
+            "ko": "재제출 후 검토자가 이전 화면에서 승인하면 API가 오래된 개정을 거부하고 새 결과의 검토를 요구합니다."
+          }
+        },
+        {
+          "input": {
+            "en": "Approved records, pending integration tasks and target mapping contracts.",
+            "ko": "승인 레코드·연계 대기 작업·대상별 매핑 규칙."
+          },
+          "output": {
+            "en": "Per-target acknowledgements and reconciled delivery status.",
+            "ko": "대상별 수신 확인과 대사된 반영 상태."
+          },
+          "example": {
+            "en": "Two targets accept a revision and one fails. Approval is retained, and only the failed target is replayed with the original transfer key.",
+            "ko": "세 대상 중 둘이 반영하고 하나가 실패하면 승인은 유지하고 실패 대상만 원래 전송 키로 재처리합니다."
+          }
+        }
+      ]
     },
     {
       "slug": "operations-analytics",
@@ -1699,7 +1959,51 @@
             }
           }
         ]
-      }
+      },
+      "stage_details": [
+        {
+          "input": {
+            "en": "Source datasets, owner definitions, refresh needs and access constraints.",
+            "ko": "원천 데이터셋·관리 주체·갱신 요구·접근 제약."
+          },
+          "output": {
+            "en": "A metadata contract describing meaning, freshness, ownership and permitted use.",
+            "ko": "의미·최신성·관리 주체·허용 활용 범위를 설명하는 메타데이터 기준."
+          },
+          "example": {
+            "en": "A dataset is technically readable but restricted for reuse. Its metadata preserves the restriction rather than equating access with permission.",
+            "ko": "기술적으로 읽을 수 있어도 재활용이 제한된 데이터셋은 접근 가능 여부와 활용 권한을 구분해 관리합니다."
+          }
+        },
+        {
+          "input": {
+            "en": "Oracle execution history, collection watermarks and quality summaries.",
+            "ko": "Oracle 실행 이력·수집 기준 시점·품질 요약."
+          },
+          "output": {
+            "en": "API responses separating execution status, freshness and valid empty results.",
+            "ko": "실행 상태·최신성·정상 빈 결과를 구분하는 API 응답."
+          },
+          "example": {
+            "en": "The ETL run succeeds but the watermark is unchanged. The API reports a freshness issue despite the successful scheduler status.",
+            "ko": "ETL 실행이 성공해도 수집 시점이 그대로면 API가 스케줄러 성공과 별개로 갱신 지연을 표시합니다."
+          }
+        },
+        {
+          "input": {
+            "en": "Job failures, freshness breaches, quality issues and dataset ownership.",
+            "ko": "작업 실패·갱신 지연·품질 이슈·데이터 담당 정보."
+          },
+          "output": {
+            "en": "Assigned investigations with source/run context and verified recovery.",
+            "ko": "원천·실행 맥락과 복구 확인을 포함한 담당자별 조사 과제."
+          },
+          "example": {
+            "en": "A rerun finishes successfully. The issue stays open until data freshness and quality checks confirm that the dataset recovered.",
+            "ko": "재실행이 성공해도 최신성·품질 검사가 데이터 복구를 확인하기 전에는 이슈를 종료하지 않습니다."
+          }
+        }
+      ]
     },
     {
       "slug": "engineering-agents",
@@ -2012,7 +2316,51 @@
             }
           }
         ]
-      }
+      },
+      "stage_details": [
+        {
+          "input": {
+            "en": "A user question, session context and an allowed schema catalogue.",
+            "ko": "사용자 질문·세션 맥락·허용 스키마 목록."
+          },
+          "output": {
+            "en": "A scoped retrieval/query plan or a clarification question.",
+            "ko": "범위가 제한된 조회·질의 계획 또는 확인 질문."
+          },
+          "example": {
+            "en": "A user asks about pressure without identifying equipment. The assistant asks which equipment or scope is intended before running a broad query.",
+            "ko": "설비를 지정하지 않고 압력을 물으면 광범위한 조회 전에 대상 설비나 범위를 확인합니다."
+          }
+        },
+        {
+          "input": {
+            "en": "An approved tool request, read-only access and execution limits.",
+            "ko": "허용된 도구 요청·읽기 전용 접근·실행 제한."
+          },
+          "output": {
+            "en": "Bounded structured results and source-linked quality cases.",
+            "ko": "제한된 범위의 구조화 결과와 출처가 연결된 품질 사례."
+          },
+          "example": {
+            "en": "Generated SQL attempts a write. The tool boundary rejects it before execution; the model cannot override database permissions.",
+            "ko": "생성 SQL이 쓰기를 시도하면 실행 전에 도구 경계에서 차단하며 모델이 DB 권한을 우회할 수 없도록 합니다."
+          }
+        },
+        {
+          "input": {
+            "en": "Retrieved records, statistical similarity signals and source references.",
+            "ko": "조회 레코드·통계적 유사도 신호·출처 참조."
+          },
+          "output": {
+            "en": "An evidence-linked answer distinguishing facts from reviewable suggestions.",
+            "ko": "사실과 검토 대상 제안을 구분한 근거 연결 응답."
+          },
+          "example": {
+            "en": "Similar cases do not justify a root cause. The answer identifies the evidence gap and proposes follow-up rather than claiming a confirmed diagnosis.",
+            "ko": "유사 사례만으로 원인을 확정할 수 없으면 근거 부족을 밝히고 확정 진단 대신 후속 확인을 제안합니다."
+          }
+        }
+      ]
     }
   ]
 }

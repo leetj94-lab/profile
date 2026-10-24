@@ -43,7 +43,12 @@
       panels.forEach((panel, i) => { panel.hidden = i !== index; });
     };
     buttons.forEach((button, index) => {
-      button.addEventListener('click', () => select(index));
+      button.addEventListener('click', () => {
+        select(index);
+        if (window.matchMedia?.('(max-width: 600px)').matches) {
+          panels[index].scrollIntoView({block:'start',behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
+        }
+      });
       button.addEventListener('keydown', event => {
         let next;
         if (event.key === 'ArrowRight' || event.key === 'ArrowDown') next = (index + 1) % buttons.length;

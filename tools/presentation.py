@@ -40,12 +40,25 @@ def render_v2(lang,c):
     for ident,pattern,en,ko in [('approach',r'<section class="ai-section" id="approach">.*?</section>','AI philosophy','AI 활용 철학'),('about',r'<section class="about wrap" id="about">.*?</section>','Experience','경력'),('contact',r'<section class="contact" id="contact">.*?</section>','Contact','연락처')]:
         block=re.search(pattern,original,re.S).group()
         block=block.replace('<section ', '<section data-v2-panel="'+ident+'" data-v2-label="'+S(en,ko,lang)+'" hidden ',1)
-        if ident=='about':block=block.replace('</section>',render_operations(lang,S,icon)+'</section>')
+        if ident=='about':
+            jumps='<nav class="experience-jumps" aria-label="'+S('Experience sections','경력 목차',lang)+'"><a href="#career-path">'+S('Career progression ↓','경력 발전 과정 ↓',lang)+'</a><a href="#mes-operations">'+S('MES/MIS & business improvement ↓','MES/MIS·업무 개선 ↓',lang)+'</a></nav>'
+            block=block.replace('<div class="timeline">',jumps+'<div class="timeline" id="career-path">')
+            block=block.replace('</section>',render_operations(lang,S,icon)+'</section>')
         s+=block
     for p in P:
         key='project-'+p['slug']; rendered=c['project'](p,lang)
         body=rendered.split('<main id="main" class="case-main">',1)[1].split('</main></div>',1)[0]
         body=body.replace('../'+route('index',lang)+'#work','#work').replace('src="../assets/','src="assets/')
+        # Keep hiring evidence visible before optional stage exploration.
+        sections=list(re.finditer(r'<section class="case-section[^"]*" id="([^"]+)">.*?</section>',body,re.S))
+        assert len(sections)==5
+        parts={m[1]:m[0] for m in sections}
+        reading_order=['before-after','results','my-build','system-flow','engineering']
+        ordered=[]
+        for no,ident in enumerate(reading_order,1):
+            ordered.append(re.sub(r'(<p class="eyebrow">)\d{2} /',lambda m:m[1]+f'{no:02} /',parts[ident],count=1))
+        body=body[:sections[0].start()]+''.join(ordered)+body[sections[-1].end():]
+
         for other in P:body=body.replace('href="'+route(other['slug'],lang)+'"','href="#project-'+other['slug']+'"')
         for attr in ['id','aria-controls']:
             body=re.sub(r'\b'+attr+r'="([^"]+)"',lambda m:attr+'="'+key+'-'+m[1]+'"',body)
