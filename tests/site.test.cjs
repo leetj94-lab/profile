@@ -49,9 +49,9 @@ test('blocked storage does not break calculation, switches or flow controls',()=
   assert.equal(r.career,'7+');assert.equal(r.panels[2].hidden,false);
 });
 test('legacy case anchors resolve to the current language and project',()=>{
-  assert.equal(run({hash:'#case-03'}).redirected,'projects/digital-twin.html');
-  assert.equal(run({language:'ko',pathname:'/profile/index.ko.html',hash:'#case-03'}).redirected,'projects/digital-twin.ko.html');
-  assert.equal(run({hash:'#case-02'}).redirected,'projects/engineering-agents.html');
+  assert.equal(run({hash:'#case-03'}).redirected,'index.html#project-digital-twin');
+  assert.equal(run({language:'ko',pathname:'/profile/index.ko.html',hash:'#case-03'}).redirected,'index.ko.html#project-digital-twin');
+  assert.equal(run({hash:'#case-02'}).redirected,'index.html#project-engineering-agents');
 });
 test('workflow selection exposes only the matching panel and pressed control',()=>{
   const r=run({home:false,withFlow:true});r.buttons[2].listeners.click();
@@ -66,5 +66,5 @@ test('workflow keyboard navigation wraps and supports Home and End',()=>{
 });
 
 test('v2 restores Korean without redirecting to the original site',()=>{
-  assert.equal(run({preference:'ko',pathname:'/profile/version2.html',hash:'#approach',version:'2'}).redirected,'version2.ko.html#approach');
+  assert.equal(run({preference:'ko',pathname:'/profile/version2.html',hash:'#approach',version:'2'}).redirected,'index.ko.html#approach');
 });

@@ -1,35 +1,44 @@
 # TJ Lee — Business Systems & Automation Engineering
 
-[View portfolio](https://leetj94-lab.github.io/profile/)
+[View the portfolio](https://leetj94-lab.github.io/profile/)
 
-The default and canonical pages are English (`index.html`, `projects/<slug>.html`). Korean pages use `.ko.html`. Existing `.en.html` addresses remain equivalent English aliases. An explicit language choice is remembered when browser storage is available; language links preserve the current section.
+## Selected version — edit this version only
 
-## Content and rebuild
+**The sidebar presentation previously called v2 is the single published portfolio.** It was selected because recruiters can scan the overview and open a specific project, experience or AI philosophy without scrolling through all content. There is no version selector or link to the retired layout.
 
-`content/portfolio.json` is the bilingual project source. Each text field stores paired `en` and `ko` values; metrics, dates and technology lists are shared. Main-page copy lives in `tools/build-locales.py`; the optional v2 shell and shared AI philosophy copy live in `tools/presentation.py`, with paired translations.
+- Active pages: `index.html` (English default), `index.en.html` (explicit English), `index.ko.html` (Korean).
+- Project details live inside the same page at `#project-<slug>`; the navigation remains visible.
+- Source presentation and paired EN/KO copy: `tools/presentation.py`.
+- Project content: `content/portfolio.json`.
+- Shared page and case components: `tools/build-locales.py`. Its `home()`/`project()` functions provide reusable content for the selected shell; they do not publish the retired layout.
+- Active UI styling: `v2-styles.css`, with shared components in `styles.css`.
+- Active behavior: `v2-script.js` (panel routing) and `script.js` (language, tenure, processing stages). The v2 filenames are retained internal implementation names, not a second public version.
 
-The source resume is `Taekjun_Lee_Resume_Final.pdf`. Project periods, roles and quantitative outcomes follow that resume. Annual productivity values retain the resume’s estimation basis. The engineering-agent work remains a prototype. Source system screenshots, protected code, operational datasets, detailed deployment architecture and internal identifiers are excluded.
+**Do not edit generated HTML or hashed CSS/JS directly.** Update these source files and rebuild.
 
-Edit `content/portfolio.json`, `styles.css`, `script.js` or the shared renderer, then run:
+## Historical files — retained, not published
+
+`archive/v1/` contains the retired layout and project pages; `archive/v2/` contains the optional-v2 snapshot before consolidation. These are frozen reference files: do not modify them for portfolio updates, do not link to them and do not include them in the public deployment.
+
+Root `version2*.html` and `projects/*.html` are compatibility redirects only. Existing shared links lead to the selected portfolio and the corresponding project; they never render the retired layout. Do not add portfolio content to these redirect files.
+
+`tools/package-public.py` publishes an explicit allowlist into `_site/`. Archive folders, README, source tools and tests are excluded. The GitHub Pages workflow publishes only `_site/`; never replace it with a repository-wide copy. Merely removing navigation links would not prevent direct access, so archive exclusion is part of deployment.
+
+## Rebuild and verify
 
 ```sh
 python tools/build-locales.py
+python tools/package-public.py
 python tests/check-pages.py
 node --test tests/site.test.cjs tests/v2.test.cjs
 ```
 
-The renderer creates complete English/Korean HTML and content-hashed CSS/JS. Do not edit hashed assets or generated HTML directly. It also keeps the former construction-progress URLs working by routing them to the updated project set.
+The renderer generates complete bilingual HTML and content-hashed runtime assets. The checks verify the selected panels, EN/KO project metrics and stacks, local links, compatibility redirects and archive exclusion. GitHub Pages deploys from `feature/portfolio-site` using `.github/workflows/pages.yml`.
 
-## Interaction
+An explicit language choice is remembered when storage is available. Language changes preserve the current section/project. Professional tenure updates from January 2019 using the Seoul calendar year; the Systems Engineer role starts in 2020.
 
-Each case study includes a before/after workflow, selectable processing stages, ownership by engineering area and operational results. Stage controls support click, arrow keys, Home and End. No API keys, analytics trackers, external runtime libraries or employer data are required.
+## Content constraints
 
-Professional experience is calculated from January 2019 using the Seoul calendar year. This is total professional tenure, separate from the Systems Engineer role beginning in 2020.
+Project periods, roles and quantitative outcomes follow the supplied resume. Estimated productivity values retain their estimation basis; engineering agents remain a prototype. Protected source code, real system screenshots, operational data and detailed internal architecture are excluded. AI-generated illustrations are disclosed.
 
-The existing `feature/portfolio-site` branch is retained for the GitHub Pages deployment environment.
-
-## Optional streamlined version
-
-`version2.html` (English) and `version2.ko.html` (Korean) provide persistent category navigation and hash-addressable project panels. The original page retains its layout and offers a v2 entry button. Each version links back to its counterpart; language changes retain the selected category or project. On mobile, the rail becomes a compact top menu.
-
-Both versions explain AI as team engineering: domain context, shared `SKILL.md` instructions for UI/code/testing standards, reusable interfaces, acceptance criteria and upfront exception/test scenarios. Source CSS/JS for the new shell are `v2-styles.css` and `v2-script.js`; the renderer generates content-hashed assets.
+The AI philosophy explains engineering judgment, shared `SKILL.md` instructions for UI/code/testing standards, reusable interfaces, acceptance criteria and upfront exception/test scenarios. No API keys, analytics trackers or employer data are required.

@@ -33,19 +33,19 @@ test('v2 starts with a single overview panel',()=>{
 test('category navigation updates content, title and keyboard focus',()=>{
   const r=run();r.navigate('#approach');assert.deepEqual(r.visible(),['approach']);
   assert.equal(r.navigation[2].attrs['aria-current'],'page');assert.equal(r.panels[2].heading.focused,true);
-  assert.equal(r.document.title,'approach — TJ Lee / v2');
+  assert.equal(r.document.title,'approach — TJ Lee');
 });
 test('a shared deep link activates its project and nested anchor',()=>{
   const r=run({hash:'#project-document-automation-system-flow'});assert.deepEqual(r.visible(),['project-document-automation']);
   assert.equal(r.subnav.hidden,false);assert.equal(r.projectLinks[0].attrs['aria-current'],'page');
   assert.equal(r.navigation[1].attrs['aria-current'],'page');assert.equal(r.target.scrolled,true);
-  assert.equal(r.back.attrs.href,'projects/document-automation.html');
+  assert.equal(r.back.attrs.href,undefined);
 });
-test('Korean retains project context across language and version links',()=>{
+test('Korean retains project context without exposing a retired version',()=>{
   const r=run({hash:'#project-document-automation',language:'ko'});
   assert.equal(r.languageLinks[0].hash,'#project-document-automation');
-  assert.equal(r.back.attrs.href,'projects/document-automation.ko.html');
-  r.navigate('#about');assert.equal(r.back.attrs.href,'index.ko.html#about');assert.equal(r.subnav.hidden,true);
+  assert.equal(r.back.attrs.href,undefined);
+  r.navigate('#about');assert.equal(r.back.attrs.href,undefined);assert.equal(r.subnav.hidden,true);
 });
 test('unknown or malformed routes safely show the overview',()=>{
   assert.deepEqual(run({hash:'#missing'}).visible(),['home']);assert.deepEqual(run({hash:'#%invalid'}).visible(),['home']);

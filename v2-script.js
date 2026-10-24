@@ -6,9 +6,7 @@
   const projectLinks=[...document.querySelectorAll('[data-v2-project]')];
   const languageLinks=[...document.querySelectorAll('[data-site-lang]')];
   const language=document.documentElement.lang==='ko'?'ko':'en';
-  const suffix=language==='ko'?'.ko.html':'.html';
   const subnav=document.querySelector('.v2-subnav');
-  const back=document.querySelector('[data-back-v1]');
   const label=document.querySelector('[data-v2-current]');
   let current='home';
   const activate=(fragment,moveFocus=false)=>{
@@ -32,9 +30,8 @@
     });
     if(subnav)subnav.hidden=!project;
     if(label)label.textContent=panel.dataset.v2Label;
-    if(back)back.setAttribute('href',project?'projects/'+project+suffix:'index'+suffix+'#'+section);
     languageLinks.forEach(a=>{a.hash=location.hash;});
-    document.title=panel.dataset.v2Label+' — TJ Lee / v2';
+    document.title=panel.dataset.v2Label+' — TJ Lee';
     if(moveFocus){
       const heading=panel.querySelector('h2');
       if(heading){heading.setAttribute('tabindex','-1');heading.focus({preventScroll:true});}

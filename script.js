@@ -5,7 +5,7 @@
   let preference = null;
   try { preference = localStorage.getItem(storageKey); } catch (_) {}
   const isHome = !!document.getElementById('home');
-  const homeStem = document.body?.dataset?.version === '2' ? 'version2' : 'index';
+  const homeStem = 'index';
   const explicitEnglish = /\.en\.html$/.test(location.pathname);
   if (isHome && language === 'en' && !explicitEnglish && preference === 'ko') {
     location.replace(homeStem + '.ko.html' + location.search + location.hash);
@@ -32,7 +32,7 @@
     '#case-05': 'asset-master-data', '#case-06': 'operations-analytics'
   };
   if (isHome && legacyCases[location.hash]) {
-    location.replace('projects/' + legacyCases[location.hash] + (language === 'ko' ? '.ko.html' : '.html'));
+    location.replace(homeStem + (language === 'ko' ? '.ko.html' : '.html') + '#project-' + legacyCases[location.hash]);
     return;
   }
   document.querySelectorAll('[data-flow]').forEach(flow => {
