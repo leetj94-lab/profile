@@ -51,7 +51,7 @@ def render_v2(lang,c):
         # The app has one document h1; panel headings retain a coherent hierarchy.
         body=body.replace('<h3','<h4').replace('</h3>','</h4>').replace('<h2','<h3').replace('</h2>','</h3>').replace('<h1>','<h2 class="case-title">').replace('</h1>','</h2>')
         context='<aside class="project-context"><span class="mini-label">'+text(p['story_stage'],lang)+'</span><p>'+text(p['story_context'],lang)+'</p></aside>'
-        marker='<div class="case-hero">'
+        marker='<section class="case-hero">'
         body=body.replace(marker,context+marker)
         s+='<section class="v2-panel v2-case" id="'+key+'" data-v2-panel="'+key+'" data-v2-label="'+text(p['title'],lang)+'" hidden>'+body+'</section>'
     s+='</main><noscript><style>[data-v2-panel][hidden]{display:block!important}</style><p class="v2-noscript">'+S('JavaScript is unavailable. All sections are shown below their navigation links.','JavaScript를 사용할 수 없어 모든 섹션을 함께 표시합니다.',lang)+'</p></noscript>'
