@@ -48,3 +48,9 @@ The AI philosophy explains engineering judgment, shared `SKILL.md` instructions 
 The four platform projects are ordered by development: master data and system integration → drawing/spatial context → connected 3D models → document delivery and richer, faster data updates. Data/operational automation and agent prototypes are shown separately as parallel improvement and exploration. Each project has paired `story_stage` and `story_context` fields in `content/portfolio.json`. The master-data project alone contains the September–November 2024 U.S. rollout note.
 
 The overview uses three strengths rather than project-specific metrics. It reports Samsung tenure from January 2019 in one line; the career section explains the initial facility role and expansion into system development. Project ownership describes implementation responsibility, not a formal technical-lead position.
+
+## Engineering details and MES/MIS operations
+
+Each project stores explicit implementation flow and safeguards in `flow`, plus implementation scope, states/recovery, challenge/decision/reason pairs and condition/expected-behavior checks in `engineering`. Update those fields in both languages; the older `decision`/`checks` fields are retained source history and are not rendered. Existing quantitative outcomes remain unchanged. Do not introduce internal identifiers, actual schemas, infrastructure endpoints or protected source materials.
+
+`tools/engineering.py` renders engineering sections and the MES/MIS continuous-improvement experience. Verification tables and the operating example use native accessible disclosure controls to keep the default page scannable. Actual project code/services are not executed by this static portfolio; website QA checks content, navigation and interactions.
