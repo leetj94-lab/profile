@@ -395,7 +395,51 @@
             "ko": "전송은 성공했지만 대상이 이전 개정을 보유하면 전송 로그만 믿지 않고 대사에서 불일치 이슈를 생성합니다."
           }
         }
-      ]
+      ],
+      "evidence": {
+        "title": {
+          "en": "A lifecycle change that crossed department boundaries",
+          "ko": "부서 간 경계를 넘는 설비 생애주기 변경"
+        },
+        "context": {
+          "en": "Maintenance needed retired equipment removed from new work selection, while quality teams still needed its historical records. I mapped both workflows and the dependent interfaces before agreeing the change scope.",
+          "ko": "정비 담당자는 폐기 설비가 신규 작업 선택에서 제외되길 원했고, 품질 담당자는 과거 이력을 계속 조회해야 했습니다. 두 업무와 연계 인터페이스를 분석해 변경 범위를 합의했습니다."
+        },
+        "requirements": [
+          {
+            "need": {
+              "en": "Prevent new work against retired assets.",
+              "ko": "폐기 설비의 신규 작업 사용 방지."
+            },
+            "design": {
+              "en": "Use an inactive lifecycle state instead of deleting the master record; propagate it through target mappings.",
+              "ko": "기준정보를 삭제하지 않고 비활성 상태로 전환해 대상별 매핑으로 전달."
+            },
+            "acceptance": {
+              "en": "New selection is blocked; historical work orders still resolve the same asset identity.",
+              "ko": "신규 선택은 차단되고 과거 작업 이력은 동일 설비 식별자로 조회."
+            }
+          },
+          {
+            "need": {
+              "en": "Detect partial rollout across connected systems.",
+              "ko": "연계 시스템의 부분 반영 식별."
+            },
+            "design": {
+              "en": "Track target acknowledgements and compare expected and received revisions.",
+              "ko": "대상별 수신 상태와 기대·수신 개정을 비교."
+            },
+            "acceptance": {
+              "en": "One unavailable target remains pending without rolling back successful targets.",
+              "ko": "응답 불가 대상만 대기 상태로 유지하고 정상 대상의 반영은 보존."
+            }
+          }
+        ]
+      },
+      "measurement": {
+        "en": "Measurement basis: the 87% figure refers to master-data work efficiency, comparing manual processing effort for the same workflow before and after standardisation, validation and integration. It is not an 87% reduction in all engineering work.",
+        "ko": "산정 기준: 87%는 기준정보 업무 효율을 뜻하며 표준화·검증·연계 전후 동일 업무 흐름에 필요한 수작업 투입을 비교한 값입니다. 엔지니어링 전체 업무가 87% 감소했다는 의미는 아닙니다."
+      }
     },
     {
       "slug": "drawing-information",
@@ -784,7 +828,51 @@
             "ko": "사용자가 파일명이 아닌 설비로 검색하면 관련 도면을 반환하고 승인 개정과 이전 이력을 구분합니다."
           }
         }
-      ]
+      ],
+      "evidence": {
+        "title": {
+          "en": "Resolving ambiguity before it becomes a search result",
+          "ko": "모호한 매핑을 검색 전에 해결"
+        },
+        "context": {
+          "en": "Users could find a drawing but could not reliably tell whether it described the current equipment revision. I separated extraction, mapping review and approval so search results carried engineering context.",
+          "ko": "도면은 찾아도 현재 설비 개정을 설명하는지 확신하기 어려웠습니다. 추출·매핑 검토·승인을 분리해 검색 결과에 엔지니어링 맥락이 남도록 설계했습니다."
+        },
+        "requirements": [
+          {
+            "need": {
+              "en": "Search by equipment rather than file names.",
+              "ko": "파일명이 아닌 설비 기준 검색."
+            },
+            "design": {
+              "en": "Index canonical asset IDs and keep revision-aware asset–drawing links.",
+              "ko": "공통 설비 ID 인덱스와 개정별 설비·도면 관계 구성."
+            },
+            "acceptance": {
+              "en": "The current approved drawing is returned with its source object; older revisions remain identifiable.",
+              "ko": "현재 승인 도면과 원본 객체를 반환하고 이전 개정은 이력으로 구분."
+            }
+          },
+          {
+            "need": {
+              "en": "Avoid silently attaching the wrong asset.",
+              "ko": "잘못된 설비의 자동 연결 방지."
+            },
+            "design": {
+              "en": "Store ambiguous matches as review candidates with the rule version.",
+              "ko": "모호한 매핑을 규칙 버전과 함께 검토 후보로 보관."
+            },
+            "acceptance": {
+              "en": "A tag matching two assets cannot pass review without an explicit mapping decision.",
+              "ko": "두 설비와 일치하는 태그는 명시적 매핑 판단 없이 검토를 통과하지 못함."
+            }
+          }
+        ]
+      },
+      "measurement": {
+        "en": "Estimation basis: annualised released engineering time × affected workforce × hourly labour value. Search, cross-system lookup and manual review were the relevant activities; the estimate represents productivity capacity, not booked cash savings.",
+        "ko": "추정 기준: 연간 절감 엔지니어링 시간 × 적용 인원 × 시간당 인건비를 기준으로 산정했습니다. 검색·시스템 간 조회·수작업 검토가 대상이며 실제 현금 절감액이 아닌 생산성 여력을 뜻합니다."
+      }
     },
     {
       "slug": "digital-twin",
@@ -1184,7 +1272,51 @@
             "ko": "캐시 값이 현재 선택 시점보다 오래됐으면 실시간 값처럼 표시하지 않고 데이터 시각과 최신성 상태를 함께 제공합니다."
           }
         }
-      ]
+      ],
+      "evidence": {
+        "title": {
+          "en": "Keeping the selected equipment and its data in sync",
+          "ko": "선택한 설비와 데이터 맥락의 일치"
+        },
+        "context": {
+          "en": "A useful digital twin had to keep operational context correct even when users changed equipment quickly or one source was slow. I defined source-specific availability and freshness behavior before connecting the viewer.",
+          "ko": "사용자가 설비를 빠르게 바꾸거나 일부 소스가 느려도 운영 맥락이 정확해야 했습니다. 뷰어 연계 전에 소스별 가용 상태와 최신성 표시 기준을 정의했습니다."
+        },
+        "requirements": [
+          {
+            "need": {
+              "en": "Keep the latest user selection authoritative.",
+              "ko": "사용자의 최신 선택을 기준으로 유지."
+            },
+            "design": {
+              "en": "Bind response updates to a selection token and asset mapping revision.",
+              "ko": "응답 갱신을 선택 토큰과 설비 매핑 개정에 연결."
+            },
+            "acceptance": {
+              "en": "A late response for asset A cannot overwrite asset B after selection changes.",
+              "ko": "A의 늦은 응답이 선택 변경 후 B의 화면을 덮어쓰지 못함."
+            }
+          },
+          {
+            "need": {
+              "en": "Keep the workspace useful during partial source failure.",
+              "ko": "일부 소스 장애 중에도 업무 지속."
+            },
+            "design": {
+              "en": "Load source panels independently, retaining timestamp and availability.",
+              "ko": "소스 패널을 개별 로드하고 데이터 시각·가용 상태 보존."
+            },
+            "acceptance": {
+              "en": "One timeout marks only its panel unavailable; model navigation and other panels keep working.",
+              "ko": "타임아웃 소스만 조회 불가로 표시하고 모델 탐색·다른 패널은 유지."
+            }
+          }
+        ]
+      },
+      "measurement": {
+        "en": "Estimation basis: annualised released engineering time × affected workforce × hourly labour value. Search, cross-system lookup and manual review were the relevant activities; the estimate represents productivity capacity, not booked cash savings.",
+        "ko": "추정 기준: 연간 절감 엔지니어링 시간 × 적용 인원 × 시간당 인건비를 기준으로 산정했습니다. 검색·시스템 간 조회·수작업 검토가 대상이며 실제 현금 절감액이 아닌 생산성 여력을 뜻합니다."
+      }
     },
     {
       "slug": "document-automation",
@@ -1465,8 +1597,8 @@
       },
       "engineering": {
         "scope": {
-          "en": "I implemented the submission API/UI, job-state model, extraction adapters, validation rules and downstream dispatch; APS performs model translation.",
-          "ko": "접수 API·화면, 작업 상태 모델, 추출 어댑터, 검증 규칙, 후속 전송을 직접 구현했고 모델 변환에는 APS를 활용했습니다."
+          "en": "I built the Vue.js workspace, FastAPI services, SQL workflow model and background extraction/validation jobs, and deployed and operated the web service on AWS EC2 with Nginx and CodePipeline. APS supplies model translation.",
+          "ko": "Vue.js 화면·FastAPI 서비스·SQL 업무 상태 모델·백그라운드 추출·검증 작업을 개발하고 AWS EC2·Nginx·CodePipeline으로 웹 서비스를 배포·운영했습니다. 모델 변환에는 APS를 활용했습니다."
         },
         "states": [
           {
@@ -1646,7 +1778,51 @@
             "ko": "세 대상 중 둘이 반영하고 하나가 실패하면 승인은 유지하고 실패 대상만 원래 전송 키로 재처리합니다."
           }
         }
-      ]
+      ],
+      "evidence": {
+        "title": {
+          "en": "From “uploaded” to “safe to use downstream”",
+          "ko": "업로드 완료에서 운영 반영 가능 상태까지"
+        },
+        "context": {
+          "en": "Engineering users wanted one clear completion status; integration owners needed to distinguish review completion from successful delivery. I separated the states and defined acceptance with both groups.",
+          "ko": "현업은 명확한 완료 상태를 원했고 연계 담당자는 검토 완료와 전송 성공의 구분이 필요했습니다. 양측 요구를 연결해 상태를 분리하고 수용 기준을 정했습니다."
+        },
+        "requirements": [
+          {
+            "need": {
+              "en": "Do not publish incomplete or invalid submissions.",
+              "ko": "미완성·오류 납품의 운영 반영 방지."
+            },
+            "design": {
+              "en": "Compare the manifest with received files; stage extracted records and run versioned rules before approval.",
+              "ko": "제출 목록과 도착 파일을 대조하고 추출 결과를 검수용 저장·개정별 규칙 검증 후 승인."
+            },
+            "acceptance": {
+              "en": "Missing files or an unknown asset ID block approval with a source-linked issue.",
+              "ko": "필수 파일 누락·미등록 설비 ID는 원본에 연결된 오류와 함께 승인 차단."
+            }
+          },
+          {
+            "need": {
+              "en": "Recover a failed integration without repeating review.",
+              "ko": "검토 반복 없이 연계 실패 복구."
+            },
+            "design": {
+              "en": "Persist approval and per-target transfer state separately; reuse the transfer key on replay.",
+              "ko": "승인·대상별 전송 상태를 분리하고 재전송 시 기존 전송 키 재사용."
+            },
+            "acceptance": {
+              "en": "Successful targets are not sent again; only the failed target is retried and reconciled.",
+              "ko": "성공 대상은 재전송하지 않고 실패 대상만 재시도·대사."
+            }
+          }
+        ]
+      },
+      "measurement": {
+        "en": "Scale and outcome are distinct: 30–70k drawings and approximately 10k registered assets/components describe per-FAB scope. The operational improvement is centralised submission, traceable validation and approved downstream updates.",
+        "ko": "처리 규모와 성과를 구분합니다. 도면 3만~7만 건과 자산·컴포넌트 약 1만 건은 FAB당 적용 범위이며, 운영 개선은 통합 접수·추적 가능한 검증·승인 데이터의 후속 반영입니다."
+      }
     },
     {
       "slug": "operations-analytics",
@@ -1864,8 +2040,8 @@
       },
       "engineering": {
         "scope": {
-          "en": "I owned dataset definitions and built the Oracle/FastAPI monitoring API, Vue.js operational views and Spotfire quality dashboards.",
-          "ko": "데이터셋 정의를 담당하고 Oracle·FastAPI 모니터링 API, Vue.js 운영 화면, Spotfire 품질 대시보드를 개발했습니다."
+          "en": "I owned dataset definitions, developed headless Python data-processing jobs and the Oracle/FastAPI/Vue.js monitoring service, and deployed internal services within the company cloud environment.",
+          "ko": "데이터셋 정의, 화면 없이 실행되는 Python 데이터 처리 작업, Oracle·FastAPI·Vue.js 모니터링 서비스를 개발하고 사내 클라우드 환경에 배포했습니다."
         },
         "states": [
           {
@@ -2003,7 +2179,47 @@
             "ko": "재실행이 성공해도 최신성·품질 검사가 데이터 복구를 확인하기 전에는 이슈를 종료하지 않습니다."
           }
         }
-      ]
+      ],
+      "evidence": {
+        "title": {
+          "en": "A green scheduler was not enough",
+          "ko": "스케줄러 성공만으로 부족했던 운영 판단"
+        },
+        "context": {
+          "en": "Users reported stale dashboards even when scheduled work appeared successful. I connected execution history with data watermarks and ownership to turn the symptom into an actionable monitoring rule.",
+          "ko": "배치가 성공했는데 대시보드가 오래됐다는 문의가 반복됐습니다. 실행 이력에 데이터 수집 시점과 담당 정보를 연결해 증상을 조치 가능한 모니터링 규칙으로 전환했습니다."
+        },
+        "requirements": [
+          {
+            "need": {
+              "en": "Detect successful jobs that did not refresh data.",
+              "ko": "데이터를 갱신하지 못한 성공 작업 식별."
+            },
+            "design": {
+              "en": "Evaluate execution state and expected freshness independently.",
+              "ko": "실행 상태와 기대 최신성을 독립 평가."
+            },
+            "acceptance": {
+              "en": "An unchanged watermark raises a freshness issue even after a successful run.",
+              "ko": "실행이 성공해도 수집 시점이 미갱신이면 최신성 이슈 발생."
+            }
+          },
+          {
+            "need": {
+              "en": "Distinguish no data from a failed source.",
+              "ko": "데이터 없음과 소스 오류 구분."
+            },
+            "design": {
+              "en": "Preserve source-read status in API responses and dashboard states.",
+              "ko": "API 응답·대시보드에 원천 조회 상태 보존."
+            },
+            "acceptance": {
+              "en": "A failed source is unknown/unavailable; only a successful empty read is zero.",
+              "ko": "소스 실패는 확인 불가이며 정상 조회의 빈 결과만 0건으로 표시."
+            }
+          }
+        ]
+      }
     },
     {
       "slug": "engineering-agents",
@@ -2360,7 +2576,47 @@
             "ko": "유사 사례만으로 원인을 확정할 수 없으면 근거 부족을 밝히고 확정 진단 대신 후속 확인을 제안합니다."
           }
         }
-      ]
+      ],
+      "evidence": {
+        "title": {
+          "en": "Useful answers with enforceable boundaries",
+          "ko": "유용한 답변과 강제 가능한 경계"
+        },
+        "context": {
+          "en": "Engineering questions mixed ambiguous terminology, database lookups and past quality cases. I scoped the tool contracts and review criteria before judging response quality.",
+          "ko": "엔지니어링 질문에는 모호한 용어, DB 조회, 과거 품질 사례가 섞여 있었습니다. 응답 품질을 판단하기 전에 도구의 처리 범위와 검토 기준을 정의했습니다."
+        },
+        "requirements": [
+          {
+            "need": {
+              "en": "Keep operational data read-only.",
+              "ko": "운영 데이터 읽기 전용 유지."
+            },
+            "design": {
+              "en": "Enforce read-only permissions, allowed schemas and execution limits in the tools.",
+              "ko": "도구에서 읽기 권한·허용 스키마·실행 제한 강제."
+            },
+            "acceptance": {
+              "en": "A generated write statement is rejected before execution.",
+              "ko": "생성된 쓰기 구문은 실행 전에 차단."
+            }
+          },
+          {
+            "need": {
+              "en": "Make unsupported conclusions visible.",
+              "ko": "근거 없는 결론의 식별."
+            },
+            "design": {
+              "en": "Link retrieved records and cases to answers; separate suggestions from retrieved facts.",
+              "ko": "응답에 조회 레코드·사례를 연결하고 제안과 조회 사실을 구분."
+            },
+            "acceptance": {
+              "en": "Insufficient evidence triggers clarification or a limited answer rather than a confirmed root cause.",
+              "ko": "근거 부족 시 원인 확정 대신 재질문하거나 답변 범위를 제한."
+            }
+          }
+        ]
+      }
     }
   ]
 }

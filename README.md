@@ -30,7 +30,7 @@ Root `version2*.html` and `projects/*.html` are compatibility redirects only. Ex
 python tools/build-locales.py
 python tools/package-public.py
 python tests/check-pages.py
-node --test tests/site.test.cjs tests/v2.test.cjs
+node --test tests/site.test.cjs tests/v2.test.cjs tests/workflow.test.cjs
 ```
 
 The renderer generates complete bilingual HTML and content-hashed runtime assets. The checks verify the selected panels, EN/KO project metrics and stacks, local links, compatibility redirects and archive exclusion. GitHub Pages deploys from `feature/portfolio-site` using `.github/workflows/pages.yml`.
@@ -60,3 +60,9 @@ Each project stores explicit implementation flow and safeguards in `flow`, plus 
 The active case-study reading order is problem/change → outcome → contribution → selectable implementation → decisions/checks. Core hiring evidence is always visible in the document and is never hidden behind a stage card. A stage card reveals its own `stage_details` (input/output/example) plus the existing processing and safeguard text. Maintain both language values for every field. Mobile click selection scrolls to the selected detail and respects reduced-motion preferences. Career links expose MES/MIS business-improvement experience directly.
 
 The three-pass HR/BA/developer review and acceptance findings are recorded in `docs/PORTFOLIO_REVIEW.md`. That internal document is excluded from the public artifact.
+
+## Requirements evidence and executable workflow
+
+Every project has an `evidence` case linking business needs, implementation decisions and acceptance criteria. Selected results have a `measurement` note separating workload scale, efficiency and estimated productivity value. Do not alter metric values in order to fit an illustrative calculation.
+
+`workflow.js` contains the validation/delivery state engine and browser adapter for the interactive workflow in the document-delivery case. It runs locally in the visitor’s browser and does not call employer APIs or persist records. It demonstrates executable validation, revision-bound approval, partial delivery and idempotent target-only retry. Tests cover invalid transitions and recovery invariants. The UI describes a workflow walkthrough, not a live employer system.

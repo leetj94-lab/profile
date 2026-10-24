@@ -6,14 +6,14 @@ from datetime import datetime
 from zoneinfo import ZoneInfo
 import json, hashlib
 from presentation import ai_section, render_v2
-from engineering import render_engineering, render_stage
+from engineering import render_engineering, render_stage, render_evidence
 
 ROOT=Path(__file__).resolve().parents[1]
 DATA=json.loads((ROOT/'content/portfolio.json').read_text())
 PROJECTS=DATA['projects']
 YEAR=datetime.now(ZoneInfo('Asia/Seoul')).year
 ASSETS={}
-for name in ['styles.css','script.js','v2-styles.css','v2-script.js']:
+for name in ['styles.css','script.js','v2-styles.css','v2-script.js','workflow.js']:
     p=ROOT/name; b=p.read_bytes(); hashed=p.stem+'-'+hashlib.sha256(b).hexdigest()[:10]+p.suffix
     (ROOT/hashed).write_bytes(b);ASSETS[p.stem]=hashed
 
@@ -102,7 +102,8 @@ def project(p,lang):
     for i in range(len(p['flow'])):s+=render_stage(p,i,lang,S,text,icon)
     s+='</div></div></section><section class="case-section" id="my-build"><p class="eyebrow">03 / '+S('MY ENGINEERING OWNERSHIP','직접 개발한 영역',lang)+'</p><h2>'+S('What I designed, built and supported.','설계하고 개발하고 운영한 영역.',lang)+'</h2><p class="implementation-scope">'+text(p['engineering']['scope'],lang)+'</p>'+tags(p)+'<div class="ownership-grid">'
     for ic,title,description in p['ownership']:s+='<article>'+icon(ic)+'<h3>'+text(title,lang)+'</h3><p>'+text(description,lang)+'</p></article>'
-    s+='</div></section>'+render_engineering(p,lang,S,text,icon)+'<section class="case-section results" id="results"><p class="eyebrow">05 / '+S('OPERATIONAL RESULT','개선 결과',lang)+'</p><h2>'+S('What changed in practice.','실무에서 달라진 결과.',lang)+'</h2><p>'+text(p['result'],lang)+'</p>'
+    s+='</div>'+render_evidence(p,lang,S,text)+'</section>'+render_engineering(p,lang,S,text,icon)+'<section class="case-section results" id="results"><p class="eyebrow">05 / '+S('OPERATIONAL RESULT','개선 결과',lang)+'</p><h2>'+S('What changed in practice.','실무에서 달라진 결과.',lang)+'</h2><p>'+text(p['result'],lang)+'</p>'
+    if p.get('measurement'):s+='<p class="measurement-note">'+text(p['measurement'],lang)+'</p>'
     if p.get('rollout'):s+='<aside class="project-rollout"><span class="mini-label">'+text(p['rollout'],lang)+'</span><p>'+text(p['rollout_note'],lang)+'</p></aside>'
     if p.get('estimate'):s+='<small>'+S('Productivity value estimates are based on workforce size, hourly pay and efficiency gains.','생산성 가치는 인원 규모·시간당 인건비·효율 개선을 기반으로 추정한 값입니다.',lang)+'</small>'
     nxt=PROJECTS[(PROJECTS.index(p)+1)%len(PROJECTS)]
