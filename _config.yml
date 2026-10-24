@@ -9,3 +9,5 @@ exclude:
   - DESIGN_NOTES.md
   - PORTFOLIO_GUIDE.md
   - docs
+  - workflow.js
+  - workflow-dc705728c9.js

@@ -12,7 +12,7 @@ def render_engineering(p,lang,S,text,icon):
     for state in e['states']:s+='<li>'+text(state,lang)+'</li>'
     s+='</ol><p>'+icon('shield')+text(e['recovery'],lang)+'</p></div><details class="verification-detail"><summary>'+icon('check')+'<span>'+S('Verification cases & expected behavior','검증 사례와 기대 동작',lang)+'</span><span class="detail-count">'+str(len(e['verification']))+'</span></summary><div class="verification-body"><table><caption class="sr-only">'+S('Boundary and recovery checks','경계·복구 검증',lang)+'</caption><thead><tr><th scope="col">'+S('Condition','조건',lang)+'</th><th scope="col">'+S('Expected behavior','기대 동작',lang)+'</th></tr></thead><tbody>'
     for v in e['verification']:s+='<tr><th scope="row">'+text(v['condition'],lang)+'</th><td>'+text(v['expected'],lang)+'</td></tr>'
-    return s+'</tbody></table></div></details>'+ (render_explorer(lang,S) if p['slug']=='document-automation' else '')+'</section>'
+    return s+'</tbody></table></div></details></section>'
 
 def render_operations(lang,S,icon):
     s='<article class="mes-operations" id="mes-operations"><div class="mes-heading"><p class="eyebrow">MES / MIS</p><h3>'+S('Operations that become better systems.','운영의 경험을 시스템 개선으로.',lang)+'</h3><p>'+S('Alongside project development, I operated MES/MIS services, answered user enquiries and turned recurring pain points into cross-functional improvement work.','프로젝트 개발과 함께 MES/MIS 운영과 사용자 문의 대응을 담당하고, 반복되는 불편을 부서 간 개선 과제로 구체화했습니다.',lang)+'</p></div><ol class="mes-process">'

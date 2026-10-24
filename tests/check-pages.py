@@ -71,9 +71,9 @@ for name in ['index.html','index.ko.html']:
             for key in ['input','output','example']:assert escape(stage[key][lang]) in html
     assert 'href="#mes-operations"' in html
     assert html.count('class="evidence-detail"')==6
-    assert html.count('data-validation-workflow')==1
-    assert 'id="project-document-automation-validation-workflow"' in html
-    assert 'workflow-' in html
+    assert 'data-validation-workflow' not in html
+    assert 'class="workflow-entry"' not in html
+    assert not re.search(r'<script[^>]+src="workflow-',html)
     for record in data['projects']:
         lang='en' if name=='index.html' else 'ko'
         for row in record['evidence']['requirements']:

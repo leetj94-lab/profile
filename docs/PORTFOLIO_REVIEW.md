@@ -23,3 +23,9 @@ Acceptance: selecting a stage changes the actual implementation evidence; cross-
 Checks: bilingual field completeness; all 24 stage panels; section order in six cases; input/output/example parity; unique IDs and deep links; ARIA control targets; keyboard selection; mobile scrolling and reduced motion; verification disclosure; desktop/mobile overflow; legacy redirects and archive exclusion.
 
 The content review retained the project progression and prototype status, avoided new quantitative claims and kept protected system identifiers/source artifacts out of the public site. Website tests validate this portfolio, not the underlying employer systems.
+
+## Final review after walkthrough removal — 2026-10-24
+
+Removed the executable walkthrough and overview entry to focus the portfolio on project evidence. Retained its source and engine tests without publishing or loading the runtime. Shared walkthrough links now resolve to document engineering. Selectable implementation stages, requirement/design/acceptance cases and reliability checks remain.
+
+Review scope: overview positioning, all six project narratives, visible outcome/ownership hierarchy, 24 implementation stages, MES/MIS improvement, reusable AI skill explanation, contact paths, bilingual content and legacy routes. No new sections, visual redesign or additional claims were needed. Removed duplicate generic productivity-estimate notes where a detailed measurement basis already explains the same point. The review verifies presentation and behavior, not the underlying employer performance claims.
