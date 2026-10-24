@@ -10,7 +10,11 @@ for name in ['index.html','index.en.html','index.ko.html']:
     page=ROOT/name;shutil.copy2(page,OUT/name)
     for asset in re.findall(r'(?:src|href)="([^"]+\.(?:css|js))"',page.read_text()):
         shutil.copy2(ROOT/asset,OUT/asset)
-shutil.copytree(ROOT/'assets',OUT/'assets')
+# Publish image assets actually referenced by current pages, not backup artwork.
+for name in ['index.html','index.en.html','index.ko.html']:
+    for asset in re.findall(r'src="(assets/[^"?#]+)"',(ROOT/name).read_text()):
+        dest=OUT/asset;dest.parent.mkdir(parents=True,exist_ok=True)
+        shutil.copy2(ROOT/asset,dest)
 # Compatibility URLs only redirect to the selected presentation; they never serve v1.
 for page in [*ROOT.glob('version2*.html'),*ROOT.glob('projects/*.html')]:
     dest=OUT/page.relative_to(ROOT);dest.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(page,dest)
