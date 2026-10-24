@@ -44,6 +44,21 @@ for filename,lang in [('index.html','en'),('index.en.html','en'),('index.ko.html
         for value,label in record['metrics']:assert value in s
         for token in record['stack']:assert escape(token) in s
 assert (ROOT/'index.html').read_bytes()==(ROOT/'index.en.html').read_bytes()
+# Keep the approved narrative and role scope consistent across both languages.
+expected=['asset-master-data','drawing-information','digital-twin','document-automation','operations-analytics','engineering-agents']
+assert [p['slug'] for p in data['projects']]==expected
+for name in ['index.html','index.ko.html']:
+    html=(ROOT/name).read_text()
+    home=html.split('id="home"',1)[1].split('</section>',1)[0]
+    about=html.split('id="about"',1)[1].split('</section>',1)[0]
+    assert home.count('data-career-years')==1 and 'since 2020' not in home
+    assert 'technical lead' not in html.lower() and '기술 리드' not in html
+    assert 'U.S. rollout' not in about and '미국 배포' not in about
+    assert 'career-growth' in about and 'project-journey' in html
+    assert html.count('class="project-rollout"')==1
+    master=html.split('id="project-asset-master-data"',1)[1].split('id="project-drawing-information"',1)[0]
+    assert 'class="project-rollout"' in master
+
 
 for p,c in parsed.items():
     for tag,link,switch in c.links:

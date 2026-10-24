@@ -42,3 +42,9 @@ An explicit language choice is remembered when storage is available. Language ch
 Project periods, roles and quantitative outcomes follow the supplied resume. Estimated productivity values retain their estimation basis; engineering agents remain a prototype. Protected source code, real system screenshots, operational data and detailed internal architecture are excluded. AI-generated illustrations are disclosed.
 
 The AI philosophy explains engineering judgment, shared `SKILL.md` instructions for UI/code/testing standards, reusable interfaces, acceptance criteria and upfront exception/test scenarios. No API keys, analytics trackers or employer data are required.
+
+## Project narrative and role wording
+
+The four platform projects are ordered by development: master data and system integration → drawing/spatial context → connected 3D models → document delivery and richer, faster data updates. Data/operational automation and agent prototypes are shown separately as parallel improvement and exploration. Each project has paired `story_stage` and `story_context` fields in `content/portfolio.json`. The master-data project alone contains the September–November 2024 U.S. rollout note.
+
+The overview uses three strengths rather than project-specific metrics. It reports Samsung tenure from January 2019 in one line; the career section explains the initial facility role and expansion into system development. Project ownership describes implementation responsibility, not a formal technical-lead position.
