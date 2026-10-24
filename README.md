@@ -54,3 +54,9 @@ The overview uses three strengths rather than project-specific metrics. It repor
 Each project stores explicit implementation flow and safeguards in `flow`, plus implementation scope, states/recovery, challenge/decision/reason pairs and condition/expected-behavior checks in `engineering`. Update those fields in both languages; the older `decision`/`checks` fields are retained source history and are not rendered. Existing quantitative outcomes remain unchanged. Do not introduce internal identifiers, actual schemas, infrastructure endpoints or protected source materials.
 
 `tools/engineering.py` renders engineering sections and the MES/MIS continuous-improvement experience. Verification tables and the operating example use native accessible disclosure controls to keep the default page scannable. Actual project code/services are not executed by this static portfolio; website QA checks content, navigation and interactions.
+
+## Hiring review: progressive detail
+
+The active case-study reading order is problem/change → outcome → contribution → selectable implementation → decisions/checks. Core hiring evidence is always visible in the document and is never hidden behind a stage card. A stage card reveals its own `stage_details` (input/output/example) plus the existing processing and safeguard text. Maintain both language values for every field. Mobile click selection scrolls to the selected detail and respects reduced-motion preferences. Career links expose MES/MIS business-improvement experience directly.
+
+The three-pass HR/BA/developer review and acceptance findings are recorded in `docs/PORTFOLIO_REVIEW.md`. That internal document is excluded from the public artifact.

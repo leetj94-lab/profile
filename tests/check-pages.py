@@ -61,6 +61,16 @@ for name in ['index.html','index.ko.html']:
     assert html.count('class="implementation-scope"')==6
     assert html.count('class="verification-detail"')==6
     assert html.count('class="mes-operations"')==1
+    assert html.count('class="stage-io"')==sum(len(p['flow']) for p in data['projects'])
+    for record in data['projects']:
+        assert len(record['stage_details'])==len(record['flow'])
+        positions=[html.index('id="project-'+record['slug']+'-'+key+'"') for key in ['before-after','results','my-build','system-flow','engineering']]
+        assert positions==sorted(positions)
+        lang='en' if name=='index.html' else 'ko'
+        for stage in record['stage_details']:
+            for key in ['input','output','example']:assert escape(stage[key][lang]) in html
+    assert 'href="#mes-operations"' in html
+
     assert not re.search(r'hypothetical|placeholder|lorem ipsum|가상시나리오|가상 시나리오|추측한 정보|사실과 다릅니다',html,re.I)
     for record in data['projects']:
         section=html.split('id="project-'+record['slug']+'"',1)[1]

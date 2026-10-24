@@ -1,4 +1,5 @@
 """Bilingual engineering detail components for the active portfolio only."""
+from html import escape
 def render_engineering(p,lang,S,text,icon):
     e=p['engineering']
     s='<section class="case-section engineering-depth" id="engineering"><p class="eyebrow">04 / '+S('DECISIONS & RELIABILITY','기술 판단과 신뢰성',lang)+'</p><h2>'+S('The constraints behind the implementation.','구현을 결정한 문제와 판단.',lang)+'</h2><div class="engineering-decisions">'
@@ -19,4 +20,13 @@ def render_operations(lang,S,icon):
     for i,(ic,en,ko,bodyen,bodyko) in enumerate(rows,1):
         s+='<li><div>'+icon(ic)+'<span>0'+str(i)+'</span></div><h4>'+S(en,ko,lang)+'</h4><p>'+S(bodyen,bodyko,lang)+'</p></li>'
     s+='</ol><details class="mes-example"><summary>'+S('An improvement from request to acceptance','요청을 설계·검증으로 연결한 개선 사례',lang)+'</summary><p>'+S('For an equipment-lifecycle change, I mapped the departments creating, modifying and consuming asset records; analysed the impact on existing work orders and interfaces; and defined process changes and acceptance scenarios before implementation.','설비 생애주기 변경 과제에서는 설비 정보를 생성·수정·활용하는 부서를 연결하고, 기존 작업 이력과 인터페이스의 영향 범위를 분석한 뒤 구현 전에 변경 프로세스와 수용 시나리오를 정리했습니다.',lang)+'</p><p>'+S('Acceptance covered new records, historical references, rejected changes and failed integrations—connecting the user’s request to behavior that could be checked.','신규 등록, 과거 이력 참조, 변경 반려, 연계 실패를 수용 기준에 포함해 사용자의 요구를 확인 가능한 시스템 동작으로 구체화했습니다.',lang)+'</p></details></article>'
+    return s
+
+def render_stage(p,index,lang,S,text,icon):
+    ic,title,tech,process,safeguard=p['flow'][index]
+    detail=p['stage_details'][index]
+    s='<article class="flow-panel" id="flow-panel-'+str(index)+'" data-flow-panel="'+str(index)+'" '+('hidden' if index else '')+'><div class="panel-heading">'+icon(ic)+'<h3>'+text(title,lang)+'</h3><span>'+escape(tech)+'</span></div><p class="stage-position">'+S('Implementation detail','단계별 구현',lang)+' · '+str(index+1)+' / '+str(len(p['flow']))+'</p><dl class="stage-io">'
+    for key,en,ko,value in [('input','Input','입력',detail['input']),('process','What I implemented','직접 구현한 처리',process),('output','Output','결과',detail['output'])]:
+        s+='<div class="stage-'+key+'"><dt>'+S(en,ko,lang)+'</dt><dd>'+text(value,lang)+'</dd></div>'
+    s+='</dl><div class="stage-example"><span>'+S('In practice','처리 예시',lang)+'</span><p>'+text(detail['example'],lang)+'</p></div><div class="safeguard">'+icon('shield')+'<div><strong>'+S('Exception & recovery','예외·복구',lang)+'</strong><p>'+text(safeguard,lang)+'</p></div></div></article>'
     return s

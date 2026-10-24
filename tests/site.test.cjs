@@ -6,18 +6,18 @@ const vm = require('node:vm');
 const source = fs.readFileSync(path.join(__dirname, '../script.js'), 'utf8');
 
 function run({date='2026-10-24T00:00:00Z', language='en', preference=null,
-  pathname='/profile/index.html', hash='', home=true, blockedStorage=false, withFlow=false, version=null}={}) {
+  pathname='/profile/index.html', hash='', home=true, blockedStorage=false, withFlow=false, version=null, mobile=false, reducedMotion=false}={}) {
   const RealDate=Date;
   class Clock extends RealDate { constructor(...args) { super(...(args.length ? args : [date])); } }
   const career={textContent:''}, year={textContent:''}, writes=[], languageListeners={};
   const links=['en','ko'].map(lang=>({dataset:{siteLang:lang},addEventListener(event,fn){languageListeners[lang]=fn;}}));
   const buttons=Array.from({length:3},(_,i)=>({attrs:{'aria-pressed':String(i===0)},listeners:{},focused:false,
     addEventListener(event,fn){this.listeners[event]=fn;},setAttribute(k,v){this.attrs[k]=v;},focus(){this.focused=true;}}));
-  const panels=buttons.map((_,i)=>({hidden:i!==0}));
+  const panels=buttons.map((_,i)=>({hidden:i!==0,scrollIntoView(value){this.scrollOptions=value;}}));
   const flow={querySelectorAll(selector){return selector==='[data-flow-select]'?buttons:panels;}};
   let redirected;
   vm.runInNewContext(source,{
-    Date:Clock,Intl,window:{},
+    Date:Clock,Intl,window:{matchMedia(query){return {matches:query.includes("prefers-reduced-motion")?reducedMotion:mobile};}},
     localStorage:{getItem(){if(blockedStorage)throw Error('blocked');return preference;},setItem(k,v){if(blockedStorage)throw Error('blocked');writes.push([k,v]);}},
     location:{pathname,hash,search:'',replace(value){redirected=value;}},
     document:{body:{dataset:{version}},documentElement:{lang:language},getElementById(id){return id==='home'?(home?{}:null):id==='year'?year:null;},
@@ -67,4 +67,14 @@ test('workflow keyboard navigation wraps and supports Home and End',()=>{
 
 test('v2 restores Korean without redirecting to the original site',()=>{
   assert.equal(run({preference:'ko',pathname:'/profile/version2.html',hash:'#approach',version:'2'}).redirected,'index.ko.html#approach');
+});
+
+test('mobile stage selection reveals its implementation panel',()=>{
+  const r=run({withFlow:true,mobile:true});r.buttons[2].listeners.click();
+  assert.equal(r.panels[2].hidden,false);assert.equal(r.panels[2].scrollOptions.block,'start');
+  assert.equal(r.panels[2].scrollOptions.behavior,'smooth');
+});
+test('stage scrolling respects reduced-motion preferences',()=>{
+  const r=run({withFlow:true,mobile:true,reducedMotion:true});r.buttons[1].listeners.click();
+  assert.equal(r.panels[1].scrollOptions.behavior,'instant');
 });
