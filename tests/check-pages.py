@@ -70,6 +70,16 @@ for name in ['index.html','index.ko.html']:
         for stage in record['stage_details']:
             for key in ['input','output','example']:assert escape(stage[key][lang]) in html
     assert 'href="#mes-operations"' in html
+    assert html.count('class="evidence-detail"')==6
+    assert html.count('data-validation-workflow')==1
+    assert 'id="project-document-automation-validation-workflow"' in html
+    assert 'workflow-' in html
+    for record in data['projects']:
+        lang='en' if name=='index.html' else 'ko'
+        for row in record['evidence']['requirements']:
+            for key in ['need','design','acceptance']:assert escape(row[key][lang]) in html
+        if record.get('measurement'):assert escape(record['measurement'][lang]) in html
+
 
     assert not re.search(r'hypothetical|placeholder|lorem ipsum|가상시나리오|가상 시나리오|추측한 정보|사실과 다릅니다',html,re.I)
     for record in data['projects']:

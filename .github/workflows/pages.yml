@@ -26,7 +26,7 @@ jobs:
           python tools/build-locales.py
           python tools/package-public.py
           python tests/check-pages.py
-          node --test tests/site.test.cjs tests/v2.test.cjs
+          node --test tests/site.test.cjs tests/v2.test.cjs tests/workflow.test.cjs
       - name: Upload static site
         uses: actions/upload-pages-artifact@v3
         with:
