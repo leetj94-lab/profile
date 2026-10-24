@@ -2,8 +2,720 @@
   "source_resume": "Taekjun_Lee_Resume_Final.pdf",
   "projects": [
     {
-      "slug": "document-automation",
+      "slug": "asset-master-data",
       "number": "01",
+      "period": "2020–2021",
+      "icon": "database",
+      "image": "asset-master-data-v3.webp",
+      "title": {
+        "en": "Facility Master Data & Integration Platform",
+        "ko": "설비 기준정보·시스템 연계 플랫폼"
+      },
+      "category": {
+        "en": "DATA FOUNDATIONS",
+        "ko": "데이터 기반 구축"
+      },
+      "status": {
+        "en": "Production",
+        "ko": "운영"
+      },
+      "role": {
+        "en": "Developer · End-to-end project ownership",
+        "ko": "개발자 · 프로젝트 전 과정 전담"
+      },
+      "lead": {
+        "en": "Built a central equipment-data platform with standardised identifiers, lifecycle workflows and ETL/EAI integrations across business systems.",
+        "ko": "설비 식별자·생애주기 업무를 표준화하고 업무 시스템 간 ETL·EAI를 연결하는 중앙 데이터 플랫폼을 구축했습니다."
+      },
+      "summary": {
+        "en": "Established common asset identifiers and master-data rules to connect engineering information across systems.",
+        "ko": "공통 설비 식별자와 기준정보 규칙을 정립해 여러 시스템의 엔지니어링 정보를 연결했습니다."
+      },
+      "stack": [
+        "Python",
+        "SQL",
+        "Data modelling",
+        "ETL / EAI",
+        "BI monitoring"
+      ],
+      "metrics": [
+        [
+          "~700",
+          {
+            "en": "users supported",
+            "ko": "지원 사용자"
+          }
+        ],
+        [
+          "87%",
+          {
+            "en": "reported work-efficiency improvement",
+            "ko": "보고된 업무 효율 개선"
+          }
+        ],
+        [
+          "2020–21",
+          {
+            "en": "delivery period",
+            "ko": "구축 기간"
+          }
+        ]
+      ],
+      "before": {
+        "en": "The same asset, different records.",
+        "ko": "같은 설비, 서로 다른 데이터."
+      },
+      "before_steps": [
+        {
+          "en": "Manage equipment in separate systems",
+          "ko": "시스템별로 설비 데이터 관리"
+        },
+        {
+          "en": "Reconcile identifiers by hand",
+          "ko": "식별자 수작업 대조"
+        },
+        {
+          "en": "Correct missing and duplicate records",
+          "ko": "누락·중복 데이터 개별 수정"
+        }
+      ],
+      "before_note": {
+        "en": "Quality, maintenance and work systems could hold inconsistent descriptions of the same equipment.",
+        "ko": "품질·정비·작업 시스템에서 같은 설비에 대한 정보가 일치하지 않을 수 있었습니다."
+      },
+      "after": {
+        "en": "Shared identity, consistent lifecycle.",
+        "ko": "공통 식별자와 일관된 생애주기."
+      },
+      "after_steps": [
+        {
+          "en": "Standardise identifiers and workflows",
+          "ko": "식별자·업무 흐름 표준화"
+        },
+        {
+          "en": "Validate and integrate records",
+          "ko": "데이터 검증·연계"
+        },
+        {
+          "en": "Monitor quality and integration status",
+          "ko": "데이터 품질·연계 상태 모니터링"
+        }
+      ],
+      "after_note": {
+        "en": "A central platform connects business rules, validation and downstream use instead of relying on repeated reconciliation.",
+        "ko": "중앙 플랫폼에서 업무 규칙·검증·후속 활용을 연결해 반복 대조에 의존하던 흐름을 개선했습니다."
+      },
+      "flow": [
+        [
+          "users",
+          {
+            "en": "Define common rules",
+            "ko": "공통 기준 정의"
+          },
+          "Asset identifiers + lifecycle",
+          {
+            "en": "Align equipment identifiers and lifecycle workflows across quality, maintenance and work systems.",
+            "ko": "품질·정비·작업 시스템 간 설비 식별자와 생애주기 업무 기준을 정리합니다."
+          },
+          {
+            "en": "Make ownership and required information explicit before integrating records.",
+            "ko": "데이터를 연계하기 전에 관리 주체와 필수 정보를 명확하게 합니다."
+          }
+        ],
+        [
+          "database",
+          {
+            "en": "Validate master records",
+            "ko": "마스터 데이터 검증"
+          },
+          "SQL + validation rules",
+          {
+            "en": "Detect missing, duplicate and inconsistent records in the central equipment-data model.",
+            "ko": "중앙 설비 데이터 모델에서 누락·중복·불일치를 식별합니다."
+          },
+          {
+            "en": "Keep identifier conflicts visible rather than silently merging records.",
+            "ko": "식별자 충돌을 임의 병합하지 않고 검토할 수 있도록 표시합니다."
+          }
+        ],
+        [
+          "api",
+          {
+            "en": "Integrate systems",
+            "ko": "업무 시스템 연계"
+          },
+          "ETL / EAI",
+          {
+            "en": "Move validated information between the platform and connected business systems.",
+            "ko": "검증된 정보를 플랫폼과 연계 업무 시스템 사이에서 전달합니다."
+          },
+          {
+            "en": "Track integration failures independently from master-data quality issues.",
+            "ko": "연계 실패와 마스터 데이터 품질 문제를 별도로 추적합니다."
+          }
+        ],
+        [
+          "pulse",
+          {
+            "en": "Monitor quality",
+            "ko": "품질 모니터링"
+          },
+          "BI dashboards",
+          {
+            "en": "Make data quality and integration status visible for ongoing operational follow-up.",
+            "ko": "지속적인 운영 조치를 위해 데이터 품질과 연계 상태를 시각화합니다."
+          },
+          {
+            "en": "Show actionable exceptions and the system context required for correction.",
+            "ko": "수정에 필요한 시스템 맥락과 조치 가능한 예외를 제공합니다."
+          }
+        ]
+      ],
+      "ownership": [
+        [
+          "database",
+          {
+            "en": "Platform & database design",
+            "ko": "플랫폼·DB 설계"
+          },
+          {
+            "en": "Designed and built the central equipment-data platform and standardised its identifiers and lifecycle workflows.",
+            "ko": "중앙 설비 데이터 플랫폼을 설계·개발하고 식별자와 생애주기 업무 흐름을 표준화했습니다."
+          }
+        ],
+        [
+          "api",
+          {
+            "en": "Validation & ETL/EAI",
+            "ko": "검증·ETL·EAI"
+          },
+          {
+            "en": "Built validation and integrations to identify missing, duplicate and inconsistent records across systems.",
+            "ko": "시스템 간 누락·중복·불일치를 식별하는 검증 기능과 연계 기능을 개발했습니다."
+          }
+        ],
+        [
+          "pulse",
+          {
+            "en": "Operational quality monitoring",
+            "ko": "운영 품질 모니터링"
+          },
+          {
+            "en": "Added BI monitoring so data-quality and integration problems could be identified and followed up.",
+            "ko": "데이터 품질·연계 문제를 확인하고 후속 조치할 수 있도록 BI 모니터링을 추가했습니다."
+          }
+        ]
+      ],
+      "decision": {
+        "en": "A shared table alone does not create consistent data. Common identifiers, lifecycle rules, validation and integration visibility have to work together.",
+        "ko": "테이블을 공유하는 것만으로 데이터가 일관되지는 않습니다. 공통 식별자, 생애주기 규칙, 검증, 연계 가시성이 함께 작동해야 합니다."
+      },
+      "checks": {
+        "en": "Missing required values · identifier collisions · repeated imports · rejected updates · integration failures",
+        "ko": "필수 값 누락 · 식별자 충돌 · 반복 수집 · 수정 반려 · 연계 실패"
+      },
+      "result": {
+        "en": "Supported approximately 700 users and a reported 87% improvement in master-data work efficiency through standardised workflows, validation and system integration.",
+        "ko": "업무 흐름 표준화·검증·시스템 연계로 약 700명의 사용자를 지원했으며, 마스터 데이터 업무 효율 87% 개선이 보고됐습니다."
+      },
+      "alt": {
+        "en": "Distributed asset records connected to a shared registry and consistent equipment information",
+        "ko": "분산된 자산 데이터를 공통 레지스트리와 일관된 설비 정보에 연결한 이미지"
+      },
+      "story_stage": {
+        "en": "Shared data foundation",
+        "ko": "공통 데이터 기반"
+      },
+      "story_context": {
+        "en": "The foundation: consistent equipment identities and master data made information reusable across systems. The next gap was spatial context in drawings.",
+        "ko": "출발점은 설비 식별자와 기준정보의 통일이었습니다. 시스템 간 정보를 재사용할 기반을 마련한 뒤, 도면에 담긴 공간 정보까지 연결할 필요가 있었습니다."
+      },
+      "rollout": {
+        "en": "U.S. rollout · Austin & Taylor FABs · Sep–Nov 2024",
+        "ko": "미국 배포 · Austin·Taylor FAB · 2024년 9–11월"
+      },
+      "rollout_note": {
+        "en": "After developing the master-data platform, I travelled to the U.S. to deploy it at the Austin and Taylor FABs and support adoption with local engineering users.",
+        "ko": "기준정보 시스템 개발 후 미국 Austin·Taylor FAB 배포를 위해 출장했으며, 현지 엔지니어와 시스템 적용 및 활용을 지원했습니다."
+      }
+    },
+    {
+      "slug": "drawing-information",
+      "number": "02",
+      "period": "2021–2022",
+      "icon": "drawing",
+      "image": "drawing-information-v3.webp",
+      "title": {
+        "en": "Intelligent Drawing & Document Management",
+        "ko": "지능형 도면·문서 관리"
+      },
+      "category": {
+        "en": "ENGINEERING INFORMATION",
+        "ko": "엔지니어링 정보"
+      },
+      "status": {
+        "en": "Production",
+        "ko": "운영"
+      },
+      "role": {
+        "en": "Developer · End-to-end project ownership",
+        "ko": "개발자 · 프로젝트 전 과정 전담"
+      },
+      "lead": {
+        "en": "Turned dispersed P&ID and PFD files into searchable engineering data, equipment-to-drawing links and automated review rules.",
+        "ko": "분산된 P&ID·PFD 파일을 검색 가능한 엔지니어링 데이터, 설비·도면 연결, 자동 검토 규칙으로 전환했습니다."
+      },
+      "summary": {
+        "en": "Extended shared asset data into drawing information, connecting equipment records with consistent spatial and engineering context.",
+        "ko": "공통 설비 데이터를 도면 정보로 확장해 설비 기록과 공간·엔지니어링 맥락을 연결했습니다."
+      },
+      "stack": [
+        "Python",
+        "SQL",
+        "REST APIs",
+        "P&ID / PFD",
+        "Rule validation"
+      ],
+      "metrics": [
+        [
+          "~4,500",
+          {
+            "en": "users served",
+            "ko": "사용자"
+          }
+        ],
+        [
+          "$3.1M",
+          {
+            "en": "estimated annual productivity value",
+            "ko": "연간 생산성 가치 추정"
+          }
+        ],
+        [
+          "2021–22",
+          {
+            "en": "delivery period",
+            "ko": "구축 기간"
+          }
+        ]
+      ],
+      "before": {
+        "en": "Drawings were files to inspect.",
+        "ko": "도면은 일일이 열어 확인하는 파일."
+      },
+      "before_steps": [
+        {
+          "en": "Find dispersed P&ID and PFD files",
+          "ko": "분산된 P&ID·PFD 파일 탐색"
+        },
+        {
+          "en": "Manually locate equipment and versions",
+          "ko": "설비·버전 정보 수동 확인"
+        },
+        {
+          "en": "Repeat completeness and rule checks",
+          "ko": "완전성·설계 규칙 반복 검토"
+        }
+      ],
+      "before_note": {
+        "en": "Searching and reviewing depended on file discovery and repeated interpretation of engineering information.",
+        "ko": "파일을 찾고 엔지니어링 정보를 반복해서 해석해야 검색과 검토를 진행할 수 있었습니다."
+      },
+      "after": {
+        "en": "Drawings became connected information.",
+        "ko": "도면을 연결된 정보로 활용."
+      },
+      "after_steps": [
+        {
+          "en": "Structure drawing and equipment data",
+          "ko": "도면·설비 데이터 구조화"
+        },
+        {
+          "en": "Search equipment-to-drawing links",
+          "ko": "설비·도면 연결 검색"
+        },
+        {
+          "en": "Run delivery and design-rule checks",
+          "ko": "납품 완전성·설계 규칙 자동 검증"
+        }
+      ],
+      "after_note": {
+        "en": "Rules and object libraries make common checks repeatable and issues easier to review.",
+        "ko": "규칙과 객체 라이브러리로 공통 검증을 반복 실행하고 문제를 검토하기 쉽게 만들었습니다."
+      },
+      "flow": [
+        [
+          "drawing",
+          {
+            "en": "Structure source data",
+            "ko": "원천 데이터 구조화"
+          },
+          "P&ID / PFD + Python",
+          {
+            "en": "Structure drawing information and equipment references for search and reuse.",
+            "ko": "검색과 재활용을 위해 도면 정보와 설비 참조를 구조화합니다."
+          },
+          {
+            "en": "Preserve source and revision context when interpreting fields.",
+            "ko": "필드를 해석할 때 원본과 개정 맥락을 유지합니다."
+          }
+        ],
+        [
+          "database",
+          {
+            "en": "Link equipment & drawings",
+            "ko": "설비·도면 연결"
+          },
+          "SQL + object libraries",
+          {
+            "en": "Build equipment-to-drawing relationships, design rules and reusable object libraries.",
+            "ko": "설비·도면 관계, 설계 규칙, 재사용 가능한 객체 라이브러리를 구축합니다."
+          },
+          {
+            "en": "Expose ambiguous identifiers and conflicting versions for review.",
+            "ko": "모호한 식별자와 버전 충돌을 검토 대상으로 드러냅니다."
+          }
+        ],
+        [
+          "shield",
+          {
+            "en": "Validate delivery",
+            "ko": "납품 검증"
+          },
+          "Completeness + design rules",
+          {
+            "en": "Automate delivery-completeness and design-rule checks to identify submission issues.",
+            "ko": "납품 완전성·설계 규칙 검증을 자동화해 제출 자료의 문제를 식별합니다."
+          },
+          {
+            "en": "Keep a failed check connected to the relevant source information.",
+            "ko": "검증 실패 항목을 관련 원본 정보와 연결합니다."
+          }
+        ],
+        [
+          "search",
+          {
+            "en": "Search & review",
+            "ko": "검색·검토"
+          },
+          "Search interfaces + APIs",
+          {
+            "en": "Let engineering users find equipment context and review drawing issues through the system.",
+            "ko": "현업 사용자가 시스템에서 설비 맥락을 찾고 도면 문제를 검토하도록 합니다."
+          },
+          {
+            "en": "Distinguish a search with no results from information that needs correction.",
+            "ko": "검색 결과 없음과 정보 수정이 필요한 상태를 구분합니다."
+          }
+        ]
+      ],
+      "ownership": [
+        [
+          "database",
+          {
+            "en": "Engineering data modelling",
+            "ko": "엔지니어링 데이터 모델링"
+          },
+          {
+            "en": "Structured P&ID/PFD data and the equipment-to-drawing relationships used by application search.",
+            "ko": "P&ID·PFD 데이터와 애플리케이션 검색에 필요한 설비·도면 관계를 구조화했습니다."
+          }
+        ],
+        [
+          "code",
+          {
+            "en": "Rule and library development",
+            "ko": "검증 규칙·라이브러리 개발"
+          },
+          {
+            "en": "Built design rules, object libraries and automated completeness checks to support engineering review.",
+            "ko": "설계 규칙, 객체 라이브러리, 자동 완전성 검증을 개발해 엔지니어링 검토를 지원했습니다."
+          }
+        ],
+        [
+          "screen",
+          {
+            "en": "User-oriented search",
+            "ko": "현업 중심 검색"
+          },
+          {
+            "en": "Connected domain knowledge with searchable information so users could work from equipment context rather than file locations.",
+            "ko": "도메인 지식과 검색 가능한 정보를 연결해 사용자가 파일 위치보다 설비 맥락을 중심으로 업무를 수행하도록 했습니다."
+          }
+        ]
+      ],
+      "decision": {
+        "en": "The important step is preserving engineering meaning while structuring files: identifiers, source references and rule results must remain traceable.",
+        "ko": "파일을 구조화하면서 엔지니어링 의미를 보존하는 것이 핵심입니다. 식별자·원본 참조·규칙 검증 결과를 추적할 수 있어야 합니다."
+      },
+      "checks": {
+        "en": "Missing submissions · duplicate identifiers · revision conflicts · incomplete fields · failed design rules",
+        "ko": "납품 누락 · 식별자 중복 · 개정 충돌 · 필드 누락 · 설계 규칙 위반"
+      },
+      "result": {
+        "en": "Served approximately 4,500 users through searchable drawing information and automated delivery/design-rule checks. Estimated annual productivity value: USD 3.1 million.",
+        "ko": "검색 가능한 도면 정보와 납품·설계 규칙 자동 검증으로 약 4,500명의 사용자를 지원했습니다. 연간 생산성 가치 추정치는 310만 달러입니다."
+      },
+      "estimate": true,
+      "alt": {
+        "en": "Engineering drawings connected to structured fields, equipment references and search results",
+        "ko": "엔지니어링 도면을 구조화한 필드·설비 참조·검색 결과와 연결한 이미지"
+      },
+      "story_stage": {
+        "en": "From records to spatial context",
+        "ko": "데이터에서 공간 정보로"
+      },
+      "story_context": {
+        "en": "Shared master data connected records, but drawings still held spatial information outside that common context. I built drawing management to make equipment and drawing information consistent and searchable.",
+        "ko": "기준정보로 데이터는 연결했지만 공간 정보는 도면에 따로 남아 있었습니다. 도면관리 시스템을 개발해 설비와 도면 정보를 일관되게 관리하고 검색할 수 있도록 했습니다."
+      }
+    },
+    {
+      "slug": "digital-twin",
+      "number": "03",
+      "period": "2023–2024",
+      "icon": "cube",
+      "image": "digital-twin-operations-v3.webp",
+      "title": {
+        "en": "3D Digital Twin Platform",
+        "ko": "3D 디지털 트윈 플랫폼"
+      },
+      "category": {
+        "en": "CONNECTED ENGINEERING",
+        "ko": "설비 정보 통합"
+      },
+      "status": {
+        "en": "Production",
+        "ko": "운영"
+      },
+      "role": {
+        "en": "Developer · End-to-end project ownership",
+        "ko": "개발자 · 프로젝트 전 과정 전담"
+      },
+      "lead": {
+        "en": "A searchable 3D workspace connecting equipment location, operating status and information from eight MES/MIS and infrastructure systems.",
+        "ko": "설비 위치·운영 상태와 MES·MIS·인프라 8개 시스템의 정보를 검색 가능한 3D 업무 공간으로 연결했습니다."
+      },
+      "summary": {
+        "en": "Connected asset data and 3D models so users could explore equipment together with operating information from eight systems.",
+        "ko": "설비 데이터와 3D 모델을 연계해 8개 시스템의 운영 정보를 설비의 공간 맥락에서 탐색하도록 했습니다."
+      },
+      "stack": [
+        "Python",
+        "REST APIs",
+        "3D web integration",
+        "Revit / BIM",
+        "ACC",
+        "MES / MIS"
+      ],
+      "metrics": [
+        [
+          "8",
+          {
+            "en": "connected MES/MIS & infrastructure systems",
+            "ko": "연계 MES·MIS·인프라 시스템"
+          }
+        ],
+        [
+          "~1.5M",
+          {
+            "en": "linked assets & components",
+            "ko": "연결 자산·컴포넌트"
+          }
+        ],
+        [
+          "~1,000",
+          {
+            "en": "users supported",
+            "ko": "지원 사용자"
+          }
+        ]
+      ],
+      "before": {
+        "en": "Find equipment, then search again.",
+        "ko": "설비를 찾은 뒤, 정보를 다시 검색."
+      },
+      "before_steps": [
+        {
+          "en": "Locate equipment in drawings or models",
+          "ko": "도면·모델에서 설비 위치 확인"
+        },
+        {
+          "en": "Open separate operational systems",
+          "ko": "각 운영 시스템에 따로 접속"
+        },
+        {
+          "en": "Manually connect IDs and context",
+          "ko": "식별자와 업무 맥락 수동 연결"
+        }
+      ],
+      "before_note": {
+        "en": "Physical location and operational context were separated across applications and engineering records.",
+        "ko": "물리적 위치와 운영 맥락이 애플리케이션·엔지니어링 자료에 분리돼 있었습니다."
+      },
+      "after": {
+        "en": "Select the asset, see its context.",
+        "ko": "설비를 선택하면 관련 맥락을 한곳에."
+      },
+      "after_steps": [
+        {
+          "en": "Search and select equipment in 3D",
+          "ko": "3D에서 설비 검색·선택"
+        },
+        {
+          "en": "Resolve linked system information",
+          "ko": "연계 시스템 정보 조회"
+        },
+        {
+          "en": "View location, status and related records",
+          "ko": "위치·상태·관련 자료 함께 확인"
+        }
+      ],
+      "after_note": {
+        "en": "The application/integration layers connect approximately 2 TB of models with engineering and operating information.",
+        "ko": "약 2TB의 모델과 엔지니어링·운영 정보를 애플리케이션·연계 계층으로 연결했습니다."
+      },
+      "flow": [
+        [
+          "cube",
+          {
+            "en": "Prepare model context",
+            "ko": "모델 맥락 준비"
+          },
+          "Revit + Python",
+          {
+            "en": "Preprocess model and equipment information for a searchable engineering workspace.",
+            "ko": "모델과 설비 정보를 전처리해 검색 가능한 엔지니어링 업무 공간을 준비합니다."
+          },
+          {
+            "en": "Separate preprocessing problems from interactive equipment lookup.",
+            "ko": "전처리 문제와 사용자 설비 조회 문제를 구분합니다."
+          }
+        ],
+        [
+          "search",
+          {
+            "en": "Search & select",
+            "ko": "검색·선택"
+          },
+          "3D web workspace",
+          {
+            "en": "Translate the selected object into equipment identity, location and the information needed for the user’s task.",
+            "ko": "선택한 객체를 설비 식별자·위치·업무에 필요한 정보로 연결합니다."
+          },
+          {
+            "en": "Scope information requests to the current selection.",
+            "ko": "현재 선택한 설비를 기준으로 정보 요청을 관리합니다."
+          }
+        ],
+        [
+          "api",
+          {
+            "en": "Connect systems",
+            "ko": "시스템 연계"
+          },
+          "REST APIs + MES / MIS",
+          {
+            "en": "Integrate information from eight MES/MIS and infrastructure systems into a shared operational context.",
+            "ko": "MES·MIS·인프라 8개 시스템의 정보를 공통 운영 맥락에 연결합니다."
+          },
+          {
+            "en": "Represent unavailable sources independently from the 3D model state.",
+            "ko": "정보 소스의 가용 상태와 3D 모델 상태를 별도로 표현합니다."
+          }
+        ],
+        [
+          "screen",
+          {
+            "en": "Show operating context",
+            "ko": "운영 맥락 표시"
+          },
+          "Location + status + records",
+          {
+            "en": "Display equipment location/status and related engineering information alongside the model.",
+            "ko": "모델과 함께 설비 위치·상태 및 관련 엔지니어링 정보를 표시합니다."
+          },
+          {
+            "en": "Prevent a late response for a previously selected asset from replacing the current context.",
+            "ko": "이전에 선택한 설비의 늦은 응답이 현재 맥락을 덮어쓰지 않도록 합니다."
+          }
+        ]
+      ],
+      "ownership": [
+        [
+          "code",
+          {
+            "en": "Application & integration layers",
+            "ko": "애플리케이션·연계 계층"
+          },
+          {
+            "en": "Delivered the MVP and production application/integration layers, connecting 3D navigation with operational data.",
+            "ko": "MVP부터 운영 애플리케이션·연계 계층까지 개발해 3D 탐색과 운영 데이터를 연결했습니다."
+          }
+        ],
+        [
+          "database",
+          {
+            "en": "Asset identity & data linking",
+            "ko": "설비 식별·데이터 연결"
+          },
+          {
+            "en": "Linked approximately 1.5 million assets and components with model and system context.",
+            "ko": "약 150만 자산·컴포넌트를 모델 및 시스템 맥락과 연결했습니다."
+          }
+        ],
+        [
+          "cube",
+          {
+            "en": "Model preprocessing",
+            "ko": "모델 전처리"
+          },
+          {
+            "en": "Developed Revit preprocessing tools and equipment location/status visualisation around approximately 2 TB of models.",
+            "ko": "약 2TB 모델을 대상으로 Revit 전처리 도구와 설비 위치·상태 시각화를 개발했습니다."
+          }
+        ],
+        [
+          "users",
+          {
+            "en": "Technical evaluation & rollout",
+            "ko": "기술 검토·적용"
+          },
+          {
+            "en": "Evaluated technologies with NVIDIA, AVEVA and Siemens, and supported adoption for approximately 1,000 users.",
+            "ko": "NVIDIA·AVEVA·Siemens와 기술을 검토하고 약 1,000명의 사용자 활용을 지원했습니다."
+          }
+        ]
+      ],
+      "decision": {
+        "en": "The 3D model is an entry point to operational work. Asset identity, request boundaries and independent information panels matter as much as rendering.",
+        "ko": "3D 모델은 운영 업무로 진입하는 출발점입니다. 렌더링만큼 설비 식별, 요청 경계, 정보 패널의 독립성이 중요합니다."
+      },
+      "checks": {
+        "en": "Rapid asset selection · reversed API response order · one unavailable source · missing asset mappings",
+        "ko": "빠른 설비 선택 전환 · API 응답 순서 역전 · 일부 소스 장애 · 설비 매핑 누락"
+      },
+      "result": {
+        "en": "Connected eight systems in a searchable 3D workspace, supporting approximately 1,000 users. Estimated annual productivity value: USD 2.3 million.",
+        "ko": "8개 시스템을 검색 가능한 3D 업무 공간으로 연결해 약 1,000명의 사용자를 지원했습니다. 연간 생산성 가치 추정치는 230만 달러입니다."
+      },
+      "estimate": true,
+      "alt": {
+        "en": "Selected equipment inside a 3D facility linked to operating trends, status and maintenance information",
+        "ko": "3D 공간에서 선택한 설비에 운영 추세·상태·정비 정보를 연결한 이미지"
+      },
+      "story_stage": {
+        "en": "From drawings to a connected twin",
+        "ko": "도면에서 연결된 디지털 트윈으로"
+      },
+      "story_context": {
+        "en": "With asset identities and drawing context established, the next step was to connect data with models. The 3D platform brought equipment location, operating information and engineering records into one workspace.",
+        "ko": "설비 식별자와 도면 정보의 기반 위에서 데이터와 모델을 연결하는 단계로 확장했습니다. 3D 플랫폼에서 설비 위치·운영 정보·엔지니어링 기록을 하나의 업무 공간으로 통합했습니다."
+      }
+    },
+    {
+      "slug": "document-automation",
+      "number": "04",
       "period": "2025–2026",
       "icon": "file",
       "image": "document-automation-v3.webp",
@@ -20,16 +732,16 @@
         "ko": "운영"
       },
       "role": {
-        "en": "Primary Developer & Technical Project Lead",
-        "ko": "주 개발자 · 기술 프로젝트 리드"
+        "en": "Developer · End-to-end project ownership",
+        "ko": "개발자 · 프로젝트 전 과정 전담"
       },
       "lead": {
         "en": "From email-based drawing handovers to a platform that receives, extracts, validates and connects engineering data.",
         "ko": "메일로 주고받던 도면 납품을 접수·추출·검증·데이터 연계가 이어지는 플랫폼으로 전환했습니다."
       },
       "summary": {
-        "en": "Centralised drawing delivery, automated validation and downstream asset registration.",
-        "ko": "도면 납품 일원화, 자동 검증, 후속 자산 데이터 등록을 연결했습니다."
+        "en": "Automated drawing intake, extraction and validation to keep connected engineering data more consistent, current and rich in detail.",
+        "ko": "도면 접수·추출·검증을 자동화해 연계된 엔지니어링 데이터를 더 정확하고 신속하며 풍부하게 유지하도록 했습니다."
       },
       "stack": [
         "Python",
@@ -269,686 +981,14 @@
       "alt": {
         "en": "Drawing submissions connected to extraction, validation, review and reusable engineering records",
         "ko": "도면 접수부터 추출·검증·검토·정보 재활용까지 연결한 이미지"
-      }
-    },
-    {
-      "slug": "digital-twin",
-      "number": "02",
-      "period": "2023–2024",
-      "icon": "cube",
-      "image": "digital-twin-operations-v3.webp",
-      "title": {
-        "en": "3D Digital Twin Platform",
-        "ko": "3D 디지털 트윈 플랫폼"
       },
-      "category": {
-        "en": "CONNECTED ENGINEERING",
-        "ko": "설비 정보 통합"
+      "story_stage": {
+        "en": "Keep the information current",
+        "ko": "정보를 지속적으로 갱신하는 구조"
       },
-      "status": {
-        "en": "Production",
-        "ko": "운영"
-      },
-      "role": {
-        "en": "Primary Developer & Technical Project Lead",
-        "ko": "주 개발자 · 기술 프로젝트 리드"
-      },
-      "lead": {
-        "en": "A searchable 3D workspace connecting equipment location, operating status and information from eight MES/MIS and infrastructure systems.",
-        "ko": "설비 위치·운영 상태와 MES·MIS·인프라 8개 시스템의 정보를 검색 가능한 3D 업무 공간으로 연결했습니다."
-      },
-      "summary": {
-        "en": "Connected 3D equipment context with operational and engineering information across eight systems.",
-        "ko": "3D 설비 맥락에 8개 시스템의 운영·엔지니어링 정보를 연결했습니다."
-      },
-      "stack": [
-        "Python",
-        "REST APIs",
-        "3D web integration",
-        "Revit / BIM",
-        "ACC",
-        "MES / MIS"
-      ],
-      "metrics": [
-        [
-          "8",
-          {
-            "en": "connected MES/MIS & infrastructure systems",
-            "ko": "연계 MES·MIS·인프라 시스템"
-          }
-        ],
-        [
-          "~1.5M",
-          {
-            "en": "linked assets & components",
-            "ko": "연결 자산·컴포넌트"
-          }
-        ],
-        [
-          "~1,000",
-          {
-            "en": "users supported",
-            "ko": "지원 사용자"
-          }
-        ]
-      ],
-      "before": {
-        "en": "Find equipment, then search again.",
-        "ko": "설비를 찾은 뒤, 정보를 다시 검색."
-      },
-      "before_steps": [
-        {
-          "en": "Locate equipment in drawings or models",
-          "ko": "도면·모델에서 설비 위치 확인"
-        },
-        {
-          "en": "Open separate operational systems",
-          "ko": "각 운영 시스템에 따로 접속"
-        },
-        {
-          "en": "Manually connect IDs and context",
-          "ko": "식별자와 업무 맥락 수동 연결"
-        }
-      ],
-      "before_note": {
-        "en": "Physical location and operational context were separated across applications and engineering records.",
-        "ko": "물리적 위치와 운영 맥락이 애플리케이션·엔지니어링 자료에 분리돼 있었습니다."
-      },
-      "after": {
-        "en": "Select the asset, see its context.",
-        "ko": "설비를 선택하면 관련 맥락을 한곳에."
-      },
-      "after_steps": [
-        {
-          "en": "Search and select equipment in 3D",
-          "ko": "3D에서 설비 검색·선택"
-        },
-        {
-          "en": "Resolve linked system information",
-          "ko": "연계 시스템 정보 조회"
-        },
-        {
-          "en": "View location, status and related records",
-          "ko": "위치·상태·관련 자료 함께 확인"
-        }
-      ],
-      "after_note": {
-        "en": "The application/integration layers connect approximately 2 TB of models with engineering and operating information.",
-        "ko": "약 2TB의 모델과 엔지니어링·운영 정보를 애플리케이션·연계 계층으로 연결했습니다."
-      },
-      "flow": [
-        [
-          "cube",
-          {
-            "en": "Prepare model context",
-            "ko": "모델 맥락 준비"
-          },
-          "Revit + Python",
-          {
-            "en": "Preprocess model and equipment information for a searchable engineering workspace.",
-            "ko": "모델과 설비 정보를 전처리해 검색 가능한 엔지니어링 업무 공간을 준비합니다."
-          },
-          {
-            "en": "Separate preprocessing problems from interactive equipment lookup.",
-            "ko": "전처리 문제와 사용자 설비 조회 문제를 구분합니다."
-          }
-        ],
-        [
-          "search",
-          {
-            "en": "Search & select",
-            "ko": "검색·선택"
-          },
-          "3D web workspace",
-          {
-            "en": "Translate the selected object into equipment identity, location and the information needed for the user’s task.",
-            "ko": "선택한 객체를 설비 식별자·위치·업무에 필요한 정보로 연결합니다."
-          },
-          {
-            "en": "Scope information requests to the current selection.",
-            "ko": "현재 선택한 설비를 기준으로 정보 요청을 관리합니다."
-          }
-        ],
-        [
-          "api",
-          {
-            "en": "Connect systems",
-            "ko": "시스템 연계"
-          },
-          "REST APIs + MES / MIS",
-          {
-            "en": "Integrate information from eight MES/MIS and infrastructure systems into a shared operational context.",
-            "ko": "MES·MIS·인프라 8개 시스템의 정보를 공통 운영 맥락에 연결합니다."
-          },
-          {
-            "en": "Represent unavailable sources independently from the 3D model state.",
-            "ko": "정보 소스의 가용 상태와 3D 모델 상태를 별도로 표현합니다."
-          }
-        ],
-        [
-          "screen",
-          {
-            "en": "Show operating context",
-            "ko": "운영 맥락 표시"
-          },
-          "Location + status + records",
-          {
-            "en": "Display equipment location/status and related engineering information alongside the model.",
-            "ko": "모델과 함께 설비 위치·상태 및 관련 엔지니어링 정보를 표시합니다."
-          },
-          {
-            "en": "Prevent a late response for a previously selected asset from replacing the current context.",
-            "ko": "이전에 선택한 설비의 늦은 응답이 현재 맥락을 덮어쓰지 않도록 합니다."
-          }
-        ]
-      ],
-      "ownership": [
-        [
-          "code",
-          {
-            "en": "Application & integration layers",
-            "ko": "애플리케이션·연계 계층"
-          },
-          {
-            "en": "Delivered the MVP and production application/integration layers, connecting 3D navigation with operational data.",
-            "ko": "MVP부터 운영 애플리케이션·연계 계층까지 개발해 3D 탐색과 운영 데이터를 연결했습니다."
-          }
-        ],
-        [
-          "database",
-          {
-            "en": "Asset identity & data linking",
-            "ko": "설비 식별·데이터 연결"
-          },
-          {
-            "en": "Linked approximately 1.5 million assets and components with model and system context.",
-            "ko": "약 150만 자산·컴포넌트를 모델 및 시스템 맥락과 연결했습니다."
-          }
-        ],
-        [
-          "cube",
-          {
-            "en": "Model preprocessing",
-            "ko": "모델 전처리"
-          },
-          {
-            "en": "Developed Revit preprocessing tools and equipment location/status visualisation around approximately 2 TB of models.",
-            "ko": "약 2TB 모델을 대상으로 Revit 전처리 도구와 설비 위치·상태 시각화를 개발했습니다."
-          }
-        ],
-        [
-          "users",
-          {
-            "en": "Technical evaluation & rollout",
-            "ko": "기술 검토·적용"
-          },
-          {
-            "en": "Evaluated technologies with NVIDIA, AVEVA and Siemens, and supported adoption for approximately 1,000 users.",
-            "ko": "NVIDIA·AVEVA·Siemens와 기술을 검토하고 약 1,000명의 사용자 활용을 지원했습니다."
-          }
-        ]
-      ],
-      "decision": {
-        "en": "The 3D model is an entry point to operational work. Asset identity, request boundaries and independent information panels matter as much as rendering.",
-        "ko": "3D 모델은 운영 업무로 진입하는 출발점입니다. 렌더링만큼 설비 식별, 요청 경계, 정보 패널의 독립성이 중요합니다."
-      },
-      "checks": {
-        "en": "Rapid asset selection · reversed API response order · one unavailable source · missing asset mappings",
-        "ko": "빠른 설비 선택 전환 · API 응답 순서 역전 · 일부 소스 장애 · 설비 매핑 누락"
-      },
-      "result": {
-        "en": "Connected eight systems in a searchable 3D workspace, supporting approximately 1,000 users. Estimated annual productivity value: USD 2.3 million.",
-        "ko": "8개 시스템을 검색 가능한 3D 업무 공간으로 연결해 약 1,000명의 사용자를 지원했습니다. 연간 생산성 가치 추정치는 230만 달러입니다."
-      },
-      "estimate": true,
-      "alt": {
-        "en": "Selected equipment inside a 3D facility linked to operating trends, status and maintenance information",
-        "ko": "3D 공간에서 선택한 설비에 운영 추세·상태·정비 정보를 연결한 이미지"
-      }
-    },
-    {
-      "slug": "drawing-information",
-      "number": "03",
-      "period": "2021–2022",
-      "icon": "drawing",
-      "image": "drawing-information-v3.webp",
-      "title": {
-        "en": "Intelligent Drawing & Document Management",
-        "ko": "지능형 도면·문서 관리"
-      },
-      "category": {
-        "en": "ENGINEERING INFORMATION",
-        "ko": "엔지니어링 정보"
-      },
-      "status": {
-        "en": "Production",
-        "ko": "운영"
-      },
-      "role": {
-        "en": "Primary Developer & Systems Engineer",
-        "ko": "주 개발자 · 시스템 엔지니어"
-      },
-      "lead": {
-        "en": "Turned dispersed P&ID and PFD files into searchable engineering data, equipment-to-drawing links and automated review rules.",
-        "ko": "분산된 P&ID·PFD 파일을 검색 가능한 엔지니어링 데이터, 설비·도면 연결, 자동 검토 규칙으로 전환했습니다."
-      },
-      "summary": {
-        "en": "Equipment-to-drawing search and automated checks serving approximately 4,500 users.",
-        "ko": "설비·도면 검색과 자동 검증으로 약 4,500명의 사용자를 지원했습니다."
-      },
-      "stack": [
-        "Python",
-        "SQL",
-        "REST APIs",
-        "P&ID / PFD",
-        "Rule validation"
-      ],
-      "metrics": [
-        [
-          "~4,500",
-          {
-            "en": "users served",
-            "ko": "사용자"
-          }
-        ],
-        [
-          "$3.1M",
-          {
-            "en": "estimated annual productivity value",
-            "ko": "연간 생산성 가치 추정"
-          }
-        ],
-        [
-          "2021–22",
-          {
-            "en": "delivery period",
-            "ko": "구축 기간"
-          }
-        ]
-      ],
-      "before": {
-        "en": "Drawings were files to inspect.",
-        "ko": "도면은 일일이 열어 확인하는 파일."
-      },
-      "before_steps": [
-        {
-          "en": "Find dispersed P&ID and PFD files",
-          "ko": "분산된 P&ID·PFD 파일 탐색"
-        },
-        {
-          "en": "Manually locate equipment and versions",
-          "ko": "설비·버전 정보 수동 확인"
-        },
-        {
-          "en": "Repeat completeness and rule checks",
-          "ko": "완전성·설계 규칙 반복 검토"
-        }
-      ],
-      "before_note": {
-        "en": "Searching and reviewing depended on file discovery and repeated interpretation of engineering information.",
-        "ko": "파일을 찾고 엔지니어링 정보를 반복해서 해석해야 검색과 검토를 진행할 수 있었습니다."
-      },
-      "after": {
-        "en": "Drawings became connected information.",
-        "ko": "도면을 연결된 정보로 활용."
-      },
-      "after_steps": [
-        {
-          "en": "Structure drawing and equipment data",
-          "ko": "도면·설비 데이터 구조화"
-        },
-        {
-          "en": "Search equipment-to-drawing links",
-          "ko": "설비·도면 연결 검색"
-        },
-        {
-          "en": "Run delivery and design-rule checks",
-          "ko": "납품 완전성·설계 규칙 자동 검증"
-        }
-      ],
-      "after_note": {
-        "en": "Rules and object libraries make common checks repeatable and issues easier to review.",
-        "ko": "규칙과 객체 라이브러리로 공통 검증을 반복 실행하고 문제를 검토하기 쉽게 만들었습니다."
-      },
-      "flow": [
-        [
-          "drawing",
-          {
-            "en": "Structure source data",
-            "ko": "원천 데이터 구조화"
-          },
-          "P&ID / PFD + Python",
-          {
-            "en": "Structure drawing information and equipment references for search and reuse.",
-            "ko": "검색과 재활용을 위해 도면 정보와 설비 참조를 구조화합니다."
-          },
-          {
-            "en": "Preserve source and revision context when interpreting fields.",
-            "ko": "필드를 해석할 때 원본과 개정 맥락을 유지합니다."
-          }
-        ],
-        [
-          "database",
-          {
-            "en": "Link equipment & drawings",
-            "ko": "설비·도면 연결"
-          },
-          "SQL + object libraries",
-          {
-            "en": "Build equipment-to-drawing relationships, design rules and reusable object libraries.",
-            "ko": "설비·도면 관계, 설계 규칙, 재사용 가능한 객체 라이브러리를 구축합니다."
-          },
-          {
-            "en": "Expose ambiguous identifiers and conflicting versions for review.",
-            "ko": "모호한 식별자와 버전 충돌을 검토 대상으로 드러냅니다."
-          }
-        ],
-        [
-          "shield",
-          {
-            "en": "Validate delivery",
-            "ko": "납품 검증"
-          },
-          "Completeness + design rules",
-          {
-            "en": "Automate delivery-completeness and design-rule checks to identify submission issues.",
-            "ko": "납품 완전성·설계 규칙 검증을 자동화해 제출 자료의 문제를 식별합니다."
-          },
-          {
-            "en": "Keep a failed check connected to the relevant source information.",
-            "ko": "검증 실패 항목을 관련 원본 정보와 연결합니다."
-          }
-        ],
-        [
-          "search",
-          {
-            "en": "Search & review",
-            "ko": "검색·검토"
-          },
-          "Search interfaces + APIs",
-          {
-            "en": "Let engineering users find equipment context and review drawing issues through the system.",
-            "ko": "현업 사용자가 시스템에서 설비 맥락을 찾고 도면 문제를 검토하도록 합니다."
-          },
-          {
-            "en": "Distinguish a search with no results from information that needs correction.",
-            "ko": "검색 결과 없음과 정보 수정이 필요한 상태를 구분합니다."
-          }
-        ]
-      ],
-      "ownership": [
-        [
-          "database",
-          {
-            "en": "Engineering data modelling",
-            "ko": "엔지니어링 데이터 모델링"
-          },
-          {
-            "en": "Structured P&ID/PFD data and the equipment-to-drawing relationships used by application search.",
-            "ko": "P&ID·PFD 데이터와 애플리케이션 검색에 필요한 설비·도면 관계를 구조화했습니다."
-          }
-        ],
-        [
-          "code",
-          {
-            "en": "Rule and library development",
-            "ko": "검증 규칙·라이브러리 개발"
-          },
-          {
-            "en": "Built design rules, object libraries and automated completeness checks to support engineering review.",
-            "ko": "설계 규칙, 객체 라이브러리, 자동 완전성 검증을 개발해 엔지니어링 검토를 지원했습니다."
-          }
-        ],
-        [
-          "screen",
-          {
-            "en": "User-oriented search",
-            "ko": "현업 중심 검색"
-          },
-          {
-            "en": "Connected domain knowledge with searchable information so users could work from equipment context rather than file locations.",
-            "ko": "도메인 지식과 검색 가능한 정보를 연결해 사용자가 파일 위치보다 설비 맥락을 중심으로 업무를 수행하도록 했습니다."
-          }
-        ]
-      ],
-      "decision": {
-        "en": "The important step is preserving engineering meaning while structuring files: identifiers, source references and rule results must remain traceable.",
-        "ko": "파일을 구조화하면서 엔지니어링 의미를 보존하는 것이 핵심입니다. 식별자·원본 참조·규칙 검증 결과를 추적할 수 있어야 합니다."
-      },
-      "checks": {
-        "en": "Missing submissions · duplicate identifiers · revision conflicts · incomplete fields · failed design rules",
-        "ko": "납품 누락 · 식별자 중복 · 개정 충돌 · 필드 누락 · 설계 규칙 위반"
-      },
-      "result": {
-        "en": "Served approximately 4,500 users through searchable drawing information and automated delivery/design-rule checks. Estimated annual productivity value: USD 3.1 million.",
-        "ko": "검색 가능한 도면 정보와 납품·설계 규칙 자동 검증으로 약 4,500명의 사용자를 지원했습니다. 연간 생산성 가치 추정치는 310만 달러입니다."
-      },
-      "estimate": true,
-      "alt": {
-        "en": "Engineering drawings connected to structured fields, equipment references and search results",
-        "ko": "엔지니어링 도면을 구조화한 필드·설비 참조·검색 결과와 연결한 이미지"
-      }
-    },
-    {
-      "slug": "asset-master-data",
-      "number": "04",
-      "period": "2020–2021",
-      "icon": "database",
-      "image": "asset-master-data-v3.webp",
-      "title": {
-        "en": "Facility Master Data Platform",
-        "ko": "설비 마스터 데이터 플랫폼"
-      },
-      "category": {
-        "en": "DATA FOUNDATIONS",
-        "ko": "데이터 기반 구축"
-      },
-      "status": {
-        "en": "Production",
-        "ko": "운영"
-      },
-      "role": {
-        "en": "Primary Developer & Systems Engineer",
-        "ko": "주 개발자 · 시스템 엔지니어"
-      },
-      "lead": {
-        "en": "Built a central equipment-data platform with standardised identifiers, lifecycle workflows and ETL/EAI integrations across business systems.",
-        "ko": "설비 식별자·생애주기 업무를 표준화하고 업무 시스템 간 ETL·EAI를 연결하는 중앙 데이터 플랫폼을 구축했습니다."
-      },
-      "summary": {
-        "en": "Standardised equipment data for approximately 700 users, with a reported 87% improvement in master-data work efficiency.",
-        "ko": "약 700명을 위한 설비 데이터 표준화로 마스터 데이터 업무 효율 87% 개선이 보고됐습니다."
-      },
-      "stack": [
-        "Python",
-        "SQL",
-        "Data modelling",
-        "ETL / EAI",
-        "BI monitoring"
-      ],
-      "metrics": [
-        [
-          "~700",
-          {
-            "en": "users supported",
-            "ko": "지원 사용자"
-          }
-        ],
-        [
-          "87%",
-          {
-            "en": "reported work-efficiency improvement",
-            "ko": "보고된 업무 효율 개선"
-          }
-        ],
-        [
-          "2020–21",
-          {
-            "en": "delivery period",
-            "ko": "구축 기간"
-          }
-        ]
-      ],
-      "before": {
-        "en": "The same asset, different records.",
-        "ko": "같은 설비, 서로 다른 데이터."
-      },
-      "before_steps": [
-        {
-          "en": "Manage equipment in separate systems",
-          "ko": "시스템별로 설비 데이터 관리"
-        },
-        {
-          "en": "Reconcile identifiers by hand",
-          "ko": "식별자 수작업 대조"
-        },
-        {
-          "en": "Correct missing and duplicate records",
-          "ko": "누락·중복 데이터 개별 수정"
-        }
-      ],
-      "before_note": {
-        "en": "Quality, maintenance and work systems could hold inconsistent descriptions of the same equipment.",
-        "ko": "품질·정비·작업 시스템에서 같은 설비에 대한 정보가 일치하지 않을 수 있었습니다."
-      },
-      "after": {
-        "en": "Shared identity, consistent lifecycle.",
-        "ko": "공통 식별자와 일관된 생애주기."
-      },
-      "after_steps": [
-        {
-          "en": "Standardise identifiers and workflows",
-          "ko": "식별자·업무 흐름 표준화"
-        },
-        {
-          "en": "Validate and integrate records",
-          "ko": "데이터 검증·연계"
-        },
-        {
-          "en": "Monitor quality and integration status",
-          "ko": "데이터 품질·연계 상태 모니터링"
-        }
-      ],
-      "after_note": {
-        "en": "A central platform connects business rules, validation and downstream use instead of relying on repeated reconciliation.",
-        "ko": "중앙 플랫폼에서 업무 규칙·검증·후속 활용을 연결해 반복 대조에 의존하던 흐름을 개선했습니다."
-      },
-      "flow": [
-        [
-          "users",
-          {
-            "en": "Define common rules",
-            "ko": "공통 기준 정의"
-          },
-          "Asset identifiers + lifecycle",
-          {
-            "en": "Align equipment identifiers and lifecycle workflows across quality, maintenance and work systems.",
-            "ko": "품질·정비·작업 시스템 간 설비 식별자와 생애주기 업무 기준을 정리합니다."
-          },
-          {
-            "en": "Make ownership and required information explicit before integrating records.",
-            "ko": "데이터를 연계하기 전에 관리 주체와 필수 정보를 명확하게 합니다."
-          }
-        ],
-        [
-          "database",
-          {
-            "en": "Validate master records",
-            "ko": "마스터 데이터 검증"
-          },
-          "SQL + validation rules",
-          {
-            "en": "Detect missing, duplicate and inconsistent records in the central equipment-data model.",
-            "ko": "중앙 설비 데이터 모델에서 누락·중복·불일치를 식별합니다."
-          },
-          {
-            "en": "Keep identifier conflicts visible rather than silently merging records.",
-            "ko": "식별자 충돌을 임의 병합하지 않고 검토할 수 있도록 표시합니다."
-          }
-        ],
-        [
-          "api",
-          {
-            "en": "Integrate systems",
-            "ko": "업무 시스템 연계"
-          },
-          "ETL / EAI",
-          {
-            "en": "Move validated information between the platform and connected business systems.",
-            "ko": "검증된 정보를 플랫폼과 연계 업무 시스템 사이에서 전달합니다."
-          },
-          {
-            "en": "Track integration failures independently from master-data quality issues.",
-            "ko": "연계 실패와 마스터 데이터 품질 문제를 별도로 추적합니다."
-          }
-        ],
-        [
-          "pulse",
-          {
-            "en": "Monitor quality",
-            "ko": "품질 모니터링"
-          },
-          "BI dashboards",
-          {
-            "en": "Make data quality and integration status visible for ongoing operational follow-up.",
-            "ko": "지속적인 운영 조치를 위해 데이터 품질과 연계 상태를 시각화합니다."
-          },
-          {
-            "en": "Show actionable exceptions and the system context required for correction.",
-            "ko": "수정에 필요한 시스템 맥락과 조치 가능한 예외를 제공합니다."
-          }
-        ]
-      ],
-      "ownership": [
-        [
-          "database",
-          {
-            "en": "Platform & database design",
-            "ko": "플랫폼·DB 설계"
-          },
-          {
-            "en": "Designed and built the central equipment-data platform and standardised its identifiers and lifecycle workflows.",
-            "ko": "중앙 설비 데이터 플랫폼을 설계·개발하고 식별자와 생애주기 업무 흐름을 표준화했습니다."
-          }
-        ],
-        [
-          "api",
-          {
-            "en": "Validation & ETL/EAI",
-            "ko": "검증·ETL·EAI"
-          },
-          {
-            "en": "Built validation and integrations to identify missing, duplicate and inconsistent records across systems.",
-            "ko": "시스템 간 누락·중복·불일치를 식별하는 검증 기능과 연계 기능을 개발했습니다."
-          }
-        ],
-        [
-          "pulse",
-          {
-            "en": "Operational quality monitoring",
-            "ko": "운영 품질 모니터링"
-          },
-          {
-            "en": "Added BI monitoring so data-quality and integration problems could be identified and followed up.",
-            "ko": "데이터 품질·연계 문제를 확인하고 후속 조치할 수 있도록 BI 모니터링을 추가했습니다."
-          }
-        ]
-      ],
-      "decision": {
-        "en": "A shared table alone does not create consistent data. Common identifiers, lifecycle rules, validation and integration visibility have to work together.",
-        "ko": "테이블을 공유하는 것만으로 데이터가 일관되지는 않습니다. 공통 식별자, 생애주기 규칙, 검증, 연계 가시성이 함께 작동해야 합니다."
-      },
-      "checks": {
-        "en": "Missing required values · identifier collisions · repeated imports · rejected updates · integration failures",
-        "ko": "필수 값 누락 · 식별자 충돌 · 반복 수집 · 수정 반려 · 연계 실패"
-      },
-      "result": {
-        "en": "Supported approximately 700 users and a reported 87% improvement in master-data work efficiency through standardised workflows, validation and system integration.",
-        "ko": "업무 흐름 표준화·검증·시스템 연계로 약 700명의 사용자를 지원했으며, 마스터 데이터 업무 효율 87% 개선이 보고됐습니다."
-      },
-      "alt": {
-        "en": "Distributed asset records connected to a shared registry and consistent equipment information",
-        "ko": "분산된 자산 데이터를 공통 레지스트리와 일관된 설비 정보에 연결한 이미지"
+      "story_context": {
+        "en": "Connected systems and a digital twin depend on trustworthy, current information. I built the delivery platform to shorten update cycles, improve consistency and capture richer data from incoming engineering documents.",
+        "ko": "시스템 연계와 디지털 트윈의 가치는 데이터가 최신 상태와 정합성을 유지할 때 이어집니다. 도면 납품 플랫폼을 구축해 갱신 주기를 줄이고 정합성을 높이며 제출 도면에서 더 풍부한 정보를 확보하도록 했습니다."
       }
     },
     {
@@ -978,8 +1018,8 @@
         "ko": "인프라 데이터 운영을 위해 데이터셋 관리 기준, 운영 분석, ETL 작업 모니터링 애플리케이션을 연결했습니다."
       },
       "summary": {
-        "en": "Owned datasets from eight infrastructure systems and built FastAPI/Oracle/Vue.js monitoring for ETL operations.",
-        "ko": "8개 인프라 시스템의 데이터셋을 담당하고 FastAPI·Oracle·Vue.js 기반 ETL 모니터링을 개발했습니다."
+        "en": "Improved efficiency across project operations through dataset management, data-quality dashboards and automated ETL monitoring.",
+        "ko": "프로젝트 운영 전반에서 데이터셋 관리·품질 대시보드·ETL 모니터링 자동화로 업무 효율을 높였습니다."
       },
       "stack": [
         "FastAPI",
@@ -1156,6 +1196,14 @@
       "alt": {
         "en": "Operational health, data freshness and quality information connected in a reporting workspace",
         "ko": "운영 상태·데이터 최신성·품질 정보를 연결한 분석 화면 이미지"
+      },
+      "story_stage": {
+        "en": "Parallel improvement · data operations",
+        "ko": "병행 개선 · 데이터 운영"
+      },
+      "story_context": {
+        "en": "Alongside platform development, I improved the work around it: dataset management, data-quality visibility and operational monitoring. This was a parallel improvement stream, not a later phase of the four-platform sequence.",
+        "ko": "플랫폼 개발과 병행해 데이터셋 관리, 데이터 품질 가시화, 운영 모니터링을 개선했습니다. 네 플랫폼 이후의 단계가 아니라 각 프로젝트의 운영 효율을 높이는 병행 작업입니다."
       }
     },
     {
@@ -1185,8 +1233,8 @@
         "ko": "엔지니어링 조사를 지원하기 위해 스키마를 이해하는 자연어 SQL, API·DB 조회, 유사 사례 검색을 프로토타입으로 개발했습니다."
       },
       "summary": {
-        "en": "Amazon Bedrock AgentCore prototypes for engineering queries, data-value review and quality-case retrieval.",
-        "ko": "엔지니어링 질의·데이터 값 검토·품질 사례 검색을 위한 Amazon Bedrock AgentCore 프로토타입입니다."
+        "en": "Prototyping Bedrock AgentCore assistants to query engineering data, review values and retrieve quality cases with supporting evidence.",
+        "ko": "Bedrock AgentCore로 엔지니어링 데이터 질의·값 검토·품질 사례 검색을 지원하는 근거 기반 어시스턴트를 프로토타이핑하고 있습니다."
       },
       "stack": [
         "Amazon Bedrock AgentCore",
@@ -1362,6 +1410,14 @@
       "alt": {
         "en": "Engineering questions connected to schema context, evidence retrieval and review",
         "ko": "엔지니어링 질문을 스키마 맥락·근거 조회·검토로 연결한 흐름"
+      },
+      "story_stage": {
+        "en": "Exploration · engineering assistants",
+        "ko": "확장 실험 · 엔지니어링 어시스턴트"
+      },
+      "story_context": {
+        "en": "As AI changes how engineering work is done, I am exploring how assistants can use structured data and past cases. The work is a prototype, with evidence retrieval and human review kept central.",
+        "ko": "AI로 업무 방식이 바뀌는 흐름에 맞춰 구조화된 데이터와 과거 사례를 활용하는 어시스턴트를 실험하고 있습니다. 근거 조회와 사람의 검토를 중심에 둔 프로토타입 단계입니다."
       }
     }
   ]
