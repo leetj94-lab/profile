@@ -41,7 +41,7 @@ An explicit language choice is remembered when storage is available. Language ch
 
 Project periods, roles and quantitative outcomes follow the supplied resume. Estimated productivity values retain their estimation basis; engineering agents remain a prototype. Protected source code, real system screenshots, operational data and detailed internal architecture are excluded. AI-generated illustrations are disclosed.
 
-The AI philosophy explains engineering judgment, shared `SKILL.md` instructions for UI/code/testing standards, reusable interfaces, acceptance criteria and upfront exception/test scenarios. No API keys, analytics trackers or employer data are required.
+The AI section explains reusable AI skills for UI, API, testing, reliability and code review. Public copy uses capability labels rather than instruction filenames; shared conventions guide generation across tasks and contributors, followed by review, verification and skill refinement. No API keys, analytics trackers or employer data are required.
 
 ## Project narrative and role wording
 
