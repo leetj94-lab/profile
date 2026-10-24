@@ -57,6 +57,20 @@ for name in ['index.html','index.ko.html']:
     assert 'career-growth' in about and 'project-journey' in html
     assert html.count('class="project-rollout"')==1
     assert html.count('class="project-context"')==6
+    assert html.count('class="case-section engineering-depth"')==6
+    assert html.count('class="implementation-scope"')==6
+    assert html.count('class="verification-detail"')==6
+    assert html.count('class="mes-operations"')==1
+    assert not re.search(r'hypothetical|placeholder|lorem ipsum|가상시나리오|가상 시나리오|추측한 정보|사실과 다릅니다',html,re.I)
+    for record in data['projects']:
+        section=html.split('id="project-'+record['slug']+'"',1)[1]
+        for key in ['engineering','system-flow','my-build','results']:
+            assert 'id="project-'+record['slug']+'-'+key+'"' in section
+        for decision in record['engineering']['decisions']:
+            for key in ['title','challenge','choice','reason']:assert escape(decision[key]['en' if name=='index.html' else 'ko']) in section
+        for v in record['engineering']['verification']:
+            assert escape(v['expected']['en' if name=='index.html' else 'ko']) in section
+
     master=html.split('id="project-asset-master-data"',1)[1].split('id="project-drawing-information"',1)[0]
     assert 'class="project-rollout"' in master
 

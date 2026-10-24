@@ -1,5 +1,6 @@
 """AI practice copy and the selected sidebar presentation."""
 import re
+from engineering import render_operations
 
 def ai_section(lang,S,icon):
     s=f'''<section class="ai-section" id="approach"><div class="wrap"><div class="section-heading"><div><p class="eyebrow">02 / {S('AI ENGINEERING PHILOSOPHY','AI 활용 철학',lang)}</p><h2>{S('AI changes how we build.','AI가 바꾼 개발 방식.',lang)}<br><em>{S('Expertise shapes the quality.','품질을 결정하는 전문성.',lang)}</em></h2></div><p>{S('I believe AI has changed the way systems are developed. Code generation is widely accessible, but the quality of the result still depends on domain knowledge, engineering experience and the standards we apply.','AI로 시스템 개발의 패러다임이 바뀌었다고 생각합니다. 누구나 코드를 생성할 수 있는 환경에서도 결과의 품질은 도메인 이해, 엔지니어링 경험, 적용하는 기준에 따라 달라집니다.',lang)}</p></div><p class="ai-thesis">{S('I use AI to turn engineering judgment into a repeatable team practice: define the problem, agree on standards, generate within those boundaries, then review and verify.','AI를 활용해 엔지니어링 판단을 팀이 반복 적용할 수 있는 방식으로 만듭니다. 문제를 정의하고, 표준을 정하고, 그 기준 안에서 코드를 생성한 뒤 검토하고 검증합니다.',lang)}</p><div class="ai-pillars">'''
@@ -39,6 +40,7 @@ def render_v2(lang,c):
     for ident,pattern,en,ko in [('approach',r'<section class="ai-section" id="approach">.*?</section>','AI philosophy','AI 활용 철학'),('about',r'<section class="about wrap" id="about">.*?</section>','Experience','경력'),('contact',r'<section class="contact" id="contact">.*?</section>','Contact','연락처')]:
         block=re.search(pattern,original,re.S).group()
         block=block.replace('<section ', '<section data-v2-panel="'+ident+'" data-v2-label="'+S(en,ko,lang)+'" hidden ',1)
+        if ident=='about':block=block.replace('</section>',render_operations(lang,S,icon)+'</section>')
         s+=block
     for p in P:
         key='project-'+p['slug']; rendered=c['project'](p,lang)

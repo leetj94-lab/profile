@@ -6,6 +6,7 @@ from datetime import datetime
 from zoneinfo import ZoneInfo
 import json, hashlib
 from presentation import ai_section, render_v2
+from engineering import render_engineering
 
 ROOT=Path(__file__).resolve().parents[1]
 DATA=json.loads((ROOT/'content/portfolio.json').read_text())
@@ -85,7 +86,7 @@ def project(p,lang):
     s+='<section class="case-hero"><div><div class="project-meta"><span>'+text(p['category'],lang)+'</span><span>'+p['period']+'</span></div><h1>'+text(p['title'],lang)+'</h1><p class="case-lead">'+text(p['lead'],lang)+'</p><p class="role-line"><span class="status-pill">'+text(p['status'],lang)+'</span>'+text(p['role'],lang)+'</p></div><figure class="case-art">'+art(p,lang,prefix)+'</figure></section>'
     if p['image']:s+='<p class="art-note">'+S('AI-generated concept illustration for understanding the workflow; not an actual system screenshot.','업무 흐름 이해를 돕기 위해 AI로 생성한 컨셉 이미지이며 실제 시스템 화면은 아닙니다.',lang)+'</p>'
     s+='<div class="case-metrics">'+''.join('<div><strong class="'+('long-metric' if len(v)>8 else '')+'">'+E(v)+'</strong><span>'+text(label,lang)+'</span></div>' for v,label in p['metrics'])+'</div>'
-    s+='<nav class="case-jumps" aria-label="'+S('Case study sections','상세 페이지 목차',lang)+'">'+''.join('<a href="#'+ident+'">'+S(en,ko,lang)+' ↓</a>' for ident,en,ko in [('before-after','Before & after','개선 전후'),('system-flow','System flow','처리 흐름'),('my-build','What I built','개발 영역'),('results','Results','개선 결과')])+'</nav>'+disclosure(lang)
+    s+='<nav class="case-jumps" aria-label="'+S('Case study sections','상세 페이지 목차',lang)+'">'+''.join('<a href="#'+ident+'">'+S(en,ko,lang)+' ↓</a>' for ident,en,ko in [('before-after','Before & after','개선 전후'),('system-flow','System flow','처리 흐름'),('my-build','What I built','개발 영역'),('engineering','Decisions & checks','설계 판단·검증'),('results','Results','개선 결과')])+'</nav>'+disclosure(lang)
     s+='<section class="case-section" id="before-after"><p class="eyebrow">01 / '+S('WHAT CHANGED','무엇이 달라졌나',lang)+'</p><h2>'+S('The workflow, before and after.','업무 흐름의 개선 전후.',lang)+'</h2><div class="comparison">'
     for key,label,ic in [('before',S('BEFORE','개선 전',lang),'mail'),('after',S('AFTER','개선 후',lang),'check')]:
         graphic=''
@@ -100,9 +101,9 @@ def project(p,lang):
     s+='</ol><div class="flow-panels" aria-live="polite">'
     for i,(ic,title,tech,description,safeguard) in enumerate(p['flow']):
         s+='<article class="flow-panel" id="flow-panel-'+str(i)+'" data-flow-panel="'+str(i)+'" '+('hidden' if i else '')+'><div class="panel-heading">'+icon(ic)+'<h3>'+text(title,lang)+'</h3><span>'+E(tech)+'</span></div><p>'+text(description,lang)+'</p><div class="safeguard">'+icon('shield')+'<p>'+text(safeguard,lang)+'</p></div></article>'
-    s+='</div></div></section><section class="case-section" id="my-build"><p class="eyebrow">03 / '+S('MY ENGINEERING OWNERSHIP','직접 개발한 영역',lang)+'</p><h2>'+S('What I designed, built and supported.','설계하고 개발하고 운영한 영역.',lang)+'</h2>'+tags(p)+'<div class="ownership-grid">'
+    s+='</div></div></section><section class="case-section" id="my-build"><p class="eyebrow">03 / '+S('MY ENGINEERING OWNERSHIP','직접 개발한 영역',lang)+'</p><h2>'+S('What I designed, built and supported.','설계하고 개발하고 운영한 영역.',lang)+'</h2><p class="implementation-scope">'+text(p['engineering']['scope'],lang)+'</p>'+tags(p)+'<div class="ownership-grid">'
     for ic,title,description in p['ownership']:s+='<article>'+icon(ic)+'<h3>'+text(title,lang)+'</h3><p>'+text(description,lang)+'</p></article>'
-    s+='</div><div class="engineering-principle"><span class="mini-label">'+S('ENGINEERING JUDGMENT','설계의 핵심 판단',lang)+'</span><p>'+text(p['decision'],lang)+'</p></div><div class="checks"><span class="mini-label">'+S('EXCEPTION & VALIDATION FOCUS','예외·검증 시나리오',lang)+'</span><p>'+text(p['checks'],lang)+'</p></div></section><section class="case-section results" id="results"><p class="eyebrow">04 / '+S('OPERATIONAL RESULT','개선 결과',lang)+'</p><h2>'+S('What changed in practice.','실무에서 달라진 결과.',lang)+'</h2><p>'+text(p['result'],lang)+'</p>'
+    s+='</div></section>'+render_engineering(p,lang,S,text,icon)+'<section class="case-section results" id="results"><p class="eyebrow">05 / '+S('OPERATIONAL RESULT','개선 결과',lang)+'</p><h2>'+S('What changed in practice.','실무에서 달라진 결과.',lang)+'</h2><p>'+text(p['result'],lang)+'</p>'
     if p.get('rollout'):s+='<aside class="project-rollout"><span class="mini-label">'+text(p['rollout'],lang)+'</span><p>'+text(p['rollout_note'],lang)+'</p></aside>'
     if p.get('estimate'):s+='<small>'+S('Productivity value estimates are based on workforce size, hourly pay and efficiency gains.','생산성 가치는 인원 규모·시간당 인건비·효율 개선을 기반으로 추정한 값입니다.',lang)+'</small>'
     nxt=PROJECTS[(PROJECTS.index(p)+1)%len(PROJECTS)]

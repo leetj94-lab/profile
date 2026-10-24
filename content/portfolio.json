@@ -34,9 +34,11 @@
       "stack": [
         "Python",
         "SQL",
-        "Data modelling",
+        "FastAPI",
+        "Vue.js",
+        "REST APIs",
         "ETL / EAI",
-        "BI monitoring"
+        "Linux / Nginx"
       ],
       "metrics": [
         [
@@ -112,14 +114,14 @@
             "en": "Define common rules",
             "ko": "공통 기준 정의"
           },
-          "Asset identifiers + lifecycle",
+          "Canonical asset IDs · source ownership",
           {
-            "en": "Align equipment identifiers and lifecycle workflows across quality, maintenance and work systems.",
-            "ko": "품질·정비·작업 시스템 간 설비 식별자와 생애주기 업무 기준을 정리합니다."
+            "en": "Defined canonical asset IDs, mapped local identifiers and assigned authoritative sources by attribute. Lifecycle transitions cover creation, modification and retirement.",
+            "ko": "공통 설비 ID와 시스템별 코드 매핑을 정의하고 속성별 원천 관리 주체를 정했습니다. 신규·변경·폐기의 생애주기 전이를 함께 관리합니다."
           },
           {
-            "en": "Make ownership and required information explicit before integrating records.",
-            "ko": "데이터를 연계하기 전에 관리 주체와 필수 정보를 명확하게 합니다."
+            "en": "Retain source keys and ownership; conflicting records require review rather than automatic merging.",
+            "ko": "원천 키와 관리 주체를 보존하고 충돌 레코드는 자동 병합하지 않고 검토 대상으로 분리합니다."
           }
         ],
         [
@@ -128,14 +130,14 @@
             "en": "Validate master records",
             "ko": "마스터 데이터 검증"
           },
-          "SQL + validation rules",
+          "SQL constraints · Python validation",
           {
-            "en": "Detect missing, duplicate and inconsistent records in the central equipment-data model.",
-            "ko": "중앙 설비 데이터 모델에서 누락·중복·불일치를 식별합니다."
+            "en": "Loaded incoming changes into staging and compared required attributes, identifier uniqueness and parent/child relationships against the current master.",
+            "ko": "수신 변경을 검수용 영역에 적재하고 필수 속성·식별자 고유성·상하위 관계를 현재 기준정보와 대조합니다."
           },
           {
-            "en": "Keep identifier conflicts visible rather than silently merging records.",
-            "ko": "식별자 충돌을 임의 병합하지 않고 검토할 수 있도록 표시합니다."
+            "en": "Apply approved changes within a transaction; preserve previous values and the reason for change.",
+            "ko": "승인 변경은 트랜잭션으로 반영하고 이전 값과 변경 사유를 보존합니다."
           }
         ],
         [
@@ -144,14 +146,14 @@
             "en": "Integrate systems",
             "ko": "업무 시스템 연계"
           },
-          "ETL / EAI",
+          "ETL / EAI · target adapters",
           {
-            "en": "Move validated information between the platform and connected business systems.",
-            "ko": "검증된 정보를 플랫폼과 연계 업무 시스템 사이에서 전달합니다."
+            "en": "Converted approved master changes into target-specific payloads. Tracked target, asset, revision and delivery status independently from the source record.",
+            "ko": "승인된 기준정보 변경을 대상별 연계 형식으로 변환합니다. 대상·설비·개정·전송 상태를 원본 레코드와 구분해 추적합니다."
           },
           {
-            "en": "Track integration failures independently from master-data quality issues.",
-            "ko": "연계 실패와 마스터 데이터 품질 문제를 별도로 추적합니다."
+            "en": "Replays use asset and revision keys; retirement events preserve references needed by historical records.",
+            "ko": "재전송은 설비·개정 키를 기준으로 하며 폐기된 설비도 과거 이력에 필요한 참조를 보존합니다."
           }
         ],
         [
@@ -160,14 +162,14 @@
             "en": "Monitor quality",
             "ko": "품질 모니터링"
           },
-          "BI dashboards",
+          "SQL reconciliation · BI dashboards",
           {
-            "en": "Make data quality and integration status visible for ongoing operational follow-up.",
-            "ko": "지속적인 운영 조치를 위해 데이터 품질과 연계 상태를 시각화합니다."
+            "en": "Compared source and target snapshots to surface missing assets, mismatched revisions and failed deliveries in an actionable exception queue.",
+            "ko": "원천·대상 스냅샷을 비교해 설비 누락·개정 불일치·전송 실패를 조치 가능한 예외 목록으로 제공합니다."
           },
           {
-            "en": "Show actionable exceptions and the system context required for correction.",
-            "ko": "수정에 필요한 시스템 맥락과 조치 가능한 예외를 제공합니다."
+            "en": "Distinguish an approved business difference from an integration failure; retain the owner and action history.",
+            "ko": "승인된 업무상 차이와 연계 실패를 구분하고 담당자와 조치 이력을 유지합니다."
           }
         ]
       ],
@@ -237,6 +239,104 @@
       "rollout_note": {
         "en": "After developing the master-data platform, I travelled to the U.S. to deploy it at the Austin and Taylor FABs and support adoption with local engineering users.",
         "ko": "기준정보 시스템 개발 후 미국 Austin·Taylor FAB 배포를 위해 출장했으며, 현지 엔지니어와 시스템 적용 및 활용을 지원했습니다."
+      },
+      "engineering": {
+        "scope": {
+          "en": "I designed the canonical data model, validation and mapping services, user workflows and reconciliation views, and supported the U.S. rollout.",
+          "ko": "공통 데이터 모델, 검증·매핑 서비스, 사용자 업무 흐름, 대사 화면을 설계·개발하고 미국 배포를 지원했습니다."
+        },
+        "states": [
+          {
+            "en": "Source change",
+            "ko": "원천 변경"
+          },
+          {
+            "en": "Validated",
+            "ko": "검증"
+          },
+          {
+            "en": "Master approved",
+            "ko": "기준정보 승인"
+          },
+          {
+            "en": "Targets reconciled",
+            "ko": "대상 대사"
+          }
+        ],
+        "recovery": {
+          "en": "Conflicting identity → owner review; failed target → replay; stale snapshot → defer comparison.",
+          "ko": "식별자 충돌은 관리 주체 검토, 대상 오류는 재전송, 오래된 스냅샷은 비교 보류로 처리합니다."
+        },
+        "decisions": [
+          {
+            "title": {
+              "en": "A shared identity, not a shared table",
+              "ko": "테이블 공유보다 식별 기준 통일"
+            },
+            "challenge": {
+              "en": "Different systems described the same equipment with different identifiers and update rules.",
+              "ko": "동일 설비를 시스템마다 다른 코드와 갱신 규칙으로 관리했습니다."
+            },
+            "choice": {
+              "en": "Introduced a canonical ID and explicit source-to-target mappings with attribute ownership.",
+              "ko": "공통 ID, 원천·대상 매핑, 속성별 관리 주체를 정의했습니다."
+            },
+            "reason": {
+              "en": "Local systems keep their working codes while integrations use a stable identity.",
+              "ko": "기존 시스템의 업무 코드는 유지하면서 안정적인 공통 식별자로 연계할 수 있습니다."
+            }
+          },
+          {
+            "title": {
+              "en": "Reconcile after delivery",
+              "ko": "전송 이후 대사까지 설계"
+            },
+            "challenge": {
+              "en": "A successful send did not prove that every target held the same revision.",
+              "ko": "전송 성공만으로 모든 대상의 개정 일치를 보장할 수 없었습니다."
+            },
+            "choice": {
+              "en": "Compared expected master revisions with target snapshots and tracked exceptions by owner.",
+              "ko": "기준정보의 기대 개정과 대상 스냅샷을 비교하고 예외별 담당자를 관리했습니다."
+            },
+            "reason": {
+              "en": "The extra reconciliation step exposes silent drift and supports targeted correction.",
+              "ko": "별도 대사 과정으로 드러나지 않는 불일치를 찾고 필요한 건만 수정할 수 있습니다."
+            }
+          }
+        ],
+        "verification": [
+          {
+            "condition": {
+              "en": "Two local codes map to conflicting identities",
+              "ko": "시스템별 코드의 식별 충돌"
+            },
+            "expected": {
+              "en": "Hold the mapping for review without merging unrelated assets.",
+              "ko": "서로 다른 설비를 병합하지 않고 매핑을 검토 보류합니다."
+            }
+          },
+          {
+            "condition": {
+              "en": "A retired asset has historical work orders",
+              "ko": "폐기 설비에 과거 작업 이력 존재"
+            },
+            "expected": {
+              "en": "Block new use while preserving historical references.",
+              "ko": "신규 사용을 제한하되 과거 참조는 보존합니다."
+            }
+          },
+          {
+            "condition": {
+              "en": "A target receives the same revision again",
+              "ko": "동일 개정 재수신"
+            },
+            "expected": {
+              "en": "Apply idempotently and retain one effective master state.",
+              "ko": "중복 반영 없이 하나의 유효 기준정보 상태를 유지합니다."
+            }
+          }
+        ]
       }
     },
     {
@@ -272,9 +372,11 @@
       "stack": [
         "Python",
         "SQL",
-        "REST APIs",
+        "FastAPI",
+        "Vue.js",
+        "APS APIs",
         "P&ID / PFD",
-        "Rule validation"
+        "REST APIs"
       ],
       "metrics": [
         [
@@ -350,14 +452,14 @@
             "en": "Structure source data",
             "ko": "원천 데이터 구조화"
           },
-          "P&ID / PFD + Python",
+          "Python extraction adapters · APS APIs",
           {
-            "en": "Structure drawing information and equipment references for search and reuse.",
-            "ko": "검색과 재활용을 위해 도면 정보와 설비 참조를 구조화합니다."
+            "en": "Parsed drawing properties and object references into a common schema, retaining drawing number, revision and source-object identity.",
+            "ko": "도면 속성과 객체 참조를 공통 스키마로 변환하고 도면 번호·개정·원본 객체 식별자를 보존합니다."
           },
           {
-            "en": "Preserve source and revision context when interpreting fields.",
-            "ko": "필드를 해석할 때 원본과 개정 맥락을 유지합니다."
+            "en": "Route unreadable files and unsupported properties to review without losing the submitted source.",
+            "ko": "읽을 수 없는 파일과 지원하지 않는 속성은 원본을 보존한 채 검토 대상으로 보냅니다."
           }
         ],
         [
@@ -366,14 +468,14 @@
             "en": "Link equipment & drawings",
             "ko": "설비·도면 연결"
           },
-          "SQL + object libraries",
+          "SQL mappings · object library",
           {
-            "en": "Build equipment-to-drawing relationships, design rules and reusable object libraries.",
-            "ko": "설비·도면 관계, 설계 규칙, 재사용 가능한 객체 라이브러리를 구축합니다."
+            "en": "Matched extracted tags to canonical asset IDs and stored asset-to-drawing relationships. Normalised known object aliases through a managed library.",
+            "ko": "추출 태그를 공통 설비 ID와 대조해 설비·도면 관계를 저장합니다. 관리되는 객체 라이브러리로 알려진 별칭을 정규화합니다."
           },
           {
-            "en": "Expose ambiguous identifiers and conflicting versions for review.",
-            "ko": "모호한 식별자와 버전 충돌을 검토 대상으로 드러냅니다."
+            "en": "Do not silently accept ambiguous matches; store the candidate mapping and review outcome.",
+            "ko": "모호한 매핑은 임의 확정하지 않고 후보와 검토 결과를 저장합니다."
           }
         ],
         [
@@ -382,14 +484,14 @@
             "en": "Validate delivery",
             "ko": "납품 검증"
           },
-          "Completeness + design rules",
+          "Versioned rule sets · validation results",
           {
-            "en": "Automate delivery-completeness and design-rule checks to identify submission issues.",
-            "ko": "납품 완전성·설계 규칙 검증을 자동화해 제출 자료의 문제를 식별합니다."
+            "en": "Ran completeness, tag-reference and design-rule checks against each drawing revision. Stored issues with rule IDs, severity and object references.",
+            "ko": "도면 개정별로 납품 완전성·태그 참조·설계 규칙을 검사하고 규칙 ID·심각도·객체 참조와 함께 오류를 저장합니다."
           },
           {
-            "en": "Keep a failed check connected to the relevant source information.",
-            "ko": "검증 실패 항목을 관련 원본 정보와 연결합니다."
+            "en": "Pin the rule-set version to each run so results remain explainable after rules change.",
+            "ko": "검증 실행에 규칙 버전을 연결해 규칙 변경 후에도 과거 결과를 설명할 수 있도록 합니다."
           }
         ],
         [
@@ -398,14 +500,14 @@
             "en": "Search & review",
             "ko": "검색·검토"
           },
-          "Search interfaces + APIs",
+          "FastAPI search · Vue.js review",
           {
-            "en": "Let engineering users find equipment context and review drawing issues through the system.",
-            "ko": "현업 사용자가 시스템에서 설비 맥락을 찾고 도면 문제를 검토하도록 합니다."
+            "en": "Searched equipment and related drawings through indexed identifiers and linked users from an issue to the source drawing context.",
+            "ko": "인덱스 기반 식별자 검색으로 설비·관련 도면을 조회하고 오류에서 해당 도면의 원본 맥락으로 연결합니다."
           },
           {
-            "en": "Distinguish a search with no results from information that needs correction.",
-            "ko": "검색 결과 없음과 정보 수정이 필요한 상태를 구분합니다."
+            "en": "Keep superseded revisions searchable as history while showing the current approved revision by default.",
+            "ko": "이전 개정은 이력으로 조회하되 기본 화면에는 현재 승인 개정을 제공합니다."
           }
         ]
       ],
@@ -468,6 +570,104 @@
       "story_context": {
         "en": "Shared master data connected records, but drawings still held spatial information outside that common context. I built drawing management to make equipment and drawing information consistent and searchable.",
         "ko": "기준정보로 데이터는 연결했지만 공간 정보는 도면에 따로 남아 있었습니다. 도면관리 시스템을 개발해 설비와 도면 정보를 일관되게 관리하고 검색할 수 있도록 했습니다."
+      },
+      "engineering": {
+        "scope": {
+          "en": "I built the extraction/normalisation pipeline, asset–drawing relationship model, rule engine and search/review interfaces; CAD services supply source properties.",
+          "ko": "추출·정규화 파이프라인, 설비·도면 관계 모델, 규칙 검증, 검색·검토 화면을 구현했고 CAD 서비스에서 원천 속성을 확보했습니다."
+        },
+        "states": [
+          {
+            "en": "Drawing revision",
+            "ko": "도면 개정"
+          },
+          {
+            "en": "Structured objects",
+            "ko": "객체 구조화"
+          },
+          {
+            "en": "Rules checked",
+            "ko": "규칙 검증"
+          },
+          {
+            "en": "Searchable context",
+            "ko": "맥락 기반 검색"
+          }
+        ],
+        "recovery": {
+          "en": "Unreadable file → extraction review; ambiguous tag → mapping review; new revision → rerun checks.",
+          "ko": "파일 해석 실패는 추출 검토, 모호한 태그는 매핑 검토, 새 개정은 재검증으로 연결합니다."
+        },
+        "decisions": [
+          {
+            "title": {
+              "en": "Keep meaning attached to extracted fields",
+              "ko": "추출 필드에 원본 의미 보존"
+            },
+            "challenge": {
+              "en": "A flattened list of tags could not explain which revision or object produced an issue.",
+              "ko": "태그 목록만으로는 오류가 발생한 개정과 객체를 설명하기 어려웠습니다."
+            },
+            "choice": {
+              "en": "Persisted source-object references and revision-aware asset–drawing relationships.",
+              "ko": "원본 객체 참조와 개정별 설비·도면 관계를 보존했습니다."
+            },
+            "reason": {
+              "en": "Users can move from a validation result to the engineering context needed to resolve it.",
+              "ko": "사용자가 검증 결과에서 오류 조치에 필요한 엔지니어링 맥락으로 이동할 수 있습니다."
+            }
+          },
+          {
+            "title": {
+              "en": "Version rules as well as drawings",
+              "ko": "도면과 검증 규칙을 함께 버전 관리"
+            },
+            "challenge": {
+              "en": "Changing rules made old validation results difficult to reproduce.",
+              "ko": "규칙 변경 후 과거 검증 결과를 재현하기 어려웠습니다."
+            },
+            "choice": {
+              "en": "Bound each validation run to a drawing revision and rule-set version.",
+              "ko": "검증 실행을 도면 개정과 규칙 버전에 연결했습니다."
+            },
+            "reason": {
+              "en": "Historical results remain auditable while new rules can be introduced deliberately.",
+              "ko": "과거 결과의 추적성을 유지하면서 새 규칙을 통제해 적용할 수 있습니다."
+            }
+          }
+        ],
+        "verification": [
+          {
+            "condition": {
+              "en": "One tag matches multiple assets",
+              "ko": "한 태그가 여러 설비와 일치"
+            },
+            "expected": {
+              "en": "Require explicit review instead of choosing the first match.",
+              "ko": "첫 후보를 임의 선택하지 않고 명시적인 검토를 요구합니다."
+            }
+          },
+          {
+            "condition": {
+              "en": "Rules change after an approved review",
+              "ko": "승인 검토 후 규칙 변경"
+            },
+            "expected": {
+              "en": "Keep the original result and create a separate validation run.",
+              "ko": "기존 결과를 보존하고 별도 검증 실행을 생성합니다."
+            }
+          },
+          {
+            "condition": {
+              "en": "Search includes superseded drawings",
+              "ko": "검색에 이전 개정 포함"
+            },
+            "expected": {
+              "en": "Distinguish current approval from historical revisions.",
+              "ko": "현재 승인본과 이력 개정을 구분해 표시합니다."
+            }
+          }
+        ]
       }
     },
     {
@@ -502,8 +702,9 @@
       },
       "stack": [
         "Python",
+        "Vue.js",
         "REST APIs",
-        "3D web integration",
+        "APS Viewer SDK",
         "Revit / BIM",
         "ACC",
         "MES / MIS"
@@ -582,14 +783,14 @@
             "en": "Prepare model context",
             "ko": "모델 맥락 준비"
           },
-          "Revit + Python",
+          "Revit preprocessing · Python · ACC",
           {
-            "en": "Preprocess model and equipment information for a searchable engineering workspace.",
-            "ko": "모델과 설비 정보를 전처리해 검색 가능한 엔지니어링 업무 공간을 준비합니다."
+            "en": "Preprocessed model metadata into an asset lookup index and loaded model packages by the selected facility scope rather than as one entire dataset.",
+            "ko": "모델 메타데이터를 설비 조회 인덱스로 전처리하고 전체 데이터를 한 번에 다루지 않고 선택한 시설 범위별로 모델 패키지를 로드합니다."
           },
           {
-            "en": "Separate preprocessing problems from interactive equipment lookup.",
-            "ko": "전처리 문제와 사용자 설비 조회 문제를 구분합니다."
+            "en": "Track model revision and unresolved asset mappings separately from viewer availability.",
+            "ko": "모델 개정과 미매핑 설비를 뷰어 가용 상태와 분리해 관리합니다."
           }
         ],
         [
@@ -598,14 +799,14 @@
             "en": "Search & select",
             "ko": "검색·선택"
           },
-          "3D web workspace",
+          "APS Viewer SDK · Vue.js",
           {
-            "en": "Translate the selected object into equipment identity, location and the information needed for the user’s task.",
-            "ko": "선택한 객체를 설비 식별자·위치·업무에 필요한 정보로 연결합니다."
+            "en": "Resolved a selected model object through its asset mapping and requested only the operational panels relevant to that asset.",
+            "ko": "선택한 모델 객체를 설비 매핑으로 해석하고 해당 설비에 필요한 운영 정보 패널만 요청합니다."
           },
           {
-            "en": "Scope information requests to the current selection.",
-            "ko": "현재 선택한 설비를 기준으로 정보 요청을 관리합니다."
+            "en": "Cancel superseded requests and attach a selection token so late responses cannot overwrite a new selection.",
+            "ko": "이전 요청을 취소하고 선택 토큰을 연결해 늦은 응답이 새 선택 결과를 덮어쓰지 않도록 합니다."
           }
         ],
         [
@@ -614,14 +815,14 @@
             "en": "Connect systems",
             "ko": "시스템 연계"
           },
-          "REST APIs + MES / MIS",
+          "Python REST adapters · MES / MIS",
           {
-            "en": "Integrate information from eight MES/MIS and infrastructure systems into a shared operational context.",
-            "ko": "MES·MIS·인프라 8개 시스템의 정보를 공통 운영 맥락에 연결합니다."
+            "en": "Normalised responses from eight systems into a shared asset context with source timestamps, availability and field-level provenance.",
+            "ko": "8개 시스템의 응답을 원천 시각·가용 상태·필드별 출처를 포함한 공통 설비 맥락으로 정규화합니다."
           },
           {
-            "en": "Represent unavailable sources independently from the 3D model state.",
-            "ko": "정보 소스의 가용 상태와 3D 모델 상태를 별도로 표현합니다."
+            "en": "Use source-specific timeouts and bounded caches; never present cached data as a fresh live reading.",
+            "ko": "소스별 타임아웃과 유효기간이 있는 캐시를 사용하고 캐시 데이터를 최신 실시간 값처럼 표시하지 않습니다."
           }
         ],
         [
@@ -630,14 +831,14 @@
             "en": "Show operating context",
             "ko": "운영 맥락 표시"
           },
-          "Location + status + records",
+          "Independent data panels · freshness states",
           {
-            "en": "Display equipment location/status and related engineering information alongside the model.",
-            "ko": "모델과 함께 설비 위치·상태 및 관련 엔지니어링 정보를 표시합니다."
+            "en": "Displayed location, operating status and related records alongside the selected model, with independent loading and failure states per source.",
+            "ko": "선택한 모델 옆에 위치·운영 상태·관련 기록을 표시하고 소스별 로딩·실패 상태를 독립적으로 제공합니다."
           },
           {
-            "en": "Prevent a late response for a previously selected asset from replacing the current context.",
-            "ko": "이전에 선택한 설비의 늦은 응답이 현재 맥락을 덮어쓰지 않도록 합니다."
+            "en": "A failed source degrades its own panel while model navigation and available sources remain usable.",
+            "ko": "특정 소스가 실패해도 해당 패널만 제한하고 모델 탐색과 다른 정보는 계속 사용할 수 있도록 합니다."
           }
         ]
       ],
@@ -711,6 +912,104 @@
       "story_context": {
         "en": "With asset identities and drawing context established, the next step was to connect data with models. The 3D platform brought equipment location, operating information and engineering records into one workspace.",
         "ko": "설비 식별자와 도면 정보의 기반 위에서 데이터와 모델을 연결하는 단계로 확장했습니다. 3D 플랫폼에서 설비 위치·운영 정보·엔지니어링 기록을 하나의 업무 공간으로 통합했습니다."
+      },
+      "engineering": {
+        "scope": {
+          "en": "I implemented model preprocessing, asset mapping, viewer interactions and operational-data adapters; Revit/ACC and the viewer SDK provide the model and rendering foundation.",
+          "ko": "모델 전처리·설비 매핑·뷰어 상호작용·운영 데이터 어댑터를 구현했고 모델·렌더링 기반에는 Revit·ACC·뷰어 SDK를 활용했습니다."
+        },
+        "states": [
+          {
+            "en": "Model object",
+            "ko": "모델 객체"
+          },
+          {
+            "en": "Asset identity",
+            "ko": "설비 식별"
+          },
+          {
+            "en": "Source adapters",
+            "ko": "소스 어댑터"
+          },
+          {
+            "en": "Operational context",
+            "ko": "운영 맥락"
+          }
+        ],
+        "recovery": {
+          "en": "Missing mapping → explicit unresolved state; source timeout → partial view; late response → discard.",
+          "ko": "매핑 누락은 미연결 상태, 소스 타임아웃은 부분 조회, 이전 선택의 늦은 응답은 폐기로 처리합니다."
+        },
+        "decisions": [
+          {
+            "title": {
+              "en": "Separate the model from live-data requests",
+              "ko": "모델과 운영 데이터 요청 분리"
+            },
+            "challenge": {
+              "en": "A slow operational system could stall the entire equipment view.",
+              "ko": "느린 운영시스템 하나가 설비 화면 전체를 지연시킬 수 있었습니다."
+            },
+            "choice": {
+              "en": "Kept model navigation independent and loaded source panels through isolated adapters.",
+              "ko": "모델 탐색을 독립시키고 소스별 어댑터로 정보 패널을 개별 로드했습니다."
+            },
+            "reason": {
+              "en": "Partial information remains useful and failures stay local to their source.",
+              "ko": "일부 정보만으로도 업무를 이어가고 장애의 영향을 해당 소스로 제한할 수 있습니다."
+            }
+          },
+          {
+            "title": {
+              "en": "Correct context before visual richness",
+              "ko": "시각 효과보다 맥락의 정확성 우선"
+            },
+            "challenge": {
+              "en": "Rapid selections and cached values could show information for the wrong asset or time.",
+              "ko": "빠른 선택 전환과 캐시 값으로 다른 설비·시점의 정보가 표시될 수 있었습니다."
+            },
+            "choice": {
+              "en": "Used selection tokens, revision-aware mappings and visible data timestamps.",
+              "ko": "선택 토큰, 개정별 매핑, 데이터 시각 표시를 적용했습니다."
+            },
+            "reason": {
+              "en": "A clear unavailable or stale state is safer than a convincing but incorrect display.",
+              "ko": "그럴듯하지만 잘못된 표시보다 조회 불가·갱신 지연을 명확히 알리는 편이 낫습니다."
+            }
+          }
+        ],
+        "verification": [
+          {
+            "condition": {
+              "en": "Select asset B before asset A responds",
+              "ko": "A 응답 전 B 설비 선택"
+            },
+            "expected": {
+              "en": "Discard A’s late response and keep B’s context.",
+              "ko": "A의 늦은 응답을 버리고 B의 맥락을 유지합니다."
+            }
+          },
+          {
+            "condition": {
+              "en": "One operational API times out",
+              "ko": "일부 운영 API 타임아웃"
+            },
+            "expected": {
+              "en": "Keep the model and other panels available; identify the failed source.",
+              "ko": "모델과 다른 패널은 유지하고 실패한 소스를 표시합니다."
+            }
+          },
+          {
+            "condition": {
+              "en": "A model revision has unmapped objects",
+              "ko": "새 모델 개정에 미매핑 객체 존재"
+            },
+            "expected": {
+              "en": "Show unresolved mappings without attaching unrelated equipment data.",
+              "ko": "무관한 설비 정보를 연결하지 않고 미매핑 상태를 표시합니다."
+            }
+          }
+        ]
       }
     },
     {
@@ -829,14 +1128,14 @@
             "en": "Receive & version",
             "ko": "접수·버전 관리"
           },
-          "AWS S3 + EventBridge",
+          "S3 Object Created → EventBridge → SQS",
           {
-            "en": "Store submitted drawings and route file-arrival events into the processing workflow.",
-            "ko": "제출 도면을 저장하고 파일 도착 이벤트를 처리 흐름에 연결합니다."
+            "en": "S3 object-creation events pass through EventBridge filters into SQS. A submission manifest determines when the expected drawing set is ready; a single file arrival does not complete a delivery.",
+            "ko": "S3 객체 생성 이벤트를 EventBridge에서 필터링해 SQS로 전달합니다. 제출 목록과 도착 파일을 대조해 납품 묶음의 준비 상태를 판단하며, 파일 하나의 업로드를 납품 완료로 처리하지 않습니다."
           },
           {
-            "en": "Keep file identity and version context attached to processing status.",
-            "ko": "파일 식별자와 버전 정보를 처리 상태와 함께 관리합니다."
+            "en": "Route extraction outputs to a separate prefix; key jobs by submission, object and revision to prevent recursive or duplicate processing.",
+            "ko": "추출 결과는 별도 경로에 저장하고 제출 건·객체·개정을 작업 키로 사용해 재귀 실행과 중복 처리를 막습니다."
           }
         ],
         [
@@ -845,14 +1144,14 @@
             "en": "Buffer & process",
             "ko": "큐잉·처리"
           },
-          "SQS + Lambda",
+          "SQS → Lambda · job registry",
           {
-            "en": "Decouple file arrival from processing so extraction work can be handled through an event-driven pipeline.",
-            "ko": "파일 접수와 처리를 분리해 이벤트 기반 파이프라인으로 추출 작업을 수행합니다."
+            "en": "Lambda claims a queued job through a unique job record, records its state and starts extraction. Long-running external translation is tracked as a separate job rather than held inside one invocation.",
+            "ko": "Lambda가 고유 작업 레코드로 처리 대상을 확보하고 상태를 기록한 뒤 추출을 시작합니다. 오래 걸리는 외부 변환은 한 번의 호출에서 대기하지 않고 별도 작업 상태로 추적합니다."
           },
           {
-            "en": "Track failed work separately so a retry does not obscure the original submission.",
-            "ko": "실패 작업을 별도로 추적해 재시도 시 원래 제출 이력을 놓치지 않도록 합니다."
+            "en": "Retry transient errors with a limit, report failed batch items separately and isolate exhausted jobs in a dead-letter queue.",
+            "ko": "일시 오류는 제한적으로 재시도하고 배치 내 실패 항목만 반환하며, 반복 실패 작업은 별도 실패 큐로 격리합니다."
           }
         ],
         [
@@ -861,14 +1160,14 @@
             "en": "Extract drawing data",
             "ko": "도면 데이터 추출"
           },
-          "APS APIs",
+          "APS Model Derivative APIs · Python",
           {
-            "en": "Use drawing APIs to turn document and object information into data the platform can validate and integrate.",
-            "ko": "도면 API를 통해 문서·객체 정보를 추출하고 검증·연계 가능한 데이터로 변환합니다."
+            "en": "Submit model-translation jobs, check completion and retrieve object properties. Python adapters normalise source fields into equipment references, drawing revisions and reusable attributes.",
+            "ko": "모델 변환 작업을 요청하고 완료 상태를 확인한 뒤 객체 속성을 조회합니다. Python 어댑터가 원천 필드를 설비 참조·도면 개정·재사용 가능한 속성으로 정규화합니다."
           },
           {
-            "en": "Retain source references and separate extraction errors from business-rule violations.",
-            "ko": "원본 참조를 유지하고 추출 오류와 업무 규칙 위반을 구분합니다."
+            "en": "Persist external job IDs and source references; distinguish translation failure, incomplete output and invalid business data.",
+            "ko": "외부 작업 ID와 원본 참조를 보존하고 변환 실패·결과 미완성·업무 데이터 오류를 구분합니다."
           }
         ],
         [
@@ -877,14 +1176,14 @@
             "en": "Validate & structure",
             "ko": "검증·구조화"
           },
-          "Python + FastAPI + SQL",
+          "SQL staging · Python validation · FastAPI",
           {
-            "en": "Apply completeness, identifier and consistency checks, then persist structured results and workflow state.",
-            "ko": "납품 완전성, 식별자, 정합성을 검증하고 구조화된 결과와 업무 상태를 저장합니다."
+            "en": "Store extracted records in staging, then check required fields, duplicate identifiers, master-data references and cross-drawing consistency. Persist rule, source record, severity and validation-run IDs with each issue.",
+            "ko": "추출 결과를 검수용 영역에 저장한 뒤 필수 값·식별자 중복·기준정보 참조·도면 간 정합성을 검사합니다. 오류마다 규칙·원본 레코드·심각도·검증 실행 ID를 저장합니다."
           },
           {
-            "en": "Make duplicate, missing and inconsistent values actionable rather than silently accepting them.",
-            "ko": "중복·누락·불일치를 조치 가능한 오류로 표시합니다."
+            "en": "Database constraints protect uniqueness and references; business-rule failures remain reviewable and never enter the approved dataset.",
+            "ko": "DB 제약조건으로 고유성·참조를 보호하고, 업무 규칙 오류는 검토 대상으로 보존하되 승인 데이터에 반영하지 않습니다."
           }
         ],
         [
@@ -893,14 +1192,14 @@
             "en": "Review & resolve",
             "ko": "검토·오류 조치"
           },
-          "Vue.js + REST APIs",
+          "Vue.js · FastAPI · revision-based review",
           {
-            "en": "Provide document tracking, validation results and error-management interfaces for engineering users.",
-            "ko": "현업 사용자를 위한 납품 추적, 검증 결과, 오류 관리 화면을 제공합니다."
+            "en": "Expose issues by drawing and rule with source context and corrective actions. Resubmission creates a new revision and validation run; approval is bound to the revision actually reviewed.",
+            "ko": "도면·규칙별 오류에 원본 맥락과 조치 방법을 제공합니다. 재제출은 새 개정과 검증 실행을 만들며, 승인은 실제 검토한 개정에 연결합니다."
           },
           {
-            "en": "Keep per-document progress and error context visible during correction and resubmission.",
-            "ko": "수정·재제출 과정에서도 도면별 진행 상태와 오류 맥락을 확인할 수 있도록 합니다."
+            "en": "Reject stale approval requests when a newer revision exists; retain previous results for comparison and audit.",
+            "ko": "새 개정이 있으면 이전 화면의 승인 요청을 차단하고, 비교·감사를 위해 과거 결과를 보존합니다."
           }
         ],
         [
@@ -909,14 +1208,14 @@
             "en": "Register & integrate",
             "ko": "등록·후속 연계"
           },
-          "Master data + ETL/EAI",
+          "Approved SQL records → EAI / REST adapters",
           {
-            "en": "Connect validated engineering information to master data and downstream systems.",
-            "ko": "검증된 엔지니어링 정보를 마스터 데이터와 후속 시스템에 연결합니다."
+            "en": "Commit approved records and pending integration tasks together. A dispatcher maps fields for each target, records acknowledgements and reconciles sent revisions against downstream results.",
+            "ko": "승인 데이터와 연계 대기 작업을 하나의 트랜잭션으로 저장합니다. 전송 작업이 대상별 필드를 매핑하고 수신 결과를 기록하며 전송 개정과 대상 시스템 반영 결과를 대사합니다."
           },
           {
-            "en": "Keep integration status distinct from validation status for operational follow-up.",
-            "ko": "검증 상태와 연계 상태를 구분해 운영자가 후속 조치를 판단하도록 합니다."
+            "en": "Use a stable transfer key for retries. Validation status and per-target delivery status remain separate, so one target failure does not restart extraction.",
+            "ko": "재전송에는 동일한 전송 키를 사용합니다. 검증 상태와 대상별 연계 상태를 분리해 한 시스템의 실패로 추출 전체를 다시 실행하지 않습니다."
           }
         ]
       ],
@@ -989,6 +1288,104 @@
       "story_context": {
         "en": "Connected systems and a digital twin depend on trustworthy, current information. I built the delivery platform to shorten update cycles, improve consistency and capture richer data from incoming engineering documents.",
         "ko": "시스템 연계와 디지털 트윈의 가치는 데이터가 최신 상태와 정합성을 유지할 때 이어집니다. 도면 납품 플랫폼을 구축해 갱신 주기를 줄이고 정합성을 높이며 제출 도면에서 더 풍부한 정보를 확보하도록 했습니다."
+      },
+      "engineering": {
+        "scope": {
+          "en": "I implemented the submission API/UI, job-state model, extraction adapters, validation rules and downstream dispatch; APS performs model translation.",
+          "ko": "접수 API·화면, 작업 상태 모델, 추출 어댑터, 검증 규칙, 후속 전송을 직접 구현했고 모델 변환에는 APS를 활용했습니다."
+        },
+        "states": [
+          {
+            "en": "Received",
+            "ko": "접수"
+          },
+          {
+            "en": "Validated",
+            "ko": "검증"
+          },
+          {
+            "en": "Approved",
+            "ko": "승인"
+          },
+          {
+            "en": "Delivered",
+            "ko": "연계 완료"
+          }
+        ],
+        "recovery": {
+          "en": "Extraction failure → bounded retry; rule violation → correction; delivery failure → target-only replay.",
+          "ko": "추출 실패는 제한적 재시도, 규칙 위반은 수정·재검수, 연계 실패는 해당 대상만 재전송합니다."
+        },
+        "decisions": [
+          {
+            "title": {
+              "en": "Separate data readiness from transport",
+              "ko": "데이터 준비와 전송 상태 분리"
+            },
+            "challenge": {
+              "en": "A saved or validated record could be mistaken for data already applied downstream.",
+              "ko": "DB 저장·검증 완료가 운영시스템 반영 완료로 오인될 수 있었습니다."
+            },
+            "choice": {
+              "en": "Used staging, revision-bound approval and a transactional integration queue with per-target acknowledgements.",
+              "ko": "검수용 저장, 개정별 승인, 트랜잭션 기반 연계 대기열과 대상별 수신 상태를 분리했습니다."
+            },
+            "reason": {
+              "en": "The UI can explain exactly what is blocked; a transport failure cannot invalidate a completed review.",
+              "ko": "멈춘 위치를 사용자에게 설명할 수 있고 전송 실패가 완료된 검토를 무효화하지 않습니다."
+            }
+          },
+          {
+            "title": {
+              "en": "Asynchronous extraction, controlled replay",
+              "ko": "비동기 추출과 제한된 재처리"
+            },
+            "challenge": {
+              "en": "Duplicate events and slow translations made synchronous request chains fragile.",
+              "ko": "중복 이벤트와 긴 변환 시간으로 동기식 요청 연결이 취약해졌습니다."
+            },
+            "choice": {
+              "en": "Buffered arrivals in SQS and persisted job identity, external job IDs and retry state.",
+              "ko": "SQS로 접수를 완충하고 작업 식별자·외부 작업 ID·재시도 상태를 영속화했습니다."
+            },
+            "reason": {
+              "en": "This adds state-management work but bounds retries and avoids duplicate registrations.",
+              "ko": "상태 관리의 복잡도는 늘지만 재시도 범위를 제한하고 중복 등록을 방지합니다."
+            }
+          }
+        ],
+        "verification": [
+          {
+            "condition": {
+              "en": "The same object event arrives twice",
+              "ko": "동일 객체 이벤트 중복 수신"
+            },
+            "expected": {
+              "en": "One job identity; no duplicate approved record.",
+              "ko": "하나의 작업 식별자로 처리하며 승인 데이터가 중복 생성되지 않습니다."
+            }
+          },
+          {
+            "condition": {
+              "en": "A new revision arrives during approval",
+              "ko": "승인 도중 새 개정 제출"
+            },
+            "expected": {
+              "en": "Reject the stale approval and require review of the new revision.",
+              "ko": "이전 개정의 승인을 차단하고 새 개정의 검토를 요구합니다."
+            }
+          },
+          {
+            "condition": {
+              "en": "One target fails after approval",
+              "ko": "승인 후 일부 대상 연계 실패"
+            },
+            "expected": {
+              "en": "Retain approval; retry only the failed target with its original transfer key.",
+              "ko": "승인은 유지하고 원래 전송 키로 실패한 대상만 재처리합니다."
+            }
+          }
+        ]
       }
     },
     {
@@ -1103,14 +1500,14 @@
             "en": "Define dataset context",
             "ko": "데이터셋 맥락 정의"
           },
-          "Metadata + security classification",
+          "Metadata registry · ownership · access scope",
           {
-            "en": "Define metadata and security classifications for datasets from eight infrastructure systems.",
-            "ko": "8개 인프라 시스템 데이터셋의 메타데이터와 보안 분류를 정의합니다."
+            "en": "Registered dataset owners, definitions, refresh expectations and security classifications across eight infrastructure sources.",
+            "ko": "8개 인프라 소스의 데이터 관리 주체·정의·기대 갱신 주기·보안 분류를 등록했습니다."
           },
           {
-            "en": "Keep dataset ownership and usage constraints visible to downstream consumers.",
-            "ko": "후속 사용자가 데이터 관리 주체와 활용 제약을 이해하도록 합니다."
+            "en": "Separate technical accessibility from permission to reuse a dataset.",
+            "ko": "기술적으로 조회 가능한 상태와 활용 권한이 있는 상태를 구분합니다."
           }
         ],
         [
@@ -1119,14 +1516,14 @@
             "en": "Expose job state",
             "ko": "작업 상태 제공"
           },
-          "Oracle + FastAPI",
+          "Oracle run history · FastAPI",
           {
-            "en": "Bring ETL job information into backend services for operational monitoring.",
-            "ko": "ETL 작업 정보를 운영 모니터링용 백엔드 서비스로 제공합니다."
+            "en": "Joined ETL execution history with watermarks and data-quality summaries to expose run status, last successful load and affected datasets.",
+            "ko": "ETL 실행 이력에 수집 기준 시점과 품질 요약을 연결해 실행 상태·마지막 정상 적재·영향 데이터셋을 제공합니다."
           },
           {
-            "en": "Separate unavailable sources, empty results and failed jobs.",
-            "ko": "소스 조회 불가, 정상적인 빈 결과, 작업 실패를 구분합니다."
+            "en": "An empty result is valid only when the source read succeeded; unavailable sources do not become zero counts.",
+            "ko": "원천 조회에 성공한 경우에만 빈 결과를 정상으로 판단하고 조회 불가를 0건으로 바꾸지 않습니다."
           }
         ],
         [
@@ -1135,14 +1532,14 @@
             "en": "Monitor & investigate",
             "ko": "모니터링·원인 확인"
           },
-          "Vue.js + Spotfire",
+          "Vue.js · Spotfire · exception routing",
           {
-            "en": "Build web monitoring and operational/data-quality dashboards for pipeline follow-up.",
-            "ko": "파이프라인 후속 조치를 위한 웹 모니터링과 운영·데이터 품질 대시보드를 제공합니다."
+            "en": "Built monitoring views for failed jobs, stale data, abnormal counts and unresolved quality issues, with ownership and source context for follow-up.",
+            "ko": "실패 작업·갱신 지연·건수 이상·미해결 품질 이슈를 모니터링하고 후속 조치를 위한 담당자와 원천 맥락을 제공합니다."
           },
           {
-            "en": "Show freshness and error context instead of presenting missing data as normal output.",
-            "ko": "데이터 누락을 정상 결과처럼 표시하지 않고 갱신 시점과 오류 맥락을 제공합니다."
+            "en": "Track incident closure separately from job recovery; verify the dataset after a successful rerun.",
+            "ko": "장애 조치 종료와 작업 복구를 구분하고 재실행 성공 후에도 데이터셋을 확인합니다."
           }
         ]
       ],
@@ -1204,6 +1601,104 @@
       "story_context": {
         "en": "Alongside platform development, I improved the work around it: dataset management, data-quality visibility and operational monitoring. This was a parallel improvement stream, not a later phase of the four-platform sequence.",
         "ko": "플랫폼 개발과 병행해 데이터셋 관리, 데이터 품질 가시화, 운영 모니터링을 개선했습니다. 네 플랫폼 이후의 단계가 아니라 각 프로젝트의 운영 효율을 높이는 병행 작업입니다."
+      },
+      "engineering": {
+        "scope": {
+          "en": "I owned dataset definitions and built the Oracle/FastAPI monitoring API, Vue.js operational views and Spotfire quality dashboards.",
+          "ko": "데이터셋 정의를 담당하고 Oracle·FastAPI 모니터링 API, Vue.js 운영 화면, Spotfire 품질 대시보드를 개발했습니다."
+        },
+        "states": [
+          {
+            "en": "Run history",
+            "ko": "실행 이력"
+          },
+          {
+            "en": "Quality signals",
+            "ko": "품질 신호"
+          },
+          {
+            "en": "Owner triage",
+            "ko": "담당자 조치"
+          },
+          {
+            "en": "Recovery verified",
+            "ko": "복구 확인"
+          }
+        ],
+        "recovery": {
+          "en": "Job success + stale watermark → freshness issue; failed source → unknown; empty successful read → valid zero.",
+          "ko": "작업 성공·갱신 지연은 최신성 이슈, 소스 실패는 확인 불가, 정상 조회·빈 결과는 유효한 0건으로 구분합니다."
+        },
+        "decisions": [
+          {
+            "title": {
+              "en": "Monitor the data, not only the scheduler",
+              "ko": "스케줄러가 아니라 데이터까지 모니터링"
+            },
+            "challenge": {
+              "en": "An ETL job could finish successfully without refreshing the expected data.",
+              "ko": "ETL 작업이 성공해도 기대한 데이터가 갱신되지 않을 수 있었습니다."
+            },
+            "choice": {
+              "en": "Combined run status with watermarks, counts and quality exceptions.",
+              "ko": "실행 상태에 수집 기준 시점·건수·품질 예외를 함께 연결했습니다."
+            },
+            "reason": {
+              "en": "This exposes silent data failures that a green job status would hide.",
+              "ko": "작업 성공 표시만으로 놓치는 데이터 이상을 드러낼 수 있습니다."
+            }
+          },
+          {
+            "title": {
+              "en": "Make every exception actionable",
+              "ko": "예외를 조치 가능한 업무로 연결"
+            },
+            "challenge": {
+              "en": "Dashboards showed symptoms without enough context to assign or resolve them.",
+              "ko": "대시보드에 증상은 보여도 배정·해결에 필요한 맥락이 부족했습니다."
+            },
+            "choice": {
+              "en": "Attached dataset ownership, affected sources, run IDs and recovery state.",
+              "ko": "데이터 관리 주체·영향 소스·실행 ID·복구 상태를 연결했습니다."
+            },
+            "reason": {
+              "en": "Operators can investigate and confirm recovery without repeating the same manual searches.",
+              "ko": "운영자가 같은 수동 조회를 반복하지 않고 원인과 복구를 확인할 수 있습니다."
+            }
+          }
+        ],
+        "verification": [
+          {
+            "condition": {
+              "en": "Job succeeds but the watermark does not advance",
+              "ko": "작업 성공 후 수집 시점 미갱신"
+            },
+            "expected": {
+              "en": "Flag stale data independently from execution success.",
+              "ko": "실행 성공과 별개로 데이터 갱신 지연을 표시합니다."
+            }
+          },
+          {
+            "condition": {
+              "en": "Source query fails",
+              "ko": "원천 조회 실패"
+            },
+            "expected": {
+              "en": "Report unknown/unavailable rather than a valid zero count.",
+              "ko": "정상 0건이 아닌 확인 불가 상태로 표시합니다."
+            }
+          },
+          {
+            "condition": {
+              "en": "A failed job is rerun successfully",
+              "ko": "실패 작업의 재실행 성공"
+            },
+            "expected": {
+              "en": "Confirm freshness and quality before closing the issue.",
+              "ko": "최신성과 품질을 확인한 후 이슈를 종료합니다."
+            }
+          }
+        ]
       }
     },
     {
@@ -1241,7 +1736,8 @@
         "Python",
         "SQL",
         "REST APIs",
-        "Statistical similarity"
+        "Schema retrieval",
+        "Read-only query tools"
       ],
       "metrics": [
         [
@@ -1317,14 +1813,14 @@
             "en": "Understand the question",
             "ko": "질문 이해"
           },
-          "Schema context + user intent",
+          "Schema retrieval · scoped tool contracts",
           {
-            "en": "Resolve the engineering question against relevant schema and retrieval context.",
-            "ko": "엔지니어링 질문을 관련 스키마와 조회 맥락에 연결합니다."
+            "en": "Selected relevant tables, aliases and relationships before generating a query plan. Kept user intent and session context within the current investigation.",
+            "ko": "쿼리 계획 생성 전에 관련 테이블·별칭·관계를 선택하고 사용자 의도와 세션 맥락을 현재 조사 범위 안에서 관리합니다."
           },
           {
-            "en": "Constrain query scope before retrieving data.",
-            "ko": "데이터를 조회하기 전에 질의 범위를 제한합니다."
+            "en": "Unknown identifiers trigger clarification; context from another session is never reused as user evidence.",
+            "ko": "알 수 없는 식별자는 재질문하고 다른 세션의 맥락을 사용자의 근거로 재사용하지 않습니다."
           }
         ],
         [
@@ -1333,14 +1829,14 @@
             "en": "Retrieve evidence",
             "ko": "근거 조회"
           },
-          "SQL + APIs + databases",
+          "Read-only SQL tools · APIs · case retrieval",
           {
-            "en": "Retrieve structured information and similar quality-deviation cases, including root causes and corrective/preventive actions.",
-            "ko": "구조화된 정보와 근본 원인·시정·예방 조치를 포함한 유사 품질 일탈 사례를 조회합니다."
+            "en": "Executed allowlisted read-only tools with row limits and timeouts, then retrieved relevant quality cases and their source references.",
+            "ko": "행 수·시간 제한이 있는 허용된 읽기 전용 도구를 실행하고 관련 품질 사례와 원천 참조를 조회합니다."
           },
           {
-            "en": "Preserve the source context needed to verify a response.",
-            "ko": "응답을 확인하는 데 필요한 원천 맥락을 보존합니다."
+            "en": "Reject write statements and unapproved schema access; tool errors remain distinct from an empty valid result.",
+            "ko": "쓰기 구문과 허용 범위 밖의 스키마 접근을 차단하고 도구 오류와 정상 빈 결과를 구분합니다."
           }
         ],
         [
@@ -1349,14 +1845,14 @@
             "en": "Support the review",
             "ko": "검토 지원"
           },
-          "Statistical similarity + LLM",
+          "Evidence-grounded responses · review set",
           {
-            "en": "Combine similarity signals and language-model suggestions to support engineering review.",
-            "ko": "유사도 신호와 언어 모델 제안을 결합해 엔지니어링 검토를 지원합니다."
+            "en": "Combined structured results and similar cases into a response that separates retrieved facts, statistical similarity and suggested follow-up.",
+            "ko": "구조화된 결과와 유사 사례를 응답으로 구성하되 조회 사실·통계적 유사도·후속 제안을 구분합니다."
           },
           {
-            "en": "Keep suggestions subject to engineering review, with missing evidence made visible.",
-            "ko": "제안은 엔지니어 검토를 거치도록 하고 근거 부족을 드러냅니다."
+            "en": "Evaluate known questions and failure cases; missing evidence leads to a limited answer or clarification, not an invented result.",
+            "ko": "기준 질문과 실패 사례로 평가하고 근거가 부족하면 결과를 만들어내지 않고 답변 범위를 제한하거나 재질문합니다."
           }
         ]
       ],
@@ -1418,6 +1914,104 @@
       "story_context": {
         "en": "As AI changes how engineering work is done, I am exploring how assistants can use structured data and past cases. The work is a prototype, with evidence retrieval and human review kept central.",
         "ko": "AI로 업무 방식이 바뀌는 흐름에 맞춰 구조화된 데이터와 과거 사례를 활용하는 어시스턴트를 실험하고 있습니다. 근거 조회와 사람의 검토를 중심에 둔 프로토타입 단계입니다."
+      },
+      "engineering": {
+        "scope": {
+          "en": "I built the AgentCore prototype, schema context, query/retrieval tools and evaluation cases; foundation models interpret language and generate reviewable suggestions.",
+          "ko": "AgentCore 프로토타입·스키마 맥락·질의 및 검색 도구·평가 사례를 구현했고 기반 모델은 자연어 해석과 검토 가능한 제안을 담당합니다."
+        },
+        "states": [
+          {
+            "en": "Question",
+            "ko": "질문"
+          },
+          {
+            "en": "Scoped retrieval",
+            "ko": "범위 제한 조회"
+          },
+          {
+            "en": "Evidence",
+            "ko": "근거"
+          },
+          {
+            "en": "Human review",
+            "ko": "사람의 검토"
+          }
+        ],
+        "recovery": {
+          "en": "Ambiguous request → clarify; unsafe query → reject; insufficient evidence → limited answer with source gaps.",
+          "ko": "모호한 요청은 재질문, 위험한 질의는 차단, 근거 부족은 누락된 출처와 함께 답변 범위를 제한합니다."
+        },
+        "decisions": [
+          {
+            "title": {
+              "en": "The model proposes; tools enforce",
+              "ko": "모델은 제안하고 도구가 통제"
+            },
+            "challenge": {
+              "en": "A fluent model response was not a sufficient control for database access.",
+              "ko": "자연스러운 모델 응답만으로 DB 접근을 통제할 수 없었습니다."
+            },
+            "choice": {
+              "en": "Enforced read-only access, schema allowlists, execution limits and structured tool outputs outside the prompt.",
+              "ko": "프롬프트 밖에서 읽기 권한·스키마 허용 목록·실행 제한·구조화된 도구 출력을 적용했습니다."
+            },
+            "reason": {
+              "en": "Access boundaries remain enforceable even when the generated query is wrong.",
+              "ko": "생성 쿼리가 잘못돼도 접근 경계를 강제할 수 있습니다."
+            }
+          },
+          {
+            "title": {
+              "en": "Evaluate evidence and failure behavior",
+              "ko": "답변뿐 아니라 근거·실패 동작 평가"
+            },
+            "challenge": {
+              "en": "A good-looking answer could hide an incorrect join or irrelevant past case.",
+              "ko": "그럴듯한 답변이 잘못된 조인이나 무관한 과거 사례를 감출 수 있었습니다."
+            },
+            "choice": {
+              "en": "Checked known questions against expected retrieval and included ambiguous, empty and unavailable-source cases.",
+              "ko": "기준 질문의 기대 조회 결과를 비교하고 모호한 질문·빈 결과·소스 장애 사례를 평가에 포함했습니다."
+            },
+            "reason": {
+              "en": "The prototype is judged on reviewability and boundaries as well as answer usefulness.",
+              "ko": "답변의 유용성뿐 아니라 검토 가능성과 처리 경계를 함께 판단합니다."
+            }
+          }
+        ],
+        "verification": [
+          {
+            "condition": {
+              "en": "A request would modify data",
+              "ko": "데이터 변경을 요구하는 요청"
+            },
+            "expected": {
+              "en": "Reject execution through read-only tooling and permissions.",
+              "ko": "읽기 전용 도구와 권한으로 실행을 차단합니다."
+            }
+          },
+          {
+            "condition": {
+              "en": "A relevant field is unknown",
+              "ko": "필요한 필드가 불명확"
+            },
+            "expected": {
+              "en": "Ask for clarification instead of inventing a column.",
+              "ko": "컬럼을 만들어내지 않고 확인 질문을 합니다."
+            }
+          },
+          {
+            "condition": {
+              "en": "Retrieved cases do not support a conclusion",
+              "ko": "검색 사례가 결론을 뒷받침하지 못함"
+            },
+            "expected": {
+              "en": "Expose the evidence gap and keep suggestions subject to review.",
+              "ko": "근거 부족을 밝히고 제안은 검토 대상으로 유지합니다."
+            }
+          }
+        ]
       }
     }
   ]
