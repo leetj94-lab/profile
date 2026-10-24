@@ -30,26 +30,20 @@ def bilingual(value):
     elif isinstance(value,list):
         for v in value:bilingual(v)
 bilingual(data)
-stems=['index']+['projects/'+p['slug'] for p in data['projects']]
 parsed={}
-for stem in stems:
-    for suffix,lang in [('.html','en'),('.en.html','en'),('.ko.html','ko')]:
-        p=ROOT/(stem+suffix);s=p.read_text();c=Page();c.feed(s);parsed[p]=c
-        assert c.lang==lang and c.h1==1 and not c.stack and not c.errors and len(c.ids)==len(set(c.ids)),p
-        assert not re.search(r'hypothetical|DRAFT MAPPING|DESIGN EXAMPLE|가상 설계|예상 시나리오|가상 분석',s,re.I),p
-        if stem!='index':
-            assert c.disclosures==1 and all(i in c.ids for i in ['before-after','system-flow','my-build','results']),p
-            assert len(re.findall(r'data-flow-select=',s))==len(re.findall(r'data-flow-panel=',s)),p
-        else:assert 'data-career-years' in s and '2019' in s
-    # English aliases have identical semantics and markup.
-    assert (ROOT/(stem+'.html')).read_bytes()==(ROOT/(stem+'.en.html')).read_bytes()
-for filename,lang in [('version2.html','en'),('version2.en.html','en'),('version2.ko.html','ko')]:
+for filename,lang in [('index.html','en'),('index.en.html','en'),('index.ko.html','ko')]:
     p=ROOT/filename;c=Page();s=p.read_text();c.feed(s);parsed[p]=c
     assert c.lang==lang and c.h1==1 and not c.errors and not c.stack and len(c.ids)==len(set(c.ids)),p
     assert all(key in c.ids for key in ['home','work','approach','about','contact'])
     assert s.count('data-v2-panel=')==11 and 'data-version="2"' in s
-    for record in data['projects']:assert 'project-'+record['slug'] in c.ids
-assert (ROOT/'version2.html').read_bytes()==(ROOT/'version2.en.html').read_bytes()
+    assert 'data-back-v1' not in s and 'version2.html' not in s and 'VERSION 2' not in s
+    assert not re.search(r'href="(?:archive/|projects/)',s)
+    assert c.disclosures==6
+    for record in data['projects']:
+        assert 'project-'+record['slug'] in c.ids
+        for value,label in record['metrics']:assert value in s
+        for token in record['stack']:assert escape(token) in s
+assert (ROOT/'index.html').read_bytes()==(ROOT/'index.en.html').read_bytes()
 
 for p,c in parsed.items():
     for tag,link,switch in c.links:
@@ -59,8 +53,11 @@ for p,c in parsed.items():
         assert target.exists(),(p,link)
         if u.fragment and target in parsed:assert u.fragment in parsed[target].ids,(p,link)
         if tag=='a' and u.path.endswith('.html') and not switch:assert ('.ko.html' in target.name)==(c.lang=='ko'),(p,link)
-for p in data['projects']:
-    en=(ROOT/'projects'/(p['slug']+'.html')).read_text();ko=(ROOT/'projects'/(p['slug']+'.ko.html')).read_text()
-    for value,label in p['metrics']:assert value in en and value in ko
-    for token in p['stack']:assert escape(token) in en and escape(token) in ko
-print('PASS: original and v2 pages, isolated project IDs, metric/stack parity, locale links, HTML, assets and sections.')
+out=ROOT/'_site'
+assert out.exists() and not (out/'archive').exists()
+assert not list(out.rglob('README.md')) and not (out/'tools').exists()
+for page in [*out.glob('version2*.html'),*out.glob('projects/*.html')]:
+    s=page.read_text();assert 'location.replace' in s and 'data-v2-panel' not in s
+for page in out.rglob('*.html'):
+    assert 'data-back-v1' not in page.read_text()
+print('PASS: selected portfolio, 11 panels, metric/stack parity, locale links, HTML/assets, redirects and archive exclusion.')

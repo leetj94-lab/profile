@@ -114,10 +114,7 @@ def write_page(stem,renderer):
     path.with_name(path.name+'.en.html').write_text(renderer('en'))
     path.with_name(path.name+'.ko.html').write_text(renderer('ko'))
 
-write_page('index',home)
-for p in PROJECTS:write_page('projects/'+p['slug'],lambda lang,p=p:project(p,lang))
-write_page('version2',lambda lang:render_v2(lang,globals()))
-for suffix,lang in [('.html','en'),('.en.html','en'),('.ko.html','ko')]:
-    target=route('engineering-agents',lang)
-    (ROOT/'projects'/('construction-progress'+suffix)).write_text('<!doctype html><html lang="'+lang+'"><head><meta charset="utf-8"><meta http-equiv="refresh" content="0;url='+target+'"><title>TJ Lee</title></head><body><a href="'+target+'">'+S('Continue to the updated project','업데이트된 프로젝트로 이동',lang)+'</a></body></html>')
-print('Built English-default and Korean pages, English aliases and legacy redirects.',ASSETS)
+# The selected sidebar presentation is the only active HTML output.
+# archive/v1 and version2*.html are historical snapshots; never regenerate them.
+write_page('index',lambda lang:render_v2(lang,globals()))
+print('Built the selected English/Korean portfolio and English alias.',ASSETS)

@@ -1,0 +1,10 @@
+# Historical source files must also stay out of Jekyll fallback builds.
+exclude:
+  - archive
+  - tools
+  - tests
+  - content
+  - README.md
+  - CASE_STUDIES_DRAFT.md
+  - DESIGN_NOTES.md
+  - PORTFOLIO_GUIDE.md
