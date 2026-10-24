@@ -56,6 +56,7 @@ for name in ['index.html','index.ko.html']:
     assert 'U.S. rollout' not in about and '미국 배포' not in about
     assert 'career-growth' in about and 'project-journey' in html
     assert html.count('class="project-rollout"')==1
+    assert html.count('class="project-context"')==6
     master=html.split('id="project-asset-master-data"',1)[1].split('id="project-drawing-information"',1)[0]
     assert 'class="project-rollout"' in master
 
