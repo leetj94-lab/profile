@@ -30,7 +30,7 @@ Root `version2*.html` and `projects/*.html` are compatibility redirects only. Ex
 python tools/build-locales.py
 python tools/package-public.py
 python tests/check-pages.py
-node --test tests/site.test.cjs tests/v2.test.cjs tests/workflow.test.cjs
+node --test tests/site.test.cjs tests/v2.test.cjs
 ```
 
 The renderer generates complete bilingual HTML and content-hashed runtime assets. The checks verify the selected panels, EN/KO project metrics and stacks, local links, compatibility redirects and archive exclusion. GitHub Pages deploys from `feature/portfolio-site` using `.github/workflows/pages.yml`.
@@ -65,4 +65,10 @@ The three-pass HR/BA/developer review and acceptance findings are recorded in `d
 
 Every project has an `evidence` case linking business needs, implementation decisions and acceptance criteria. Selected results have a `measurement` note separating workload scale, efficiency and estimated productivity value. Do not alter metric values in order to fit an illustrative calculation.
 
-The former interactive validation/delivery walkthrough and its overview entry are removed from the public UI. `workflow.js`, its engine tests and the unused `render_explorer` helper are retained for future reuse; do not re-enable them unless explicitly requested. The active renderer does not load or package the walkthrough runtime, and Jekyll fallback excludes it. Previously shared walkthrough anchors resolve to the document case's engineering section. The selectable implementation stages remain active: these explain project work and are separate from the retired walkthrough.
+The former interactive validation/delivery walkthrough is preserved under `archive/retired-workflow/` with its renderer and engine tests. It is not imported, built, packaged or tested as part of the active site. Previously shared walkthrough anchors resolve to the document case's engineering section. Selectable implementation stages remain active.
+
+## Repository cleanup and backup boundaries
+
+Unused generated CSS/JS revisions have been removed. Current pages retain their exact content and active runtime assets. Three older generated assets referenced by the frozen HTML snapshots are retained for backup purposes: `script-9054735561.js`, `v2-script-fc61b946be.js` and `v2-styles-321b1ff776.css`; do not edit them for live updates.
+
+`archive/legacy-notes/` holds the earlier writing/design notes and translation dictionary. `archive/legacy-assets/` holds superseded images. These files, the v1/v2 snapshots and the retired walkthrough are backups only. Do not reintroduce them into the active sources or public deployment. Only images referenced by current pages are packaged. Compatibility redirects remain because they support previously shared URLs.

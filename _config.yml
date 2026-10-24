@@ -5,9 +5,4 @@ exclude:
   - tests
   - content
   - README.md
-  - CASE_STUDIES_DRAFT.md
-  - DESIGN_NOTES.md
-  - PORTFOLIO_GUIDE.md
   - docs
-  - workflow.js
-  - workflow-dc705728c9.js
